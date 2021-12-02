@@ -59,10 +59,13 @@ GRANT USAGE ON SCHEMA workforce TO workforce_user;
 -- Role workforce_reader
 GRANT SELECT ON
     config,
+    credential,
+    credential_type,
     occupancy,
     occupation_code,
     occupant_credentials,
     office,
+    office_group,
     pay_plan,
     position,
     v_office_positions
@@ -71,10 +74,13 @@ TO workforce_reader;
 -- Role workforce_writer
 GRANT INSERT,UPDATE,DELETE ON
     config,
+    credential,
+    credential_type,
     occupancy,
     occupation_code,
     occupant_credentials,
     office,
+    office_group,
     pay_plan,
     position
 TO workforce_writer;

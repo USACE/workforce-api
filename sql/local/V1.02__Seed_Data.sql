@@ -1,10 +1,10 @@
 
 -- position
-INSERT INTO position (id, occupation_code_id, title, office_id, pay_plan_id, grade, is_supervisor) VALUES
-    ('a25c9ec2-fc14-4f7e-bde3-177fa9de4208', 'dc091470-ccc2-4f12-b3cf-6a9bf71f8238', 'Supervisory Hydraulic Engineer', '2f160ba7-fd5f-4716-8ced-4a29f75065a6', '24533fd9-6158-422f-b1bc-94d5779bd2aa', 13, TRUE),
-    ('45eefa59-a7d8-4c24-b509-0bc752ef6a2b', 'dc091470-ccc2-4f12-b3cf-6a9bf71f8238', 'Hydraulic Engineer', '2f160ba7-fd5f-4716-8ced-4a29f75065a6', '24533fd9-6158-422f-b1bc-94d5779bd2aa', 12, FALSE),
-    ('d485b403-20c9-4651-b78d-4a08d0a5f5ba', 'dc091470-ccc2-4f12-b3cf-6a9bf71f8238', 'Hydraulic Engineer', '2f160ba7-fd5f-4716-8ced-4a29f75065a6', '24533fd9-6158-422f-b1bc-94d5779bd2aa', 9,  FALSE),
-    ('0097ee0f-428c-4fd0-9782-8a6e36d47e60', 'dc091470-ccc2-4f12-b3cf-6a9bf71f8238', 'Hydraulic Engineer', '2f160ba7-fd5f-4716-8ced-4a29f75065a6', '24533fd9-6158-422f-b1bc-94d5779bd2aa', 11, FALSE);
+INSERT INTO position (id, occupation_code_id, title, office_group_id, pay_plan_id, grade, is_supervisor) VALUES
+    ('a25c9ec2-fc14-4f7e-bde3-177fa9de4208', 'dc091470-ccc2-4f12-b3cf-6a9bf71f8238', 'Supervisory Hydraulic Engineer', '8c44bda8-cbc7-4348-989d-e3eb2a0148c0', '24533fd9-6158-422f-b1bc-94d5779bd2aa', 13, TRUE),
+    ('45eefa59-a7d8-4c24-b509-0bc752ef6a2b', 'dc091470-ccc2-4f12-b3cf-6a9bf71f8238', 'Hydraulic Engineer', '8c44bda8-cbc7-4348-989d-e3eb2a0148c0', '24533fd9-6158-422f-b1bc-94d5779bd2aa', 12, FALSE),
+    ('d485b403-20c9-4651-b78d-4a08d0a5f5ba', 'dc091470-ccc2-4f12-b3cf-6a9bf71f8238', 'Hydraulic Engineer', '8c44bda8-cbc7-4348-989d-e3eb2a0148c0', '24533fd9-6158-422f-b1bc-94d5779bd2aa', 9,  FALSE),
+    ('0097ee0f-428c-4fd0-9782-8a6e36d47e60', 'dc091470-ccc2-4f12-b3cf-6a9bf71f8238', 'Hydraulic Engineer', '8c44bda8-cbc7-4348-989d-e3eb2a0148c0', '24533fd9-6158-422f-b1bc-94d5779bd2aa', 11, FALSE);
 
 
 -- occupancy

@@ -17,10 +17,11 @@ CREATE OR REPLACE VIEW v_office_positions AS (
             AND o2.end_date IS null) = 0 
         THEN 'VACANT' ELSE 'OCCUPIED' END AS status,
     o3.symbol AS office_symbol
-    FROM workforce."position" p 
-    LEFT JOIN workforce.occupancy o ON o.position_id = p.id
-    JOIN workforce.occupation_code oc ON oc.id  = p.occupation_code_id 
-    JOIN workforce.pay_plan pp ON pp.id  = p.pay_plan_id
-    JOIN workforce.office o3 ON o3.id = p.office_id 
+    FROM "position" p 
+    LEFT JOIN occupancy o ON o.position_id = p.id
+    JOIN occupation_code oc ON oc.id  = p.occupation_code_id 
+    JOIN pay_plan pp ON pp.id  = p.pay_plan_id
+    JOIN office_group og ON og.id = p.office_group_id 
+    JOIN office o3 ON o3.id = og.office_id
     ORDER BY status, p.title
 )

@@ -80,17 +80,44 @@ INSERT INTO pay_plan (id, code, name) VALUES
 -- CREDENTIALS
 ------------------
 
+-- credential_type
+CREATE TABLE IF NOT EXISTS credential_type (
+    id UUID PRIMARY KEY NOT NULL DEFAULT uuid_generate_v4(),
+    name VARCHAR UNIQUE NOT NULL
+);
+
+INSERT INTO credential_type (id, name) VALUES
+    ('9e1aeb76-5b84-42f9-ac66-9aa9e6074ca0', 'Advanced Degree'),
+    ('b867b808-7ca2-4442-8173-e5e1aec2919d', 'Professional Registration'),
+    ('3c4a0953-cdf3-49c2-b0a0-2f85906e9214', 'Certification');
+
 -- certifications/professional creds/degrees
 CREATE TABLE IF NOT EXISTS credential (
     id UUID PRIMARY KEY NOT NULL DEFAULT uuid_generate_v4(),
     abbrev VARCHAR UNIQUE NOT NULL,
-    name VARCHAR UNIQUE NOT NULL
+    name VARCHAR UNIQUE NOT NULL,
+    credential_type_id UUID NOT NULL REFERENCES credential_type(id)
 );
 
-INSERT INTO credential (id, abbrev, name) VALUES
-    ('e4e8cf08-7571-47c8-8451-ff4a010e0056', 'PE', 'Professional Engineer'),
-    ('73fe40cf-3f9c-4def-9285-4825ba98cccf', 'PH', 'Professional Hydrologist'),
-    ('535ba415-6be5-410d-b53c-8759c23c62cf', 'PhD', 'Doctor of Philosophy');
+INSERT INTO credential (id, abbrev, name, credential_type_id) VALUES
+    ('e4e8cf08-7571-47c8-8451-ff4a010e0056', 'PE', 'Professional Engineer', 'b867b808-7ca2-4442-8173-e5e1aec2919d'),
+    ('73fe40cf-3f9c-4def-9285-4825ba98cccf', 'PH', 'Professional Hydrologist', 'b867b808-7ca2-4442-8173-e5e1aec2919d'),
+    ('535ba415-6be5-410d-b53c-8759c23c62cf', 'PhD', 'Doctor of Philosophy', '9e1aeb76-5b84-42f9-ac66-9aa9e6074ca0');
+
+
+CREATE TABLE IF NOT EXISTS office_group (
+    id UUID PRIMARY KEY NOT NULL DEFAULT uuid_generate_v4(),
+    office_id UUID NOT NULL REFERENCES office(id),
+    name VARCHAR NOT NULL,
+    slug VARCHAR NOT NULL,
+    CONSTRAINT unique_office_slug UNIQUE(office_id, slug)
+);
+
+-- @todo
+-- NEED TO ADD SECTION/GROUP FOR EACH OFFICE FROM SPREADSHEET
+
+INSERT INTO office_group (id, office_id, name, slug) VALUES
+    ('8c44bda8-cbc7-4348-989d-e3eb2a0148c0', '2f160ba7-fd5f-4716-8ced-4a29f75065a6', 'Water Management', 'water-management');
 
 
 ------------------
@@ -100,11 +127,11 @@ INSERT INTO credential (id, abbrev, name) VALUES
 CREATE TABLE IF NOT EXISTS position (
     id UUID PRIMARY KEY NOT NULL DEFAULT uuid_generate_v4(),
     occupation_code_id UUID NOT NULL REFERENCES occupation_code(id),
+    spreadsheet_series VARCHAR,
     title VARCHAR,
-    office_id UUID NOT NULL REFERENCES office(id),
+    office_group_id UUID NOT NULL REFERENCES office_group(id),
     pay_plan_id UUID NOT NULL REFERENCES pay_plan(id),
     grade SMALLINT,
-    -- supervisor_id UUID REFERENCES employee(id),
     is_supervisor BOOLEAN NOT NULL DEFAULT FALSE
 );
 
