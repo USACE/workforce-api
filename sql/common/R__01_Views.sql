@@ -9,6 +9,7 @@ CREATE OR REPLACE VIEW v_office_positions AS (
     p.is_supervisor,
     pp.code,
     p.grade,
+    og.slug AS group_slug,
     (SELECT count(id) FROM occupancy o2 WHERE o2.position_id = p.id) AS all_occupants,
     CASE WHEN 
         (SELECT count(id) 

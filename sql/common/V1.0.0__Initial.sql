@@ -117,6 +117,8 @@ CREATE TABLE IF NOT EXISTS office_group (
 -- NEED TO ADD SECTION/GROUP FOR EACH OFFICE FROM SPREADSHEET
 
 INSERT INTO office_group (id, office_id, name, slug) VALUES
+    ('c5fbbb80-3cb5-4407-a8b0-d5fd105714fc', '552e59f7-c0cc-4689-8a4d-e791c028430a', 'Water Resources', 'water-resources'),
+    ('5db16a83-f38b-4a16-8aa1-ea1175c6003e', '552e59f7-c0cc-4689-8a4d-e791c028430a', 'Water Management', 'water-management'),
     ('8c44bda8-cbc7-4348-989d-e3eb2a0148c0', '2f160ba7-fd5f-4716-8ced-4a29f75065a6', 'Water Management', 'water-management');
 
 
