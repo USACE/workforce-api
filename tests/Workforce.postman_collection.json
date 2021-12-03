@@ -1,0 +1,213 @@
+{
+	"info": {
+		"_postman_id": "a0e79b23-eaf7-48bd-a9f1-3631c4b2835b",
+		"name": "Workforce",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Position By ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost/position/39fc35db-31b1-47c9-88e5-062ef39393a1",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"position",
+						"39fc35db-31b1-47c9-88e5-062ef39393a1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Position By Office",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost/offices/lrh/positions",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"offices",
+						"lrh",
+						"positions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Position By Office and Group",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost/offices/lrn/water-management/positions",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"offices",
+						"lrn",
+						"water-management",
+						"positions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Position",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"position_title\": \"Super Trooper Engineer\",\n    \"code\": \"GS\",\n    \"position_grade\": 15,\n    \"is_supervisor\": false,\n    \"occupation_code\": \"0810\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost/offices/lrh/water-management/positions",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"offices",
+						"lrh",
+						"water-management",
+						"positions"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Position",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"position_title\": \"NOT SO Super Trooper\",\n    \"code\": \"GS\",\n    \"position_grade\": 15,\n    \"is_supervisor\": false,\n    \"occupation_code\": \"1315\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost/offices/lrn/water-management/positions/f7813c81-eb74-49ba-be2d-66df03ae954",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"offices",
+						"lrn",
+						"water-management",
+						"positions",
+						"f7813c81-eb74-49ba-be2d-66df03ae954"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Position",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost/position/3b7e5ca3-d3c7-4f9e-822f-e95a6f5584eb",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"position",
+						"3b7e5ca3-d3c7-4f9e-822f-e95a6f5584eb"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "in",
+				"value": "query",
+				"type": "string"
+			},
+			{
+				"key": "value",
+				"value": "appkey",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "key",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

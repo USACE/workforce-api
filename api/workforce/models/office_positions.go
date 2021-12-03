@@ -6,6 +6,7 @@ import (
 
 	"github.com/georgysavva/scany/pgxscan"
 	"github.com/google/uuid"
+	"github.com/jackc/pgx/v4"
 	"github.com/jackc/pgx/v4/pgxpool"
 )
 
@@ -14,49 +15,60 @@ type Position struct {
 	PositionTitle  string `json:"position_title" db:"position_title"`
 	Code           string `json:"code" db:"code"`
 	Grade          int    `json:"position_grade" db:"grade"`
-	IsSupervisor   *bool  `json:"is_supervisor" db:"is_supervisor"`
+	IsSupervisor   bool   `json:"is_supervisor" db:"is_supervisor"`
 	OccupationCode string `json:"occupation_code" db:"occupation_code"`
 	OccupationName string `json:"occupation_name" db:"occupation_name"`
 	GroupSlug      string `json:"group_slug" db:"group_slug"`
 }
 
 // GetOfficeByID
-func GetPositionByID(db *pgxpool.Pool, id string) (*Position, error) {
-	ps := []Position{}
-	if err := pgxscan.Select(context.Background(),
-		db, &ps,
+func GetPositionByID(db *pgxpool.Pool, id *uuid.UUID) (*Position, error) {
+	p := new(Position)
+	if err := db.QueryRow(context.Background(),
 		`SELECT office_symbol, position_title, code, grade, is_supervisor, occupation_code, occupation_name, group_slug
-		 FROM v_office_positions
-		 WHERE position_id = $1`,
+		FROM v_office_positions
+		WHERE position_id = $1`,
 		id,
+	).Scan(
+		&p.OfficeSymbol,
+		&p.PositionTitle,
+		&p.Code,
+		&p.Grade,
+		&p.IsSupervisor,
+		&p.OccupationCode,
+		&p.OccupationName,
+		&p.GroupSlug,
 	); err != nil {
 		return nil, err
 	}
-	p := &ps[0]
 	return p, nil
 }
-func ListOfficePositions(db *pgxpool.Pool, office_symbol string, group string) ([]Position, error) {
-	ss := make([]Position, 0)
-	if err := pgxscan.Select(
-		context.Background(), db, &ss,
+
+// ListOfficePositions
+func ListOfficePositions(db *pgxpool.Pool, office_symbol string, group string) ([]*Position, error) {
+	var ss []*Position
+	rows, err := db.Query(context.Background(),
 		`SELECT office_symbol, position_title, code, grade, is_supervisor, occupation_code, occupation_name, group_slug
-		 FROM v_office_positions
-		 WHERE office_symbol = $1
-		 AND group_slug like $2
-		 ORDER BY office_symbol`, strings.ToUpper(office_symbol), group,
-	); err != nil {
+		FROM v_office_positions
+		WHERE office_symbol = $1
+		AND group_slug like $2
+		ORDER BY office_symbol, occupation_code`,
+		strings.ToUpper(office_symbol), group,
+	)
+	if err != nil {
 		return nil, err
+	}
+	if err := pgxscan.ScanAll(&ss, rows); err != nil {
+		return nil, err
+	}
+	if len(ss) < 1 {
+		return nil, pgx.ErrNoRows
 	}
 	return ss, nil
 }
 
 // CreateOfficePosition
 func CreateOfficeGroupPosition(db *pgxpool.Pool, p *Position) (*Position, error) {
-	tx, err := db.Begin(context.Background())
-	if err != nil {
-		return nil, err
-	}
-	defer tx.Rollback(context.Background())
 	sqlStatement := `INSERT INTO position (
 		occupation_code_id,
 		title,
@@ -72,7 +84,7 @@ func CreateOfficeGroupPosition(db *pgxpool.Pool, p *Position) (*Position, error)
 			$6,
 			$7) RETURNING id`
 	id := new(uuid.UUID)
-	db.QueryRow(context.Background(),
+	if err := db.QueryRow(context.Background(),
 		sqlStatement,
 		p.OccupationCode,
 		p.PositionTitle,
@@ -81,16 +93,14 @@ func CreateOfficeGroupPosition(db *pgxpool.Pool, p *Position) (*Position, error)
 		p.Code,
 		p.Grade,
 		p.IsSupervisor,
-	).Scan(&id)
-	if err = tx.Commit(context.Background()); err != nil {
+	).Scan(&id); err != nil {
 		return nil, err
 	}
-
-	return GetPositionByID(db, id.String())
+	return GetPositionByID(db, id)
 }
 
 // UpdateOfficeGroupPosition
-func UpdateOfficeGroupPosition(db *pgxpool.Pool, p *Position, id string) (*Position, error) {
+func UpdateOfficeGroupPosition(db *pgxpool.Pool, p *Position, id *uuid.UUID) (*Position, error) {
 	sqlStatement := `UPDATE position SET
 		occupation_code_id = (SELECT id FROM occupation_code WHERE code = $1),
 		title = $2,
@@ -102,7 +112,7 @@ func UpdateOfficeGroupPosition(db *pgxpool.Pool, p *Position, id string) (*Posit
 			id = $8
 				RETURNING id`
 	rid := new(uuid.UUID)
-	if err := pgxscan.Get(context.Background(), db, &rid,
+	if err := db.QueryRow(context.Background(),
 		sqlStatement,
 		p.OccupationCode,
 		p.PositionTitle,
@@ -112,18 +122,25 @@ func UpdateOfficeGroupPosition(db *pgxpool.Pool, p *Position, id string) (*Posit
 		p.Grade,
 		p.IsSupervisor,
 		id,
-	); err != nil {
+	).Scan(&rid); err != nil {
 		return nil, err
 	}
-	return GetPositionByID(db, rid.String())
+	return GetPositionByID(db, rid)
 }
 
 // DeletePosition
-func DeletePosition(db *pgxpool.Pool, id string) (int, error) {
-	sqlStatement := `WITH deleted AS (DELETE FROM position WHERE id = $1 RETURNING *) SELECT count(*) FROM deleted`
-	var c int
-	if err := pgxscan.Get(context.Background(), db, &c, sqlStatement, id); err != nil {
-		return 0, err
+func DeletePosition(db *pgxpool.Pool, id *uuid.UUID) (*int64, error) {
+	// sqlStatement := `WITH deleted AS (DELETE FROM position WHERE id = $1 RETURNING *) SELECT count(*) FROM deleted`
+	sqlStatement := `DELETE FROM position WHERE id = $1`
+	res, err := db.Exec(context.Background(), sqlStatement, id)
+	if err != nil {
+		return nil, err
 	}
-	return c, nil
+	cnt := res.RowsAffected()
+	return &cnt, nil
+	// var c int
+	// if err := pgxscan.Get(context.Background(), db, &c, sqlStatement, id); err != nil {
+	// 	return 0, err
+	// }
+	// return c, nil
 }
