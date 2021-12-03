@@ -8,8 +8,8 @@ import (
 	"golang.org/x/net/http2"
 
 	"github.com/USACE/workforce-api/api/app"
-	"github.com/USACE/workforce-api/api/workforce"
 	"github.com/USACE/workforce-api/api/middleware"
+	"github.com/USACE/workforce-api/api/workforce"
 
 	_ "github.com/jackc/pgx/v4"
 	"github.com/kelseyhightower/envconfig"
@@ -63,8 +63,13 @@ func main() {
 	// Offices
 	public.GET("/offices", mp.ListOffices)
 
-	//Office Positions/Employees
+	// Office Positions/Employees
+	public.GET("/position/:position_id", mp.GetPositionByID)
 	public.GET("/offices/:office_symbol/positions", mp.ListOfficePositions)
+	public.GET("/offices/:office_symbol/:group/positions", mp.ListOfficeGroupPositions)
+	key.POST("/offices/:office_symbol/:group/position", mp.CreateOfficeGroupPosition)
+	key.PUT("/offices/:office_symbol/:group/positions/:position_id", mp.UpdateOfficeGroupPosition)
+	key.DELETE("/position/:position_id", mp.DeletePosition)
 
 	// Server
 	s := &http2.Server{
