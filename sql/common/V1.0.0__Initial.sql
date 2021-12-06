@@ -110,6 +110,7 @@ CREATE TABLE IF NOT EXISTS office_group (
     office_id UUID NOT NULL REFERENCES office(id),
     name VARCHAR NOT NULL,
     slug VARCHAR NOT NULL,
+    last_verified date,
     CONSTRAINT unique_office_slug UNIQUE(office_id, slug)
 );
 
@@ -134,7 +135,8 @@ CREATE TABLE IF NOT EXISTS position (
     office_group_id UUID NOT NULL REFERENCES office_group(id),
     pay_plan_id UUID NOT NULL REFERENCES pay_plan(id),
     grade SMALLINT,
-    is_supervisor BOOLEAN NOT NULL DEFAULT FALSE
+    is_supervisor BOOLEAN NOT NULL DEFAULT FALSE,
+    last_updated date NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 --------------------
@@ -159,3 +161,21 @@ CREATE TABLE IF NOT EXISTS occupant_credentials (
     credential_id UUID NOT NULL REFERENCES credential(id),
     CONSTRAINT unique_occupant_credential UNIQUE(occupancy_id, credential_id)
 );
+
+--------------------
+-- DATA CALL
+--------------------
+CREATE TABLE IF NOT EXISTS data_call (
+    id UUID PRIMARY KEY NOT NULL DEFAULT uuid_generate_v4(),
+    title VARCHAR NOT NULL,
+    description TEXT,
+    start_date date NOT NULL,
+    due_date date NOT NULL
+    CONSTRAINT unique_data_call UNIQUE(title, due_date)
+)
+
+CREATE TABLE IF NOT EXISTS data_call_completed(
+    office_group_id UUID NOT NULL REFERENCES office_group(id),
+    completion_date date NOT NULL,
+    user_id UUID NOT NULL
+)
