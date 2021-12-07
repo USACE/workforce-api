@@ -136,6 +136,7 @@ CREATE TABLE IF NOT EXISTS position (
     pay_plan_id UUID NOT NULL REFERENCES pay_plan(id),
     grade SMALLINT,
     is_supervisor BOOLEAN NOT NULL DEFAULT FALSE,
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,
     last_updated date NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -170,12 +171,13 @@ CREATE TABLE IF NOT EXISTS data_call (
     title VARCHAR NOT NULL,
     description TEXT,
     start_date date NOT NULL,
-    due_date date NOT NULL
+    due_date date NOT NULL,
     CONSTRAINT unique_data_call UNIQUE(title, due_date)
-)
+);
 
-CREATE TABLE IF NOT EXISTS data_call_completed(
+CREATE TABLE IF NOT EXISTS data_call_completed (
+    data_call_id UUID NOT NULL REFERENCES data_call(id),
     office_group_id UUID NOT NULL REFERENCES office_group(id),
     completion_date date NOT NULL,
-    user_id UUID NOT NULL
-)
+    sub UUID NOT NULL
+);

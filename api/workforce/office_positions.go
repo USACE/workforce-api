@@ -3,6 +3,7 @@ package workforce
 import (
 	"fmt"
 	"net/http"
+	"strconv"
 	"strings"
 
 	"github.com/USACE/workforce-api/api/messages"
@@ -19,36 +20,43 @@ func (s Store) GetPositionByID(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
-	p, err := models.GetPositionByID(s.Connection, &id)
-	if err != nil {
-		if err == pgx.ErrNoRows {
-			return c.JSON(http.StatusNotFound, messages.DefaultMessageNotFound)
-		}
-		return c.String(http.StatusInternalServerError, err.Error())
+	p := new(models.Position)
+	if err := p.GetPositionByID(s.Connection, &id); err != nil {
+		return c.JSON(http.StatusInternalServerError, messages.NewMessage(err.Error()))
 	}
 	return c.JSON(http.StatusOK, p)
 }
 
 // ListOfficePositions
 func (s Store) ListOfficePositions(c echo.Context) error {
-	w, err := models.ListOfficePositions(s.Connection, c.Param("office_symbol"), "%")
+	var a bool = true
+	p := c.QueryParam("active")
+	if p != "" {
+		a, _ = strconv.ParseBool(p)
+	}
+	w, err := models.ListOfficePositions(s.Connection, c.Param("office_symbol"), "%", a)
 	if err != nil {
 		if err == pgx.ErrNoRows {
 			return c.JSON(http.StatusNotFound, messages.DefaultMessageNotFound)
 		}
-		return c.String(http.StatusInternalServerError, err.Error())
+		return c.JSON(http.StatusInternalServerError, messages.NewMessage(err.Error()))
 	}
 	return c.JSON(http.StatusOK, w)
 }
 
 // ListOfficeGroupPositions
 func (s Store) ListOfficeGroupPositions(c echo.Context) error {
-	j, err := models.ListOfficePositions(s.Connection, c.Param("office_symbol"), c.Param("group"))
+	var a bool = true
+	p := c.QueryParam("active")
+	if p != "" {
+		a, _ = strconv.ParseBool(p)
+	}
+	j, err := models.ListOfficePositions(s.Connection, c.Param("office_symbol"), c.Param("group"), a)
 	if err != nil {
 		if err == pgx.ErrNoRows {
 			return c.JSON(http.StatusNotFound, messages.DefaultMessageNotFound)
 		}
-		return c.String(http.StatusInternalServerError, err.Error())
+		return c.JSON(http.StatusInternalServerError, messages.NewMessage(err.Error()))
 	}
 	return c.JSON(http.StatusOK, j)
 }
@@ -66,7 +74,7 @@ func (s Store) CreateOfficeGroupPosition(c echo.Context) error {
 		if err == pgx.ErrNoRows {
 			return c.JSON(http.StatusNotFound, messages.DefaultMessageNotFound)
 		}
-		return c.String(http.StatusInternalServerError, err.Error())
+		return c.JSON(http.StatusInternalServerError, messages.NewMessage(err.Error()))
 	}
 	return c.JSON(http.StatusOK, up)
 }
@@ -88,7 +96,7 @@ func (s Store) UpdateOfficeGroupPosition(c echo.Context) error {
 		if err == pgx.ErrNoRows {
 			return c.JSON(http.StatusNotFound, messages.DefaultMessageNotFound)
 		}
-		return c.String(http.StatusInternalServerError, err.Error())
+		return c.JSON(http.StatusInternalServerError, messages.NewMessage(err.Error()))
 	}
 	return c.JSON(http.StatusOK, up)
 }
@@ -103,11 +111,11 @@ func (s Store) DeletePosition(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err)
 	}
-	m := map[string]string{}
+	var m messages.Message
 	if int(*i) < 1 {
-		m["message"] = "no position deleted"
+		m = messages.NewMessage("no position deleted")
 	} else {
-		m["message"] = fmt.Sprintf("Deleted id %s", id)
+		m = messages.NewMessage(fmt.Sprintf("Deleted id %s", id))
 	}
 	return c.JSON(http.StatusOK, m)
 

@@ -6,168 +6,428 @@
 	},
 	"item": [
 		{
-			"name": "Get Position By ID",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost/position/39fc35db-31b1-47c9-88e5-062ef39393a1",
-					"host": [
-						"localhost"
-					],
-					"path": [
-						"position",
-						"39fc35db-31b1-47c9-88e5-062ef39393a1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get Position By Office",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost/offices/lrh/positions",
-					"host": [
-						"localhost"
-					],
-					"path": [
-						"offices",
-						"lrh",
-						"positions"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get Position By Office and Group",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost/offices/lrn/water-management/positions",
-					"host": [
-						"localhost"
-					],
-					"path": [
-						"offices",
-						"lrn",
-						"water-management",
-						"positions"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Create Position",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"position_title\": \"Super Trooper Engineer\",\n    \"code\": \"GS\",\n    \"position_grade\": 15,\n    \"is_supervisor\": false,\n    \"occupation_code\": \"0810\"\n}\n",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "Offices",
+			"item": [
+				{
+					"name": "List District Offices",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/offices",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"offices"
+							]
 						}
-					}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Groups",
+			"item": [
+				{
+					"name": "List Groups By Office",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/groups",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"groups"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Positions",
+			"item": [
+				{
+					"name": "Get Position By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/position/:position_id",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"position",
+								":position_id"
+							],
+							"variable": [
+								{
+									"key": "position_id",
+									"value": "39fc35db-31b1-47c9-88e5-062ef39393a3",
+									"description": "UUID for the position"
+								}
+							]
+						}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "localhost/offices/lrh/water-management/positions",
-					"host": [
-						"localhost"
-					],
-					"path": [
-						"offices",
-						"lrh",
-						"water-management",
-						"positions"
-					],
-					"query": [
-						{
-							"key": "",
-							"value": null,
-							"disabled": true
+				{
+					"name": "Delete Position",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/position/:position_id",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"position",
+								":position_id"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "position_id",
+									"value": "3b7e5ca3-d3c7-4f9e-822f-e95a6f5584eb",
+									"description": "UUID for the position"
+								}
+							]
 						}
-					]
+					},
+					"response": []
+				},
+				{
+					"name": "Get Position By Office",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/offices/:office_symbol/positions",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"offices",
+								":office_symbol",
+								"positions"
+							],
+							"query": [
+								{
+									"key": "active",
+									"value": "true",
+									"description": "Query to get active positions or not active positions",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "office_symbol",
+									"value": "lrh",
+									"description": "District code"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Position By Office and Group",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/offices/:office_symbol/:group/positions",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"offices",
+								":office_symbol",
+								":group",
+								"positions"
+							],
+							"query": [
+								{
+									"key": "active",
+									"value": "true",
+									"description": "Query to get active positions or not active positions",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "office_symbol",
+									"value": "lrn",
+									"description": "District code"
+								},
+								{
+									"key": "group",
+									"value": "water-management",
+									"description": "Office name as a slug"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Position by Office and Group",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"position_title\": \"Super Trooper Engineer\",\n    \"code\": \"GS\",\n    \"position_grade\": 15,\n    \"is_supervisor\": false,\n    \"occupation_code\": \"0810\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/offices/:office_symbol/:group/positions",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"offices",
+								":office_symbol",
+								":group",
+								"positions"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "office_symbol",
+									"value": "LRN",
+									"description": "District code"
+								},
+								{
+									"key": "group",
+									"value": "water-management",
+									"description": "Office name as a slug"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Position by Office and Group",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"position_title\": \"NOT A Super Trooper\",\n    \"code\": \"GS\",\n    \"position_grade\": 15,\n    \"is_supervisor\": false,\n    \"occupation_code\": \"1315\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/offices/:office_symbol/:group/positions/:position_id",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"offices",
+								":office_symbol",
+								":group",
+								"positions",
+								":position_id"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "office_symbol",
+									"value": "LRN",
+									"description": "District code"
+								},
+								{
+									"key": "group",
+									"value": "water-management",
+									"description": "Office name as a slug"
+								},
+								{
+									"key": "position_id",
+									"value": "39fc35db-31b1-47c9-88e5-062ef39393a3",
+									"description": "UUID for the position"
+								}
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "Update Position",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"position_title\": \"NOT SO Super Trooper\",\n    \"code\": \"GS\",\n    \"position_grade\": 15,\n    \"is_supervisor\": false,\n    \"occupation_code\": \"1315\"\n}\n",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "Occupancy",
+			"item": [
+				{
+					"name": "Get Occupancy By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/occupancy/:occupancy_id",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"occupancy",
+								":occupancy_id"
+							],
+							"variable": [
+								{
+									"key": "occupancy_id",
+									"value": "f3a3cd1a-97c5-47a0-840a-3be45fae2bc7"
+								}
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "localhost/offices/lrn/water-management/positions/f7813c81-eb74-49ba-be2d-66df03ae954",
-					"host": [
-						"localhost"
-					],
-					"path": [
-						"offices",
-						"lrn",
-						"water-management",
-						"positions",
-						"f7813c81-eb74-49ba-be2d-66df03ae954"
-					],
-					"query": [
-						{
-							"key": "",
-							"value": null,
-							"disabled": true
+				{
+					"name": "Get Occupancy by Office",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/offices/:office_symbol/occupancy",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"offices",
+								":office_symbol",
+								"occupancy"
+							],
+							"query": [
+								{
+									"key": "active",
+									"value": "true",
+									"description": "Query to get active positions or not active positions",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "office_symbol",
+									"value": "lrh"
+								}
+							]
 						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Delete Position",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "localhost/position/3b7e5ca3-d3c7-4f9e-822f-e95a6f5584eb",
-					"host": [
-						"localhost"
-					],
-					"path": [
-						"position",
-						"3b7e5ca3-d3c7-4f9e-822f-e95a6f5584eb"
-					],
-					"query": [
-						{
-							"key": "",
-							"value": null,
-							"disabled": true
+				{
+					"name": "Get Occupancy by Office and Group",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/offices/:office_symbol/:group/occupancy",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"offices",
+								":office_symbol",
+								":group",
+								"occupancy"
+							],
+							"query": [
+								{
+									"key": "active",
+									"value": "true",
+									"description": "Query to get active positions or not active positions",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "office_symbol",
+									"value": "lrh"
+								},
+								{
+									"key": "group",
+									"value": "water-management"
+								}
+							]
 						}
-					]
+					},
+					"response": []
+				},
+				{
+					"name": "Create Occupancy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"position_id\": \"2c8746e3-5aed-4db9-854b-8aedf28bc856\",\n    \"title\": \"PITA\",\n    \"start_date\": \"2021-01-01T12:00:00Z\",\n    \"end_date\": null,\n    \"service_start_date\": \"2000-01-01T12:00:00Z\",\n    \"service_end_date\": null,\n    \"dob\": \"1990-01-01T12:00:00Z\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/occupancy",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"occupancy"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		}
 	],
 	"auth": {
