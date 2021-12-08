@@ -23,7 +23,28 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "List District Offices",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost/offices",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"offices"
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": \"00000000-0000-0000-0000-000000000000\",\n        \"name\": \"District\",\n        \"symbol\": \"XXX\",\n        \"parent_id\": \"00000000-0000-0000-0000-000000000000\"\n    }\n]"
+						}
+					]
 				}
 			]
 		},
@@ -36,11 +57,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost/groups",
+							"raw": "localhost/offices/:office_symbol/groups",
 							"host": [
 								"localhost"
 							],
 							"path": [
+								"offices",
+								":office_symbol",
 								"groups"
 							],
 							"query": [
@@ -49,10 +72,52 @@
 									"value": "lrh",
 									"disabled": true
 								}
+							],
+							"variable": [
+								{
+									"key": "office_symbol",
+									"value": "lrn"
+								}
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "List Groups by Office",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost/offices/:office_symbol/groups",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"offices",
+										":office_symbol",
+										"groups"
+									],
+									"query": [
+										{
+											"key": "office_symbol",
+											"value": "lrh",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "office_symbol",
+											"value": "lrn"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "[\n    {\n        \"office_symbol\": \"LRN\",\n        \"name\": \"Water Resources\",\n        \"slug\": \"water-resources\",\n        \"last_verified\": null\n    },\n    {\n        \"office_symbol\": \"LRN\",\n        \"name\": \"Water Management\",\n        \"slug\": \"water-management\",\n        \"last_verified\": null\n    }\n]"
+						}
+					]
 				}
 			]
 		},
@@ -82,7 +147,36 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Get Position By ID",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost/position/:position_id",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"position",
+										":position_id"
+									],
+									"variable": [
+										{
+											"key": "position_id",
+											"value": "39fc35db-31b1-47c9-88e5-062ef39393a3",
+											"description": "UUID for the position"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"office_symbol\": \"LRH\",\n    \"position_title\": \"Hydraulic Engineer\",\n    \"code\": \"GS\",\n    \"position_grade\": 13,\n    \"is_active\": false,\n    \"is_supervisor\": true,\n    \"occupation_code\": \"0810\",\n    \"occupation_name\": \"Civil Engineer\",\n    \"group_slug\": \"water-resources\"\n}"
+						}
+					]
 				},
 				{
 					"name": "Delete Position",
@@ -157,7 +251,45 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Get Position By Office",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost/offices/:office_symbol/positions",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"offices",
+										":office_symbol",
+										"positions"
+									],
+									"query": [
+										{
+											"key": "active",
+											"value": "true",
+											"description": "Query to get active positions or not active positions",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "office_symbol",
+											"value": "lrh",
+											"description": "District code"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "[\n    {\n        \"office_symbol\": \"LRH\",\n        \"position_title\": \"Hydraulic Engineer\",\n        \"code\": \"GS\",\n        \"position_grade\": 12,\n        \"is_active\": true,\n        \"is_supervisor\": false,\n        \"occupation_code\": \"0810\",\n        \"occupation_name\": \"Civil Engineer\",\n        \"group_slug\": \"water-management\"\n    }\n]"
+						}
+					]
 				},
 				{
 					"name": "Get Position By Office and Group",
@@ -197,7 +329,51 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Get Position By Office and Group",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost/offices/:office_symbol/:group/positions",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"offices",
+										":office_symbol",
+										":group",
+										"positions"
+									],
+									"query": [
+										{
+											"key": "active",
+											"value": "true",
+											"description": "Query to get active positions or not active positions",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "office_symbol",
+											"value": "lrn",
+											"description": "District code"
+										},
+										{
+											"key": "group",
+											"value": "water-management",
+											"description": "Office name as a slug"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "[\n    {\n        \"office_symbol\": \"LRN\",\n        \"position_title\": \"Water Quality\",\n        \"code\": \"GS\",\n        \"position_grade\": 12,\n        \"is_active\": true,\n        \"is_supervisor\": false,\n        \"occupation_code\": \"0401\",\n        \"occupation_name\": \"General Biologist\",\n        \"group_slug\": \"water-management\"\n    },\n    {\n        \"office_symbol\": \"LRN\",\n        \"position_title\": \"Water Management Section Chief\",\n        \"code\": \"GS\",\n        \"position_grade\": 13,\n        \"is_active\": true,\n        \"is_supervisor\": true,\n        \"occupation_code\": \"0810\",\n        \"occupation_name\": \"Civil Engineer\",\n        \"group_slug\": \"water-management\"\n    }\n]"
+						}
+					]
 				},
 				{
 					"name": "Create Position by Office and Group",
@@ -245,7 +421,59 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Create Position by Office and Group",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"position_title\": \"Super Trooper Engineer\",\n    \"code\": \"GS\",\n    \"position_grade\": 15,\n    \"is_supervisor\": false,\n    \"occupation_code\": \"0810\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost/offices/:office_symbol/:group/positions",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"offices",
+										":office_symbol",
+										":group",
+										"positions"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "office_symbol",
+											"value": "LRN",
+											"description": "District code"
+										},
+										{
+											"key": "group",
+											"value": "water-management",
+											"description": "Office name as a slug"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"office_symbol\": \"LRN\",\n    \"position_title\": \"Super Trooper Engineer\",\n    \"code\": \"GS\",\n    \"position_grade\": 15,\n    \"is_active\": false,\n    \"is_supervisor\": false,\n    \"occupation_code\": \"0810\",\n    \"occupation_name\": \"Civil Engineer\",\n    \"group_slug\": \"water-management\"\n}"
+						}
+					]
 				},
 				{
 					"name": "Update Position by Office and Group",
@@ -299,7 +527,65 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Update Position by Office and Group",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"position_title\": \"NOT A Super Trooper\",\n    \"code\": \"GS\",\n    \"position_grade\": 15,\n    \"is_supervisor\": false,\n    \"occupation_code\": \"1315\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost/offices/:office_symbol/:group/positions/:position_id",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"offices",
+										":office_symbol",
+										":group",
+										"positions",
+										":position_id"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": "",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "office_symbol",
+											"value": "LRN",
+											"description": "District code"
+										},
+										{
+											"key": "group",
+											"value": "water-management",
+											"description": "Office name as a slug"
+										},
+										{
+											"key": "position_id",
+											"value": "39fc35db-31b1-47c9-88e5-062ef39393a3",
+											"description": "UUID for the position"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"office_symbol\": \"LRN\",\n    \"position_title\": \"NOT A Super Trooper\",\n    \"code\": \"GS\",\n    \"position_grade\": 15,\n    \"is_active\": false,\n    \"is_supervisor\": false,\n    \"occupation_code\": \"1315\",\n    \"occupation_name\": \"Hydrologist\",\n    \"group_slug\": \"water-management\"\n}"
+						}
+					]
 				}
 			]
 		},
@@ -328,7 +614,35 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Get Occupancy By ID",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost/occupancy/:occupancy_id",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"occupancy",
+										":occupancy_id"
+									],
+									"variable": [
+										{
+											"key": "occupancy_id",
+											"value": "f3a3cd1a-97c5-47a0-840a-3be45fae2bc7"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"id\": \"00000000-0000-0000-0000-000000000000\",\n    \"position_id\": \"00000000-0000-0000-0000-000000000000\",\n    \"title\": null,\n    \"start_date\": \"2001-10-20T00:00:00Z\",\n    \"end_date\": \"2020-04-01T00:00:00Z\",\n    \"service_start_date\": \"1990-04-16T00:00:00Z\",\n    \"service_end_date\": null,\n    \"dob\": \"1970-07-01T00:00:00Z\"\n}"
+						}
+					]
 				},
 				{
 					"name": "Get Occupancy by Office",
@@ -361,7 +675,44 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Get Occupancy by Office",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost/offices/:office_symbol/occupancy",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"offices",
+										":office_symbol",
+										"occupancy"
+									],
+									"query": [
+										{
+											"key": "active",
+											"value": "true",
+											"description": "Query to get active positions or not active positions",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "office_symbol",
+											"value": "lrh"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": \"00000000-0000-0000-0000-000000000000\",\n        \"position_id\": \"00000000-0000-0000-0000-000000000000\",\n        \"title\": null,\n        \"start_date\": \"2005-10-20T00:00:00Z\",\n        \"end_date\": null,\n        \"service_start_date\": \"2001-10-20T00:00:00Z\",\n        \"service_end_date\": null,\n        \"dob\": \"1990-03-01T00:00:00Z\"\n    },\n    {\n        \"id\": \"00000000-0000-0000-0000-000000000000\",\n        \"position_id\": \"00000000-0000-0000-0000-000000000000\",\n        \"title\": null,\n        \"start_date\": \"2001-10-20T00:00:00Z\",\n        \"end_date\": \"2020-04-01T00:00:00Z\",\n        \"service_start_date\": \"1990-04-16T00:00:00Z\",\n        \"service_end_date\": null,\n        \"dob\": \"1970-07-01T00:00:00Z\"\n    }\n]"
+						}
+					]
 				},
 				{
 					"name": "Get Occupancy by Office and Group",
@@ -399,7 +750,49 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Get Occupancy by Office and Group",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost/offices/:office_symbol/:group/occupancy",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"offices",
+										":office_symbol",
+										":group",
+										"occupancy"
+									],
+									"query": [
+										{
+											"key": "active",
+											"value": "true",
+											"description": "Query to get active positions or not active positions",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "office_symbol",
+											"value": "lrh"
+										},
+										{
+											"key": "group",
+											"value": "water-management"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": \"00000000-0000-0000-0000-000000000000\",\n        \"position_id\": \"00000000-0000-0000-0000-000000000000\",\n        \"title\": null,\n        \"start_date\": \"2005-10-20T00:00:00Z\",\n        \"end_date\": null,\n        \"service_start_date\": \"2001-10-20T00:00:00Z\",\n        \"service_end_date\": null,\n        \"dob\": \"1990-03-01T00:00:00Z\"\n    },\n    {\n        \"id\": \"00000000-0000-0000-0000-000000000000\",\n        \"position_id\": \"00000000-0000-0000-0000-000000000000\",\n        \"title\": null,\n        \"start_date\": \"2001-10-20T00:00:00Z\",\n        \"end_date\": \"2020-04-01T00:00:00Z\",\n        \"service_start_date\": \"1990-04-16T00:00:00Z\",\n        \"service_end_date\": null,\n        \"dob\": \"1970-07-01T00:00:00Z\"\n    }\n]"
+						}
+					]
 				},
 				{
 					"name": "Create Occupancy",
@@ -432,7 +825,44 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Create Occupancy",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"position_id\": \"2c8746e3-5aed-4db9-854b-8aedf28bc856\",\n    \"title\": \"PITA\",\n    \"start_date\": \"2021-01-01T12:00:00Z\",\n    \"end_date\": null,\n    \"service_start_date\": \"2000-01-01T12:00:00Z\",\n    \"service_end_date\": null,\n    \"dob\": \"1990-01-01T12:00:00Z\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost/occupancy",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"occupancy"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"id\": \"00000000-0000-0000-0000-000000000000\",\n    \"position_id\": \"00000000-0000-0000-0000-000000000000\",\n    \"title\": \"PITA\",\n    \"start_date\": \"2021-01-01T00:00:00Z\",\n    \"end_date\": null,\n    \"service_start_date\": \"2000-01-01T00:00:00Z\",\n    \"service_end_date\": null,\n    \"dob\": \"1990-01-01T00:00:00Z\"\n}"
+						}
+					]
 				}
 			]
 		}

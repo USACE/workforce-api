@@ -71,6 +71,7 @@ CREATE TABLE IF NOT EXISTS pay_plan (
 
 /* https://dw.opm.gov/datastandards/referenceData/1497/current */
 INSERT INTO pay_plan (id, code, name) VALUES
+    ('10d910f3-75d5-4e74-855e-906ffebb30f6', 'SES', 'Senior Executive Service'),
     ('3a4823a1-44f1-48bc-9b1c-e52c25dee0b0', 'DB', 'Demonstration Engineers and Scientists'),
     ('4a8fb820-0f8d-457e-af9c-1aca86923a33', 'DJ', 'Demonstration Administrative'),
     ('ed1c3145-465f-4399-abe6-a7db4f096fa7', 'DE', 'Demonstration Engineers and Scientists Technicians'),
@@ -129,7 +130,7 @@ INSERT INTO office_group (id, office_id, name, slug) VALUES
 
 CREATE TABLE IF NOT EXISTS position (
     id UUID PRIMARY KEY NOT NULL DEFAULT uuid_generate_v4(),
-    occupation_code_id UUID NOT NULL REFERENCES occupation_code(id),
+    occupation_code_id UUID REFERENCES occupation_code(id),
     spreadsheet_series VARCHAR,
     title VARCHAR,
     office_group_id UUID NOT NULL REFERENCES office_group(id),

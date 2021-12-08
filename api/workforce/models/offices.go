@@ -10,9 +10,9 @@ import (
 )
 
 type Office struct {
-	ID     uuid.UUID `json:"office_id"`
-	Name   string    `json:"office_name"`
-	Symbol string    `json:"office_symbol"`
+	ID     uuid.UUID `json:"id"`
+	Name   string    `json:"name"`
+	Symbol string    `json:"symbol"`
 	ParentOffice
 }
 
