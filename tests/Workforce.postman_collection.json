@@ -31,7 +31,7 @@
 			"name": "Groups",
 			"item": [
 				{
-					"name": "List Groups By Office",
+					"name": "List Groups by Office",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -42,6 +42,13 @@
 							],
 							"path": [
 								"groups"
+							],
+							"query": [
+								{
+									"key": "office_symbol",
+									"value": "lrh",
+									"disabled": true
+								}
 							]
 						}
 					},

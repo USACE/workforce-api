@@ -2,6 +2,7 @@ package models
 
 import (
 	"context"
+	"strings"
 	"time"
 
 	"github.com/georgysavva/scany/pgxscan"
@@ -9,36 +10,49 @@ import (
 	"github.com/jackc/pgx/v4/pgxpool"
 )
 
-type OfficeGroup struct {
-	Office
-	ID           uuid.UUID  `json:"group_id" db:"group_id"`
-	Name         string     `json:"group_name" db:"group_name"`
-	Slug         string     `json:"group_slug" db:"group_slug"`
-	LastVarified *time.Time `json:"last_verified" db:"last_verified"`
+type Group struct {
+	ID           uuid.UUID  `json:"id"`
+	OfficeID     string     `json:"office_id"`
+	Name         string     `json:"name"`
+	Slug         string     `json:"slug"`
+	LastVerified *time.Time `json:"last_verified"`
 }
 
-// ListGroups
-func ListGroups(db *pgxpool.Pool) ([]*OfficeGroup, error) {
+type OfficeGroup struct {
+	ID           uuid.UUID    `json:"id"`
+	Symbol       string       `json:"symbol"`
+	Name         string       `json:"name"`
+	GroupIds     []uuid.UUID  `json:"group_ids"`
+	GroupNames   []string     `json:"group_names"`
+	GroupSlugs   []string     `json:"group_slugs"`
+	LastVerified []*time.Time `json:"last_verified"`
+}
+
+// ListGroupsByOffice
+func ListGroupsByOffice(db *pgxpool.Pool, sym string) (map[string]interface{}, error) {
 	rows, err := db.Query(context.Background(),
-		`SELECT
-		o1.id,o1."name", o1.symbol,
-		o1.parent_id ,o2."name" AS parent_name, o2.symbol AS parent_symbol,
-		og.id AS group_id, og."name" AS group_name, og.slug AS group_slug
-	FROM
-		office AS o1,
-		office AS o2,
-		office_group AS og
-	WHERE
-		o1.parent_id = o2.id
-		AND 
-		o1.id = og.office_id`,
+		`SELECT o1.id AS id, o1.symbol AS symbol,
+			json_agg(og.id) AS group_ids,
+			json_agg(og."name") AS group_names,
+			json_agg(og.slug) AS group_slugs,
+			json_agg(og.last_verified) AS last_verified
+		FROM office AS o1
+		JOIN office AS o2 ON o1.parent_id = o2.id
+		JOIN office_group AS og ON o1.id = og.office_id
+		WHERE o1.symbol LIKE $1
+		GROUP BY o1.id, o1.symbol`,
+		strings.ToUpper(sym),
 	)
 	if err != nil {
 		return nil, err
 	}
-	ogs := make([]*OfficeGroup, 0)
-	if err = pgxscan.ScanAll(&ogs, rows); err != nil {
+	sog := make([]*OfficeGroup, 0)
+	if err = pgxscan.ScanAll(&sog, rows); err != nil {
 		return nil, err
 	}
-	return ogs, nil
+	m := make(map[string]interface{})
+	for _, v := range sog {
+		m[v.Symbol] = v
+	}
+	return m, nil
 }
