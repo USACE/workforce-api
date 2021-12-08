@@ -68,7 +68,7 @@ func main() {
 	key.DELETE("/position/:position_id", mp.DeletePosition)
 
 	// Groups
-	public.GET("/groups", mp.ListGroupsByOffice)
+	public.GET("/offices/:office_symbol/groups", mp.ListGroupsByOffice)
 
 	// Office Positions/Employees
 	public.GET("/offices/:office_symbol/positions", mp.ListOfficePositions)
