@@ -10,11 +10,11 @@ import (
 )
 
 type Group struct {
-	UID           string     `json:"uid"`
-	Symbol        string     `json:"office_symbol"`
-	Name          string     `json:"name"`
-	Slug          string     `json:"slug"`
-	Last_verified *time.Time `json:"last_verified"`
+	UID          string     `json:"uid"`
+	OfficeSymbol string     `json:"office_symbol" db:"office_symbol"`
+	Name         string     `json:"name"`
+	Slug         string     `json:"slug"`
+	LastVerified *time.Time `json:"last_verified" db:"last_verified"`
 }
 
 // ListGroupsByOffice
@@ -22,7 +22,7 @@ func ListGroupsByOffice(db *pgxpool.Pool, sym string) ([]*Group, error) {
 	sg := make([]*Group, 0)
 	rows, err := db.Query(context.Background(),
 		`SELECT concat(lower(f.symbol), '-', g.slug) AS uid,
-			f.symbol, g.name, g.slug, g.last_verified
+			f.symbol AS office_symbol, g.name, g.slug, g.last_verified
 		FROM office_group g
 		JOIN office f ON f.id = g.office_id
 		WHERE f.symbol = $1`,
