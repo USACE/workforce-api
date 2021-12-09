@@ -8,6 +8,15 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+// ListGroups
+func (s Store) ListGroups(c echo.Context) error {
+	sg, err := models.ListGroups(s.Connection)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err)
+	}
+	return c.JSON(http.StatusOK, sg)
+}
+
 // ListGroupsByOffice
 func (s Store) ListGroupsByOffice(c echo.Context) error {
 	sg, err := models.ListGroupsByOffice(s.Connection, c.Param("office_symbol"))

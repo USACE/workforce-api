@@ -1,6 +1,6 @@
 
 -- position
-INSERT INTO position (id,occupation_code_id,spreadsheet_series,title,office_group_id,pay_plan_id,grade,is_supervisor) VALUES
+INSERT INTO position (id, occupation_code_id, spreadsheet_series, title, office_group_id, pay_plan_id, grade, is_supervisor) VALUES
     ('39fc35db-31b1-47c9-88e5-062ef39393a3','dc091470-ccc2-4f12-b3cf-6a9bf71f8238','Supervisor','Water Resources Section Chief','c5fbbb80-3cb5-4407-a8b0-d5fd105714fc','24533fd9-6158-422f-b1bc-94d5779bd2aa',13,TRUE), -- LRN Water Resources
     ('2c8746e3-5aed-4db9-854b-8aedf28bc856','dc091470-ccc2-4f12-b3cf-6a9bf71f8238','Engineer','Hydraulic Engineer','c5fbbb80-3cb5-4407-a8b0-d5fd105714fc','24533fd9-6158-422f-b1bc-94d5779bd2aa',12,FALSE),
     ('d152c96b-5e90-4329-a310-e02eb0d4de68','dc091470-ccc2-4f12-b3cf-6a9bf71f8238','Engineer','Hydraulic Engineer','c5fbbb80-3cb5-4407-a8b0-d5fd105714fc','24533fd9-6158-422f-b1bc-94d5779bd2aa',12,FALSE),

@@ -41,22 +41,17 @@ func CreateOccupancy(db *pgxpool.Pool, o *Occupancy) (*Occupancy, error) {
 
 // GetOccupancyByID with Occupancy as the receiver
 func (o *Occupancy) GetOccupancyByID(db *pgxpool.Pool) error {
-	if err := db.QueryRow(
+	rows, err := db.Query(
 		context.Background(),
 		`SELECT o.id, o.position_id, o.title, o.start_date, o.end_date,
 		o.service_start_date, o.service_end_date, o.dob
 		FROM occupancy AS o
 		WHERE id = $1`, o.ID,
-	).Scan(
-		&o.ID,
-		&o.PositionID,
-		&o.Title,
-		&o.StartDate,
-		&o.EndDate,
-		&o.ServiceStartDate,
-		&o.ServiceEndDate,
-		&o.Dob,
-	); err != nil {
+	)
+	if err != nil {
+		return nil
+	}
+	if err = pgxscan.ScanOne(o, rows); err != nil {
 		return err
 	}
 	return nil

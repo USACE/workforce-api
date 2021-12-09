@@ -11,7 +11,7 @@ import (
 )
 
 type Position struct {
-	ID             string `json:"id" db:"id"`
+	ID             string `json:"id"`
 	OfficeSymbol   string `json:"office_symbol" db:"office_symbol"`
 	PositionTitle  string `json:"position_title" db:"position_title"`
 	Code           string `json:"code" db:"code"`
@@ -25,21 +25,13 @@ type Position struct {
 
 // GetOfficeByID
 func (p *Position) GetPositionByID(db *pgxpool.Pool, id *uuid.UUID) error {
-	if err := db.QueryRow(context.Background(),
-		`SELECT position_id as id, office_symbol, position_title, code, grade, is_supervisor, occupation_code, occupation_name, group_slug
+	rows, err := db.Query(context.Background(),
+		`SELECT position_id AS id, office_symbol, position_title, code, grade, is_supervisor, occupation_code, occupation_name, group_slug
 		FROM v_office_positions
 		WHERE position_id = $1`,
 		id,
-	).Scan(
-		&p.OfficeSymbol,
-		&p.PositionTitle,
-		&p.Code,
-		&p.Grade,
-		&p.IsSupervisor,
-		&p.OccupationCode,
-		&p.OccupationName,
-		&p.GroupSlug,
-	); err != nil {
+	)
+	if pgxscan.ScanOne(p, rows); err != nil {
 		return nil
 	}
 	return nil

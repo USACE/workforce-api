@@ -62,6 +62,7 @@ func main() {
 
 	// Codes
 	public.GET("/occupation_codes", mp.ListOccupationCodes)
+	public.GET("/pay_plans", mp.ListPayPlanCodes)
 
 	// Offices
 	public.GET("/offices", mp.ListOffices)
@@ -71,6 +72,7 @@ func main() {
 	key.DELETE("/position/:position_id", mp.DeletePosition)
 
 	// Groups
+	public.GET("/groups", mp.ListGroups)
 	public.GET("/offices/:office_symbol/groups", mp.ListGroupsByOffice)
 
 	// Office Positions/Employees
