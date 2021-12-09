@@ -11,6 +11,7 @@ import (
 )
 
 type Position struct {
+	ID             string `json:"id" db:"id"`
 	OfficeSymbol   string `json:"office_symbol" db:"office_symbol"`
 	PositionTitle  string `json:"position_title" db:"position_title"`
 	Code           string `json:"code" db:"code"`
@@ -25,7 +26,7 @@ type Position struct {
 // GetOfficeByID
 func (p *Position) GetPositionByID(db *pgxpool.Pool, id *uuid.UUID) error {
 	if err := db.QueryRow(context.Background(),
-		`SELECT office_symbol, position_title, code, grade, is_supervisor, occupation_code, occupation_name, group_slug
+		`SELECT position_id as id, office_symbol, position_title, code, grade, is_supervisor, occupation_code, occupation_name, group_slug
 		FROM v_office_positions
 		WHERE position_id = $1`,
 		id,
@@ -48,7 +49,7 @@ func (p *Position) GetPositionByID(db *pgxpool.Pool, id *uuid.UUID) error {
 func ListOfficePositions(db *pgxpool.Pool, office_symbol string, group string, active bool) ([]*Position, error) {
 	var ss []*Position
 	rows, err := db.Query(context.Background(),
-		`SELECT office_symbol, position_title, code, grade, is_active, is_supervisor, occupation_code, occupation_name, group_slug
+		`SELECT  position_id as id,office_symbol, position_title, code, grade, is_active, is_supervisor, occupation_code, occupation_name, group_slug
 		FROM v_office_positions
 		WHERE office_symbol = $1
 		AND group_slug like $2

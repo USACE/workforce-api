@@ -115,7 +115,7 @@
 							"_postman_previewlanguage": "json",
 							"header": null,
 							"cookie": [],
-							"body": "[\n    {\n        \"office_symbol\": \"LRN\",\n        \"name\": \"Water Resources\",\n        \"slug\": \"water-resources\",\n        \"last_verified\": null\n    },\n    {\n        \"office_symbol\": \"LRN\",\n        \"name\": \"Water Management\",\n        \"slug\": \"water-management\",\n        \"last_verified\": null\n    }\n]"
+							"body": "[\n    {\n        \"uid\": \"lrn-water-resources\",\n        \"symbol\": \"LRN\",\n        \"name\": \"Water Resources\",\n        \"slug\": \"water-resources\",\n        \"last_verified\": null\n    },\n    {\n        \"uid\": \"lrn-water-mangement\",\n        \"symbol\": \"LRN\",\n        \"name\": \"Water Management\",\n        \"slug\": \"water-management\",\n        \"last_verified\": null\n    }\n]"
 						}
 					]
 				}
@@ -287,7 +287,7 @@
 							"_postman_previewlanguage": "json",
 							"header": null,
 							"cookie": [],
-							"body": "[\n    {\n        \"office_symbol\": \"LRH\",\n        \"position_title\": \"Hydraulic Engineer\",\n        \"code\": \"GS\",\n        \"position_grade\": 12,\n        \"is_active\": true,\n        \"is_supervisor\": false,\n        \"occupation_code\": \"0810\",\n        \"occupation_name\": \"Civil Engineer\",\n        \"group_slug\": \"water-management\"\n    }\n]"
+							"body": "[\n    {\n        \"id\": \"00000000-0000-0000-0000-00000000\",\n        \"office_symbol\": \"LRH\",\n        \"position_title\": \"Hydraulic Engineer\",\n        \"code\": \"GS\",\n        \"position_grade\": 12,\n        \"is_active\": true,\n        \"is_supervisor\": false,\n        \"occupation_code\": \"0810\",\n        \"occupation_name\": \"Civil Engineer\",\n        \"group_slug\": \"water-management\"\n    }\n]"
 						}
 					]
 				},
@@ -310,7 +310,7 @@
 							"query": [
 								{
 									"key": "active",
-									"value": "true",
+									"value": "false",
 									"description": "Query to get active positions or not active positions",
 									"disabled": true
 								}

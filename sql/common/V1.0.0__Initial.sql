@@ -95,7 +95,7 @@ CREATE TABLE IF NOT EXISTS occupation_code (
 );
 
 -- occupation_codes
-INSERT INTO occupation_code VALUES
+INSERT INTO occupation_code (id, code, name) VALUES
     ('f2227f88-0a44-4348-b26b-b021fa1589dc', '0110', 'Economist'),
     ('b724fb8c-3481-411b-9e86-8e6339d4ba7e', '0150', 'Geography'),
     ('d28d9edb-a5ff-48ae-a255-316c774d1f5d', '0401', 'Biology'),

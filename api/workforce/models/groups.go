@@ -11,7 +11,7 @@ import (
 
 type Group struct {
 	UID           string     `json:"uid"`
-	Symbol        string     `json:"symbol"`
+	Symbol        string     `json:"office_symbol"`
 	Name          string     `json:"name"`
 	Slug          string     `json:"slug"`
 	Last_verified *time.Time `json:"last_verified"`

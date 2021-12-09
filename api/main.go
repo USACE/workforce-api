@@ -60,6 +60,9 @@ func main() {
 	// Manpower Store
 	mp := workforce.Store{Connection: st.Connection}
 
+	// Codes
+	public.GET("/occupation_codes", mp.ListOccupationCodes)
+
 	// Offices
 	public.GET("/offices", mp.ListOffices)
 
