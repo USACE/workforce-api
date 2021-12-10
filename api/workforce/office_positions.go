@@ -27,6 +27,15 @@ func (s Store) GetPositionByID(c echo.Context) error {
 	return c.JSON(http.StatusOK, p)
 }
 
+// ListPositions lists positions for a single office
+func (s Store) ListPositions(c echo.Context) error {
+	w, err := models.ListPositions(s.Connection, c.Param("office_symbol"))
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, messages.NewMessage(err.Error()))
+	}
+	return c.JSON(http.StatusOK, w)
+}
+
 // ListOfficePositions
 func (s Store) ListOfficePositions(c echo.Context) error {
 	var a bool = true

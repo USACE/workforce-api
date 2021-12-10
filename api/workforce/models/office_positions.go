@@ -10,6 +10,20 @@ import (
 	"github.com/jackc/pgx/v4/pgxpool"
 )
 
+type Position2 struct {
+	ID               string     `json:"id"`
+	OfficeSymbol     string     `json:"office_symbol"`
+	GroupSlug        string     `json:"group_slug"`
+	Title            string     `json:"title"`
+	PayPlan          string     `json:"pay_plan"`
+	Grade            int        `json:"grade"`
+	IsActive         bool       `json:"is_active"`
+	IsSupervisor     bool       `json:"is_supervisor"`
+	OccupationCode   string     `json:"occupation_code"`
+	OccupationName   string     `json:"occupation_name"`
+	CurrentOccupancy *Occupancy `json:"current_occupancy"`
+}
+
 type Position struct {
 	ID             string `json:"id"`
 	OfficeSymbol   string `json:"office_symbol" db:"office_symbol"`
@@ -35,6 +49,50 @@ func (p *Position) GetPositionByID(db *pgxpool.Pool, id *uuid.UUID) error {
 		return nil
 	}
 	return nil
+}
+
+// ListPositions lists all positions given an office symbol
+func ListPositions(db *pgxpool.Pool, officeSymbol string) ([]Position2, error) {
+	pp := make([]Position2, 0)
+	if err := pgxscan.Select(
+		context.Background(), db, &pp,
+		`WITH current_occupancy_by_position as (
+			SELECT t.position_id, row_to_json(t) as current_occupancy
+			FROM (
+				SELECT id,
+				       position_id,
+				       title,
+				       start_date::timestamptz,
+				       end_date::timestamptz,
+				       service_start_date::timestamptz,
+				       service_end_date::timestamptz,
+				       dob::timestamptz
+				FROM occupancy
+				WHERE end_date is null
+			) t
+		), office_id AS (SELECT id FROM office WHERE symbol ILIKE $1)
+		SELECT p.id,
+			   f.symbol             as office_symbol,
+			   g.slug               as group_slug,
+			   p.title,
+			   a.code               as pay_plan,
+			   p.grade,
+			   p.is_active,
+			   p.is_supervisor,
+			   c1.code              as occupation_code,
+			   c1.name              as occupation_name,
+			   c2.current_occupancy
+		FROM position p
+		JOIN office_group g on g.id = p.office_group_id AND g.office_id = office_id
+		JOIN office f on f.id = g.office_id AND f.id = office_id
+		JOIN occupation_code c1 on c1.id = p.occupation_code_id
+		JOIN pay_plan a on a.id = p.pay_plan_id
+		LEFT JOIN current_occupancy_by_position c2 on c2.position_id = p.id
+		WHERE f.symbol ILIKE $1`, officeSymbol,
+	); err != nil {
+		return make([]Position2, 0), err
+	}
+	return pp, nil
 }
 
 // ListOfficePositions

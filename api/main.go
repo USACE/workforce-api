@@ -76,7 +76,9 @@ func main() {
 	public.GET("/offices/:office_symbol/groups", mp.ListGroupsByOffice)
 
 	// Office Positions/Employees
-	public.GET("/offices/:office_symbol/positions", mp.ListOfficePositions)
+	// public.GET("/offices/:office_symbol/positions", mp.ListOfficePositions)
+	public.GET("/offices/:office_symbol/positions", mp.ListPositions)
+
 	public.GET("/offices/:office_symbol/:group/positions", mp.ListOfficeGroupPositions)
 	key.POST("/offices/:office_symbol/:group/positions", mp.CreateOfficeGroupPosition)
 	key.PUT("/offices/:office_symbol/:group/positions/:position_id", mp.UpdateOfficeGroupPosition)
