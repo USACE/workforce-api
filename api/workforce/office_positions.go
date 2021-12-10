@@ -3,8 +3,6 @@ package workforce
 import (
 	"fmt"
 	"net/http"
-	"strconv"
-	"strings"
 
 	"github.com/USACE/workforce-api/api/messages"
 	"github.com/USACE/workforce-api/api/workforce/models"
@@ -16,12 +14,12 @@ import (
 
 // GetPositionByID
 func (s Store) GetPositionByID(c echo.Context) error {
-	id, err := uuid.Parse(c.Param("position_id"))
+	id, _ := uuid.Parse(c.Param("position_id"))
+	p, err := models.GetPositionByID(s.Connection, id)
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, err.Error())
-	}
-	p := new(models.Position)
-	if err := p.GetPositionByID(s.Connection, &id); err != nil {
+		if err == pgx.ErrNoRows {
+			return c.JSON(http.StatusNoContent, p)
+		}
 		return c.JSON(http.StatusInternalServerError, messages.NewMessage(err.Error()))
 	}
 	return c.JSON(http.StatusOK, p)
@@ -36,49 +34,25 @@ func (s Store) ListPositions(c echo.Context) error {
 	return c.JSON(http.StatusOK, w)
 }
 
-// ListOfficePositions
-func (s Store) ListOfficePositions(c echo.Context) error {
-	var a bool = true
-	p := c.QueryParam("active")
-	if p != "" {
-		a, _ = strconv.ParseBool(p)
-	}
-	w, err := models.ListOfficePositions(s.Connection, c.Param("office_symbol"), "%", a)
+// ListPositionsByGroup
+func (s Store) ListPositionsByGroup(c echo.Context) error {
+	pp, err := models.ListPositionsByGroup(s.Connection, c.Param("office_symbol"), c.Param("group_slug"))
 	if err != nil {
 		if err == pgx.ErrNoRows {
-			return c.JSON(http.StatusNotFound, messages.DefaultMessageNotFound)
+			return c.JSON(http.StatusNoContent, pp)
 		}
 		return c.JSON(http.StatusInternalServerError, messages.NewMessage(err.Error()))
 	}
-	return c.JSON(http.StatusOK, w)
+	return c.JSON(http.StatusOK, pp)
 }
 
-// ListOfficeGroupPositions
-func (s Store) ListOfficeGroupPositions(c echo.Context) error {
-	var a bool = true
-	p := c.QueryParam("active")
-	if p != "" {
-		a, _ = strconv.ParseBool(p)
-	}
-	j, err := models.ListOfficePositions(s.Connection, c.Param("office_symbol"), c.Param("group"), a)
-	if err != nil {
-		if err == pgx.ErrNoRows {
-			return c.JSON(http.StatusNotFound, messages.DefaultMessageNotFound)
-		}
-		return c.JSON(http.StatusInternalServerError, messages.NewMessage(err.Error()))
-	}
-	return c.JSON(http.StatusOK, j)
-}
-
-// CreateOfficePosition
-func (s Store) CreateOfficeGroupPosition(c echo.Context) error {
-	p := new(models.Position)
-	p.OfficeSymbol = c.Param("office_symbol")
-	p.GroupSlug = c.Param("group")
+// CreateOfficePosition creates a postion for an office and a particular group
+func (s Store) CreateOfficePosition(c echo.Context) error {
+	var p models.Position
 	if err := c.Bind(&p); err != nil {
 		return c.JSON(http.StatusBadRequest, err)
 	}
-	up, err := models.CreateOfficeGroupPosition(s.Connection, p)
+	up, err := models.CreateOfficePosition(s.Connection, p)
 	if err != nil {
 		if err == pgx.ErrNoRows {
 			return c.JSON(http.StatusNotFound, messages.DefaultMessageNotFound)
@@ -88,19 +62,13 @@ func (s Store) CreateOfficeGroupPosition(c echo.Context) error {
 	return c.JSON(http.StatusOK, up)
 }
 
-// UpdateOfficeGroupPosition
-func (s Store) UpdateOfficeGroupPosition(c echo.Context) error {
-	p := new(models.Position)
-	p.OfficeSymbol = strings.ToUpper(c.Param("office_symbol"))
-	p.GroupSlug = c.Param("group")
-	id, err := uuid.Parse(c.Param("position_id"))
-	if err != nil {
-		return c.JSON(http.StatusInternalServerError, err.Error())
-	}
+// UpdatePosition
+func (s Store) UpdatePosition(c echo.Context) error {
+	var p models.Position
 	if err := c.Bind(&p); err != nil {
 		return c.JSON(http.StatusInternalServerError, err)
 	}
-	up, err := models.UpdateOfficeGroupPosition(s.Connection, p, &id)
+	up, err := models.UpdatePosition(s.Connection, p)
 	if err != nil {
 		if err == pgx.ErrNoRows {
 			return c.JSON(http.StatusNotFound, messages.DefaultMessageNotFound)
@@ -116,16 +84,14 @@ func (s Store) DeletePosition(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
-	i, err := models.DeletePosition(s.Connection, &id)
+	i, err := models.DeletePosition(s.Connection, id)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err)
 	}
-	var m messages.Message
-	if int(*i) < 1 {
-		m = messages.NewMessage("no position deleted")
-	} else {
-		m = messages.NewMessage(fmt.Sprintf("Deleted id %s", id))
+	if int(i) < 1 {
+		return c.JSON(http.StatusOK, messages.NewMessage("no position deleted"))
 	}
-	return c.JSON(http.StatusOK, m)
+
+	return c.JSON(http.StatusOK, messages.NewMessage(fmt.Sprintf("Deleted id %s", id)))
 
 }

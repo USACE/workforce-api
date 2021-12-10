@@ -21,32 +21,32 @@ type OccupationCode struct {
 }
 
 // ListPayPlanCodes
-func ListPayPlanCodes(db *pgxpool.Pool) ([]*OccupationCode, error) {
+func ListPayPlanCodes(db *pgxpool.Pool) ([]PayPlan, error) {
+	pp := make([]PayPlan, 0)
 	rows, err := db.Query(context.Background(),
 		`SELECT id, code, name FROM pay_plan`,
 	)
 	if err != nil {
-		return nil, err
+		return pp, err
 	}
-	spp := make([]*OccupationCode, 0)
-	if err = pgxscan.ScanAll(&spp, rows); err != nil {
-		return nil, err
+	if err = pgxscan.ScanAll(&pp, rows); err != nil {
+		return pp, err
 	}
 
-	return spp, nil
+	return pp, nil
 }
 
 // ListOccupationCodes
-func ListOccupationCodes(db *pgxpool.Pool) ([]*OccupationCode, error) {
+func ListOccupationCodes(db *pgxpool.Pool) ([]OccupationCode, error) {
+	cc := make([]OccupationCode, 0)
 	rows, err := db.Query(context.Background(),
 		`SELECT id, code, name FROM occupation_code`,
 	)
 	if err != nil {
 		return nil, err
 	}
-	soc := make([]*OccupationCode, 0)
-	if err = pgxscan.ScanAll(&soc, rows); err != nil {
+	if err = pgxscan.ScanAll(&cc, rows); err != nil {
 		return nil, err
 	}
-	return soc, nil
+	return cc, nil
 }

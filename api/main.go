@@ -76,20 +76,19 @@ func main() {
 	public.GET("/offices/:office_symbol/groups", mp.ListGroupsByOffice)
 
 	// Office Positions/Employees
-	// public.GET("/offices/:office_symbol/positions", mp.ListOfficePositions)
 	public.GET("/offices/:office_symbol/positions", mp.ListPositions)
+	public.GET("/offices/:office_symbol/:group_slug/positions", mp.ListPositionsByGroup)
 
-	public.GET("/offices/:office_symbol/:group/positions", mp.ListOfficeGroupPositions)
-	key.POST("/offices/:office_symbol/:group/positions", mp.CreateOfficeGroupPosition)
-	key.PUT("/offices/:office_symbol/:group/positions/:position_id", mp.UpdateOfficeGroupPosition)
+	key.POST("/offices/:office_symbol/:group_slug/positions", mp.CreateOfficePosition)
+	key.PUT("/offices/:office_symbol/:group_slug/:position_id", mp.UpdatePosition)
 
 	// Occupancy
 	key.POST("/occupancy", mp.CreateOccupancy)
 	public.GET("/occupancy/:occupancy_id", mp.GetOccupancyByID)
-	public.GET("/offices/:office_symbol/occupancy", mp.ListOfficeOccupancy)
-	public.GET("offices/:office_symbol/:group/occupancy", mp.ListOfficeGroupOccupancy)
-	// key.PUT("/offices/:office_symbol/:group/occupancy", mp.UpdateOfficeGroupOccupancy)
-	// key.DELETE("", mp.DeleteOfficeGroupOccupancy)
+	public.GET("/offices/:office_symbol/occupancy", mp.ListOccupancy)
+	public.GET("offices/:office_symbol/:group_slug/occupancy", mp.ListOccupancyByGroup)
+	// key.PUT("", mp.UpdateOccupancy)
+	// key.DELETE("", mp.DeleteOccupancy)
 
 	// Server
 	s := &http2.Server{

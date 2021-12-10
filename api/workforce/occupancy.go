@@ -2,7 +2,6 @@ package workforce
 
 import (
 	"net/http"
-	"strconv"
 
 	"github.com/USACE/workforce-api/api/messages"
 	"github.com/USACE/workforce-api/api/workforce/models"
@@ -13,15 +12,15 @@ import (
 
 // CreateOccupancy
 func (s Store) CreateOccupancy(c echo.Context) error {
-	o := new(models.Occupancy)
-	if err := c.Bind(o); err != nil {
+	var co models.Occupancy
+	if err := c.Bind(&co); err != nil {
 		return c.JSON(http.StatusBadRequest, err)
 	}
-	co, err := models.CreateOccupancy(s.Connection, o)
+	o, err := models.CreateOccupancy(s.Connection, co)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, messages.NewMessage(err.Error()))
 	}
-	return c.JSON(http.StatusOK, co)
+	return c.JSON(http.StatusOK, o)
 }
 
 // GetOccupancyByID
@@ -30,44 +29,36 @@ func (s Store) GetOccupancyByID(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, messages.NewMessage(err.Error()))
 	}
-	o := new(models.Occupancy)
-	o.ID = id
-	if err := o.GetOccupancyByID(s.Connection); err != nil {
+	o, err := models.GetOccupancyByID(s.Connection, id)
+	if err != nil {
+		if err == pgx.ErrNoRows {
+			return c.JSON(http.StatusNoContent, o)
+		}
 		return c.JSON(http.StatusInternalServerError, messages.NewMessage(err.Error()))
 	}
 	return c.JSON(http.StatusOK, o)
 }
 
-//ListOfficeOccupancy
-func (s Store) ListOfficeOccupancy(c echo.Context) error {
-	var a bool = true
-	p := c.QueryParam("active")
-	if p != "" {
-		a, _ = strconv.ParseBool(p)
-	}
-	w, err := models.ListOfficeOccupancy(s.Connection, c.Param("office_symbol"), "%", a)
+//ListOccupancy
+func (s Store) ListOccupancy(c echo.Context) error {
+	oo, err := models.ListOccupancy(s.Connection, c.Param("office_symbol"))
 	if err != nil {
 		if err == pgx.ErrNoRows {
-			return c.JSON(http.StatusNotFound, messages.DefaultMessageNotFound)
+			return c.JSON(http.StatusNoContent, oo)
 		}
 		return c.JSON(http.StatusInternalServerError, messages.NewMessage(err.Error()))
 	}
-	return c.JSON(http.StatusOK, w)
+	return c.JSON(http.StatusOK, oo)
 }
 
-//ListOfficeGroupOccupancy
-func (s Store) ListOfficeGroupOccupancy(c echo.Context) error {
-	var a bool = true
-	p := c.QueryParam("active")
-	if p != "" {
-		a, _ = strconv.ParseBool(p)
-	}
-	so, err := models.ListOfficeOccupancy(s.Connection, c.Param("office_symbol"), c.Param("group"), a)
+// ListOccupancyByGroup
+func (s Store) ListOccupancyByGroup(c echo.Context) error {
+	oo, err := models.ListOccupancyByGroup(s.Connection, c.Param("office_symbol"), c.Param("group_slug"))
 	if err != nil {
 		if err == pgx.ErrNoRows {
-			return c.JSON(http.StatusNotFound, messages.DefaultMessageNotFound)
+			return c.JSON(http.StatusNoContent, oo)
 		}
 		return c.JSON(http.StatusInternalServerError, messages.NewMessage(err.Error()))
 	}
-	return c.JSON(http.StatusOK, so)
+	return c.JSON(http.StatusOK, oo)
 }

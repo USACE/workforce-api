@@ -11,12 +11,12 @@ import (
 )
 
 func (s Store) ListOffices(c echo.Context) error {
-	so, err := models.ListOffices(s.Connection)
+	oo, err := models.ListOffices(s.Connection)
 	if err != nil {
 		if err == pgx.ErrNoRows {
-			return c.JSON(http.StatusNotFound, messages.DefaultMessageNotFound)
+			return c.JSON(http.StatusNoContent, oo)
 		}
 		return c.JSON(http.StatusInternalServerError, messages.NewMessage(err.Error()))
 	}
-	return c.JSON(http.StatusOK, so)
+	return c.JSON(http.StatusOK, oo)
 }

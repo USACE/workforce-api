@@ -2,12 +2,10 @@ package models
 
 import (
 	"context"
-	"strings"
 	"time"
 
 	"github.com/georgysavva/scany/pgxscan"
 	"github.com/google/uuid"
-	"github.com/jackc/pgx/v4"
 	"github.com/jackc/pgx/v4/pgxpool"
 )
 
@@ -22,61 +20,58 @@ type Occupancy struct {
 	Dob              *time.Time `json:"dob"`
 }
 
+const baseListOccupancySql = `SELECT id, position_id, title,
+start_date, end_date, service_start_date, service_end_date, dob
+FROM v_office_occupancy AS v`
+
+// GetOccupancyByID with Occupancy as the receiver
+func GetOccupancyByID(db *pgxpool.Pool, id uuid.UUID) (Occupancy, error) {
+	var o Occupancy
+	if err := pgxscan.Get(context.Background(), db, &o,
+		`SELECT o.id, o.position_id, o.title, o.start_date, o.end_date,
+		o.service_start_date, o.service_end_date, o.dob
+		FROM occupancy AS o
+		WHERE id = $1`, id,
+	); err != nil {
+		return Occupancy{}, nil
+	}
+	return o, nil
+}
+
 // CreateOccupancy
-func CreateOccupancy(db *pgxpool.Pool, o *Occupancy) (*Occupancy, error) {
-	id := new(uuid.UUID)
-	if err := db.QueryRow(
-		context.Background(),
+func CreateOccupancy(db *pgxpool.Pool, o Occupancy) (Occupancy, error) {
+	var id uuid.UUID
+	if err := pgxscan.Get(context.Background(), db, &id,
 		`INSERT INTO occupancy
 			(position_id, title, start_date, end_date, service_start_date, service_end_date, dob)
 		VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id`,
 		o.PositionID, o.Title, o.StartDate, o.EndDate, o.ServiceStartDate, o.ServiceEndDate, o.Dob,
-	).Scan(id); err != nil {
-		return nil, err
+	); err != nil {
+		return Occupancy{}, err
 	}
-	o.ID = *id
-	o.GetOccupancyByID(db)
-	return o, nil
+	return GetOccupancyByID(db, id)
 }
 
-// GetOccupancyByID with Occupancy as the receiver
-func (o *Occupancy) GetOccupancyByID(db *pgxpool.Pool) error {
-	rows, err := db.Query(
-		context.Background(),
-		`SELECT o.id, o.position_id, o.title, o.start_date, o.end_date,
-		o.service_start_date, o.service_end_date, o.dob
-		FROM occupancy AS o
-		WHERE id = $1`, o.ID,
-	)
-	if err != nil {
-		return nil
+// ListOccupancy
+func ListOccupancy(db *pgxpool.Pool, officeSymbol string) ([]Occupancy, error) {
+	oo := make([]Occupancy, 0)
+	if err := pgxscan.Select(context.Background(), db, &oo,
+		baseListOccupancySql+" WHERE office_symbol ILIKE $1",
+		officeSymbol,
+	); err != nil {
+		return oo, err
 	}
-	if err = pgxscan.ScanOne(o, rows); err != nil {
-		return err
-	}
-	return nil
+	return oo, nil
 }
 
-//ListOfficeOccupancy
-func ListOfficeOccupancy(db *pgxpool.Pool, office_symbol string, group string, active bool) ([]*Occupancy, error) {
-	so := make([]*Occupancy, 0)
-	rows, err := db.Query(
-		context.Background(),
-		`SELECT id, position_id, title, start_date, end_date, service_start_date, service_end_date, dob
-		FROM v_office_occupancy AS voo
-		WHERE office_symbol = $1 AND group_slug LIKE $2 AND is_active = $3
-		ORDER BY office_symbol, occupation_code`,
-		strings.ToUpper(office_symbol), group, active,
-	)
-	if err != nil {
-		return nil, err
+// ListOccupancyByGroup
+func ListOccupancyByGroup(db *pgxpool.Pool, officeSymbol string, groupSlug string) ([]Occupancy, error) {
+	oo := make([]Occupancy, 0)
+	if err := pgxscan.Select(context.Background(), db, &oo,
+		baseListOccupancySql+" WHERE v.office_symbol ILIKE $1 AND v.group_slug = $2",
+		officeSymbol, groupSlug,
+	); err != nil {
+		return oo, err
 	}
-	if err = pgxscan.ScanAll(&so, rows); err != nil {
-		return nil, err
-	}
-	if len(so) < 1 {
-		return nil, pgx.ErrNoRows
-	}
-
-	return so, nil
+	return oo, nil
 }

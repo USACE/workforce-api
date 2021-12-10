@@ -52,6 +52,59 @@
 			"name": "Groups",
 			"item": [
 				{
+					"name": "List Groups",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/groups",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"groups"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "List Groups by Office",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost/offices/:office_symbol/groups",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"offices",
+										":office_symbol",
+										"groups"
+									],
+									"query": [
+										{
+											"key": "office_symbol",
+											"value": "lrh",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "office_symbol",
+											"value": "lrn"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": \"c5fbbb80-3cb5-4407-a8b0-d5fd105714fc\",\n        \"uid\": \"lrn-water-resources\",\n        \"office_symbol\": \"LRN\",\n        \"name\": \"Water Resources\",\n        \"slug\": \"water-resources\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"5db16a83-f38b-4a16-8aa1-ea1175c6003e\",\n        \"uid\": \"lrn-water-management\",\n        \"office_symbol\": \"LRN\",\n        \"name\": \"Water Management\",\n        \"slug\": \"water-management\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"8c44bda8-cbc7-4348-989d-e3eb2a0148c0\",\n        \"uid\": \"lrh-water-management\",\n        \"office_symbol\": \"LRH\",\n        \"name\": \"Water Management\",\n        \"slug\": \"water-management\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"45756635-fb9d-4b88-9208-745439dfe1ef\",\n        \"uid\": \"lrd-great-lakes-ohio-river-division\",\n        \"office_symbol\": \"LRD\",\n        \"name\": \"Great Lakes/Ohio River Division\",\n        \"slug\": \"great-lakes-ohio-river-division\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"dac665ad-e890-408a-890e-0a3386580bfb\",\n        \"uid\": \"nan-eco-system\",\n        \"office_symbol\": \"NAN\",\n        \"name\": \"Eco System\",\n        \"slug\": \"eco-system\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"d58dfa52-4be6-40cb-89cd-ee8c60262da7\",\n        \"uid\": \"lrh-huntington-district\",\n        \"office_symbol\": \"LRH\",\n        \"name\": \"Huntington District\",\n        \"slug\": \"huntington-district\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"3db44372-ed02-4b29-8ef6-7695bad62e9f\",\n        \"uid\": \"lrn-nashville-district\",\n        \"office_symbol\": \"LRN\",\n        \"name\": \"Nashville District\",\n        \"slug\": \"nashville-district\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"c98d7593-39a6-404b-ba47-f2fbf6e75c62\",\n        \"uid\": \"nae-water-management\",\n        \"office_symbol\": \"NAE\",\n        \"name\": \"Water Management\",\n        \"slug\": \"water-management\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"13451bfe-b414-4d09-ace8-1401751e5195\",\n        \"uid\": \"saj-hydraulic-design-section\",\n        \"office_symbol\": \"SAJ\",\n        \"name\": \"Hydraulic Design Section\",\n        \"slug\": \"hydraulic-design-section\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"f158fa6d-6cae-4a11-9f51-2ba2cd656a6c\",\n        \"uid\": \"mvd-mississippi-value-division\",\n        \"office_symbol\": \"MVD\",\n        \"name\": \"Mississippi Value Division\",\n        \"slug\": \"mississippi-value-division\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"5ab250de-8fa3-498e-baa4-162fbc1d5c7a\",\n        \"uid\": \"chl-navigation-division\",\n        \"office_symbol\": \"CHL\",\n        \"name\": \"Navigation Division\",\n        \"slug\": \"navigation-division\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"bc393df9-7865-4006-a16c-89f7e0233212\",\n        \"uid\": \"spd-hydraulic-and-hydrology\",\n        \"office_symbol\": \"SPD\",\n        \"name\": \"Hydraulic and Hydrology\",\n        \"slug\": \"hydraulic-and-hydrology\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"f2c26071-43a3-40e1-968b-ba66f5afd1f4\",\n        \"uid\": \"spk-water-management\",\n        \"office_symbol\": \"SPK\",\n        \"name\": \"Water Management\",\n        \"slug\": \"water-management\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"e0070a0a-e248-4d04-ac7f-f1f54cd3a519\",\n        \"uid\": \"spl-hydraulic\",\n        \"office_symbol\": \"SPL\",\n        \"name\": \"Hydraulic\",\n        \"slug\": \"hydraulic\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"3aa351ee-919c-4c24-b4cd-ebd7f1146299\",\n        \"uid\": \"swg-hydraulic-and-hydrology\",\n        \"office_symbol\": \"SWG\",\n        \"name\": \"Hydraulic and Hydrology\",\n        \"slug\": \"hydraulic-and-hydrology\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"81b94919-5fff-4120-ba6b-fe0e729a65b3\",\n        \"uid\": \"lre-detroit-district\",\n        \"office_symbol\": \"LRE\",\n        \"name\": \"Detroit District\",\n        \"slug\": \"detroit-district\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"ac03ccaf-33d0-43de-ad0b-e6528ea0638d\",\n        \"uid\": \"nwp-branch-chief\",\n        \"office_symbol\": \"NWP\",\n        \"name\": \"Branch Chief\",\n        \"slug\": \"branch-chief\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"115f4a72-4982-497d-ab3d-199c11dd7184\",\n        \"uid\": \"saj-jacksonville-district\",\n        \"office_symbol\": \"SAJ\",\n        \"name\": \"Jacksonville District\",\n        \"slug\": \"jacksonville-district\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"6987b8fc-0457-4740-9205-5f3b2fb7afe8\",\n        \"uid\": \"swl-hydraulic-and-hydrology-section\",\n        \"office_symbol\": \"SWL\",\n        \"name\": \"Hydraulic and Hydrology Section\",\n        \"slug\": \"hydraulic-and-hydrology-section\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"8c5e2564-5043-4870-8187-966da41ae83b\",\n        \"uid\": \"dspc-dam-safety-production-center\",\n        \"office_symbol\": \"DSPC\",\n        \"name\": \"Dam Safety Production Center\",\n        \"slug\": \"dam-safety-production-center\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"707a8ec1-212a-4e5d-9bff-65f972a34a6f\",\n        \"uid\": \"lrb-buffalo-district\",\n        \"office_symbol\": \"LRB\",\n        \"name\": \"Buffalo District\",\n        \"slug\": \"buffalo-district\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"f60bfdb9-3e08-4236-a595-a888ffd6260c\",\n        \"uid\": \"sam-water-management\",\n        \"office_symbol\": \"SAM\",\n        \"name\": \"Water Management\",\n        \"slug\": \"water-management\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"562a7361-fb9a-4724-96f5-fad8005df5f5\",\n        \"uid\": \"hec-hydrologic-engineering-center\",\n        \"office_symbol\": \"HEC\",\n        \"name\": \"Hydrologic Engineering Center\",\n        \"slug\": \"hydrologic-engineering-center\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"c17739b5-3cf3-4bb7-ac95-29a6762769fc\",\n        \"uid\": \"nwd-mrwm\",\n        \"office_symbol\": \"NWD\",\n        \"name\": \"MRWM\",\n        \"slug\": \"mrwm\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"0657ad65-5d6c-46ef-a0cf-252c524c2d44\",\n        \"uid\": \"nws-water-management\",\n        \"office_symbol\": \"NWS\",\n        \"name\": \"Water Management\",\n        \"slug\": \"water-management\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"3d109a0d-26e6-4fc0-8e29-5bff3508e972\",\n        \"uid\": \"spk-hydrology-and-hydraulic-branch\",\n        \"office_symbol\": \"SPK\",\n        \"name\": \"Hydrology and Hydraulic Branch\",\n        \"slug\": \"hydrology-and-hydraulic-branch\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"874a5c38-3286-4885-b545-8d5946e21c9a\",\n        \"uid\": \"chl-river-and-estuarine\",\n        \"office_symbol\": \"CHL\",\n        \"name\": \"River and Estuarine\",\n        \"slug\": \"river-and-estuarine\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"5913aeb7-2a7f-41eb-bc37-2ab65eaa1974\",\n        \"uid\": \"nap-northern-area-office\",\n        \"office_symbol\": \"NAP\",\n        \"name\": \"Northern Area Office\",\n        \"slug\": \"northern-area-office\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"096a6bc9-9165-4b0e-987c-e702be77c3b5\",\n        \"uid\": \"sad-hydraulic-and-hydrology\",\n        \"office_symbol\": \"SAD\",\n        \"name\": \"Hydraulic and Hydrology\",\n        \"slug\": \"hydraulic-and-hydrology\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"e4ac943d-83c5-4f15-b713-4fbedc5ced9e\",\n        \"uid\": \"mvm-memphis-district\",\n        \"office_symbol\": \"MVM\",\n        \"name\": \"Memphis District\",\n        \"slug\": \"memphis-district\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"f4264446-202b-4728-bcea-aa09c7492430\",\n        \"uid\": \"chl-hydrologic-systems\",\n        \"office_symbol\": \"CHL\",\n        \"name\": \"Hydrologic Systems\",\n        \"slug\": \"hydrologic-systems\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"bddaf4b5-38c1-4cfb-b17c-eef014ad7384\",\n        \"uid\": \"saj-hydrologic-modeling-section\",\n        \"office_symbol\": \"SAJ\",\n        \"name\": \"Hydrologic Modeling Section\",\n        \"slug\": \"hydrologic-modeling-section\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"e212040b-151d-4eea-8922-2c89d08719e0\",\n        \"uid\": \"crrel-water-resources-gis\",\n        \"office_symbol\": \"CRREL\",\n        \"name\": \"Water Resources/GIS\",\n        \"slug\": \"water-resources-gis\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"28677059-3000-42cb-a8ac-14d87c9ff0ec\",\n        \"uid\": \"nws-hydraulic\",\n        \"office_symbol\": \"NWS\",\n        \"name\": \"Hydraulic\",\n        \"slug\": \"hydraulic\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"0b8e835d-c20d-4d1f-8053-3778d7d2299a\",\n        \"uid\": \"nws-hydrology-and-hydraulic-branch\",\n        \"office_symbol\": \"NWS\",\n        \"name\": \"Hydrology and Hydraulic Branch\",\n        \"slug\": \"hydrology-and-hydraulic-branch\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"5312e9ef-7fbb-44a8-8ce4-39499f9754d0\",\n        \"uid\": \"swt-hydraulic-and-hydrology-branch\",\n        \"office_symbol\": \"SWT\",\n        \"name\": \"Hydraulic and Hydrology Branch\",\n        \"slug\": \"hydraulic-and-hydrology-branch\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"e786be38-b207-4322-8e3e-67357c3f5240\",\n        \"uid\": \"swd-watershed-team\",\n        \"office_symbol\": \"SWD\",\n        \"name\": \"Watershed Team\",\n        \"slug\": \"watershed-team\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"bfbd716b-2193-46c6-a5e1-210028e7d80b\",\n        \"uid\": \"swl-water-management-section\",\n        \"office_symbol\": \"SWL\",\n        \"name\": \"Water Management Section\",\n        \"slug\": \"water-management-section\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"c007e796-4159-42e9-9be4-704537ffded8\",\n        \"uid\": \"lrl-louisville-district\",\n        \"office_symbol\": \"LRL\",\n        \"name\": \"Louisville District\",\n        \"slug\": \"louisville-district\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"23d20816-15e0-4ba7-bf46-f281afe8bf2f\",\n        \"uid\": \"nao-hydraulic-and-hydrology\",\n        \"office_symbol\": \"NAO\",\n        \"name\": \"Hydraulic and Hydrology\",\n        \"slug\": \"hydraulic-and-hydrology\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"d79bee85-acf3-4edd-a985-f3620dced96e\",\n        \"uid\": \"swf-water-management-section\",\n        \"office_symbol\": \"SWF\",\n        \"name\": \"Water Management Section\",\n        \"slug\": \"water-management-section\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"d7f754a2-e8be-4d96-a918-326dc93ea9b1\",\n        \"uid\": \"spk-hydraulic-analysis\",\n        \"office_symbol\": \"SPK\",\n        \"name\": \"Hydraulic Analysis\",\n        \"slug\": \"hydraulic-analysis\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"41dc3189-b945-4331-b808-9a97afbd326f\",\n        \"uid\": \"mvs-st-louis-district\",\n        \"office_symbol\": \"MVS\",\n        \"name\": \"St. Louis District\",\n        \"slug\": \"st-louis-district\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"d4687912-fed9-44ee-ad2d-2aad388dc8ef\",\n        \"uid\": \"spk-hydraulic-design\",\n        \"office_symbol\": \"SPK\",\n        \"name\": \"Hydraulic Design\",\n        \"slug\": \"hydraulic-design\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"1bcb211f-a131-4de9-ad9d-85c2ace4f7ef\",\n        \"uid\": \"nab-water-management\",\n        \"office_symbol\": \"NAB\",\n        \"name\": \"Water Management\",\n        \"slug\": \"water-management\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"e5d7c8a7-90bc-42ea-b7c3-b029f0b36f79\",\n        \"uid\": \"swt-hydraulic-and-hydrology-section\",\n        \"office_symbol\": \"SWT\",\n        \"name\": \"Hydraulic and Hydrology Section\",\n        \"slug\": \"hydraulic-and-hydrology-section\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"31414045-98a4-46cb-922a-02cc0def7c82\",\n        \"uid\": \"nwo-hydrology\",\n        \"office_symbol\": \"NWO\",\n        \"name\": \"Hydrology\",\n        \"slug\": \"hydrology\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"e9fb6438-af48-4be7-b4c4-a33bf68699a1\",\n        \"uid\": \"saj-water-resources-engineering-branch\",\n        \"office_symbol\": \"SAJ\",\n        \"name\": \"Water Resources Engineering Branch\",\n        \"slug\": \"water-resources-engineering-branch\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"160736a4-b898-425a-a2d0-ed450d5a6504\",\n        \"uid\": \"nwd-reservoir-control-center\",\n        \"office_symbol\": \"NWD\",\n        \"name\": \"Reservoir Control Center\",\n        \"slug\": \"reservoir-control-center\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"abaf7c3a-7143-4f79-8e3f-4b4e23be1408\",\n        \"uid\": \"swg-water-management-section\",\n        \"office_symbol\": \"SWG\",\n        \"name\": \"Water Management Section\",\n        \"slug\": \"water-management-section\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"bfcf9125-7ee7-4ca9-ac11-fbe17abde234\",\n        \"uid\": \"mvn-new-orleans-district\",\n        \"office_symbol\": \"MVN\",\n        \"name\": \"New Orleans District\",\n        \"slug\": \"new-orleans-district\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"5ab3c7a8-edd2-4c8c-adf8-89df129fe8f2\",\n        \"uid\": \"sam-hydrology-hydraulic-and-coastal\",\n        \"office_symbol\": \"SAM\",\n        \"name\": \"Hydrology, Hydraulic and Coastal\",\n        \"slug\": \"hydrology-hydraulic-and-coastal\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"b5a3a353-1e3f-488f-8650-9b44cb9c1984\",\n        \"uid\": \"sam-water-resources-branch\",\n        \"office_symbol\": \"SAM\",\n        \"name\": \"Water Resources Branch\",\n        \"slug\": \"water-resources-branch\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"4f6898b8-b714-4f19-98db-c2a89c4ef610\",\n        \"uid\": \"chl-executive-office\",\n        \"office_symbol\": \"CHL\",\n        \"name\": \"Executive Office\",\n        \"slug\": \"executive-office\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"14e7ea14-8fe9-4a83-a794-9d686cf5932b\",\n        \"uid\": \"nan-hydrology\",\n        \"office_symbol\": \"NAN\",\n        \"name\": \"Hydrology\",\n        \"slug\": \"hydrology\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"f8adf3f9-984b-46b8-9429-1410d4d008e7\",\n        \"uid\": \"lrp-pittsburgh-district\",\n        \"office_symbol\": \"LRP\",\n        \"name\": \"Pittsburgh District\",\n        \"slug\": \"pittsburgh-district\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"073e77c9-b2fd-4f20-8afc-a55faccdbb5a\",\n        \"uid\": \"swl-hydraulic-and-hydrology-branch\",\n        \"office_symbol\": \"SWL\",\n        \"name\": \"Hydraulic and Hydrology Branch\",\n        \"slug\": \"hydraulic-and-hydrology-branch\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"d08e8aa6-1665-4188-a5d4-5872158bffbc\",\n        \"uid\": \"nwk-hydraulic-and-hydrology\",\n        \"office_symbol\": \"NWK\",\n        \"name\": \"Hydraulic and Hydrology\",\n        \"slug\": \"hydraulic-and-hydrology\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"282f274d-1d2b-4991-b6b5-3dadbf0c2dee\",\n        \"uid\": \"nan-flood\",\n        \"office_symbol\": \"NAN\",\n        \"name\": \"Flood\",\n        \"slug\": \"flood\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"962d8d2f-cce1-40c8-8796-0f6820ed6460\",\n        \"uid\": \"sas-hydrology-and-hydraulic-branch\",\n        \"office_symbol\": \"SAS\",\n        \"name\": \"Hydrology and Hydraulic Branch\",\n        \"slug\": \"hydrology-and-hydraulic-branch\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"4f6dbbff-2481-4e2d-92c9-55b11c5fed29\",\n        \"uid\": \"nwd-hydrologic-engineering-and-power-branch\",\n        \"office_symbol\": \"NWD\",\n        \"name\": \"Hydrologic Engineering and Power Branch\",\n        \"slug\": \"hydrologic-engineering-and-power-branch\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"82c57998-b4d0-44c6-b776-c1afbe40c971\",\n        \"uid\": \"hq-headquarters\",\n        \"office_symbol\": \"HQ\",\n        \"name\": \"Headquarters\",\n        \"slug\": \"headquarters\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"2cebb9a1-0d88-4404-abee-b678688cbac4\",\n        \"uid\": \"nab-hydraulic-and-hydrology\",\n        \"office_symbol\": \"NAB\",\n        \"name\": \"Hydraulic and Hydrology\",\n        \"slug\": \"hydraulic-and-hydrology\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"222841bc-2961-4d7f-9a41-634def716644\",\n        \"uid\": \"nww-hydrology\",\n        \"office_symbol\": \"NWW\",\n        \"name\": \"Hydrology\",\n        \"slug\": \"hydrology\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"66493baa-4869-4938-ac46-8ad090cabbfc\",\n        \"uid\": \"sac-general-engineering\",\n        \"office_symbol\": \"SAC\",\n        \"name\": \"General Engineering\",\n        \"slug\": \"general-engineering\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"969ebb66-8c32-406b-be95-e9912523fe94\",\n        \"uid\": \"mvk-vicksburg-district\",\n        \"office_symbol\": \"MVK\",\n        \"name\": \"Vicksburg District\",\n        \"slug\": \"vicksburg-district\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"0efd7e95-4ac4-4b17-9ccc-07ef9b224bbc\",\n        \"uid\": \"nwp-hydraulic-and-coastal\",\n        \"office_symbol\": \"NWP\",\n        \"name\": \"Hydraulic and Coastal\",\n        \"slug\": \"hydraulic-and-coastal\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"e30fd884-08ac-46ef-9b0b-aab1f5e8ee97\",\n        \"uid\": \"nad-north-atlantic-division\",\n        \"office_symbol\": \"NAD\",\n        \"name\": \"North Atlantic Division\",\n        \"slug\": \"north-atlantic-division\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"cc8cee9d-39a8-4df0-9ef0-7a0922ee815b\",\n        \"uid\": \"nwk-water-management\",\n        \"office_symbol\": \"NWK\",\n        \"name\": \"Water Management\",\n        \"slug\": \"water-management\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"d578517d-6e1a-48d7-aa41-27dad4bc40e9\",\n        \"uid\": \"swt-technical-services-section\",\n        \"office_symbol\": \"SWT\",\n        \"name\": \"Technical Services Section\",\n        \"slug\": \"technical-services-section\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"9b70b2e6-2945-49cf-88ea-851e819419e6\",\n        \"uid\": \"nwo-flood-risk-and-floodplain\",\n        \"office_symbol\": \"NWO\",\n        \"name\": \"Flood Risk and Floodplain\",\n        \"slug\": \"flood-risk-and-floodplain\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"b597ae3f-50c5-4c51-9ee8-4f2ec9bc4b78\",\n        \"uid\": \"nan-new-york-district\",\n        \"office_symbol\": \"NAN\",\n        \"name\": \"New York District\",\n        \"slug\": \"new-york-district\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"81f82f17-ac0f-410b-bd94-def745712bc2\",\n        \"uid\": \"nwo-river-and-reservoir\",\n        \"office_symbol\": \"NWO\",\n        \"name\": \"River and Reservoir\",\n        \"slug\": \"river-and-reservoir\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"4365be74-179e-4cb6-ae2e-ce90336eef90\",\n        \"uid\": \"spn-hydraulic-and-hydrology\",\n        \"office_symbol\": \"SPN\",\n        \"name\": \"Hydraulic and Hydrology\",\n        \"slug\": \"hydraulic-and-hydrology\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"0846d6b0-dd21-48be-a98a-27ef5ff6a933\",\n        \"uid\": \"chl-flood-and-storm-protection-division\",\n        \"office_symbol\": \"CHL\",\n        \"name\": \"Flood and Storm Protection Division\",\n        \"slug\": \"flood-and-storm-protection-division\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"a427e462-7d69-4067-83ba-d2cb09a51278\",\n        \"uid\": \"nwp-reservoir-regulation\",\n        \"office_symbol\": \"NWP\",\n        \"name\": \"Reservoir Regulation\",\n        \"slug\": \"reservoir-regulation\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"c7defd51-ae86-4440-a24f-b9616a789f64\",\n        \"uid\": \"swg-hh-and-c-branch\",\n        \"office_symbol\": \"SWG\",\n        \"name\": \"HH and C Branch\",\n        \"slug\": \"hh-and-c-branch\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"daaff576-c4b7-4424-9074-2429c5b765f5\",\n        \"uid\": \"chl-field-data-and-analysis\",\n        \"office_symbol\": \"CHL\",\n        \"name\": \"Field Data and Analysis\",\n        \"slug\": \"field-data-and-analysis\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"e9f43913-d42f-4f4b-8dca-1894fe24c768\",\n        \"uid\": \"saj-interagency-modeling-section\",\n        \"office_symbol\": \"SAJ\",\n        \"name\": \"Interagency Modeling Section\",\n        \"slug\": \"interagency-modeling-section\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"a82ff09d-82da-4046-9b35-98abb3dd6aa4\",\n        \"uid\": \"pod-cw-integration-division\",\n        \"office_symbol\": \"POD\",\n        \"name\": \"CW Integration Division\",\n        \"slug\": \"cw-integration-division\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"bd850da4-9547-40d6-8ee5-e7a45d94eb4a\",\n        \"uid\": \"chl-technical-programs\",\n        \"office_symbol\": \"CHL\",\n        \"name\": \"Technical Programs\",\n        \"slug\": \"technical-programs\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"dd145493-bb1c-40ef-99a4-0b27aa835c6e\",\n        \"uid\": \"saj-water-management-section\",\n        \"office_symbol\": \"SAJ\",\n        \"name\": \"Water Management Section\",\n        \"slug\": \"water-management-section\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"fe3eb2c8-420c-49cd-865d-0367db73f6a8\",\n        \"uid\": \"swf-hydraulic-and-hydrology\",\n        \"office_symbol\": \"SWF\",\n        \"name\": \"Hydraulic and Hydrology\",\n        \"slug\": \"hydraulic-and-hydrology\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"b9fb3a7d-e67c-42b5-97ea-3408f86c101e\",\n        \"uid\": \"nwp-hydrologic-and-river-engineering\",\n        \"office_symbol\": \"NWP\",\n        \"name\": \"Hydrologic and River Engineering\",\n        \"slug\": \"hydrologic-and-river-engineering\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"5074c29b-447e-408f-96d4-1e55d9a53335\",\n        \"uid\": \"nap-hydraulic-and-hydrology\",\n        \"office_symbol\": \"NAP\",\n        \"name\": \"Hydraulic and Hydrology\",\n        \"slug\": \"hydraulic-and-hydrology\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"af12245a-420f-4702-a902-d3479f412b3c\",\n        \"uid\": \"poa-hydraulic-and-hydrology\",\n        \"office_symbol\": \"POA\",\n        \"name\": \"Hydraulic and Hydrology\",\n        \"slug\": \"hydraulic-and-hydrology\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"9169c76d-a968-422a-b0c4-75fc979f000f\",\n        \"uid\": \"mvp-st-paul-district\",\n        \"office_symbol\": \"MVP\",\n        \"name\": \"St. Paul District\",\n        \"slug\": \"st-paul-district\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"b0970149-4524-473b-9d2e-1b70412930c1\",\n        \"uid\": \"saw-hydrology\",\n        \"office_symbol\": \"SAW\",\n        \"name\": \"Hydrology\",\n        \"slug\": \"hydrology\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"4a901b60-4a05-4ef7-aaa4-adb0febee9e3\",\n        \"uid\": \"nww-hydraulic\",\n        \"office_symbol\": \"NWW\",\n        \"name\": \"Hydraulic\",\n        \"slug\": \"hydraulic\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"258b7cd7-900d-4c17-998c-14880855040e\",\n        \"uid\": \"nww-hydrology-and-hydraulic-branch\",\n        \"office_symbol\": \"NWW\",\n        \"name\": \"Hydrology and Hydraulic Branch\",\n        \"slug\": \"hydrology-and-hydraulic-branch\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"3f8fff99-c521-4ce4-8d23-9e26d34916a7\",\n        \"uid\": \"nae-reservoir-regulation\",\n        \"office_symbol\": \"NAE\",\n        \"name\": \"Reservoir Regulation\",\n        \"slug\": \"reservoir-regulation\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"0e7c4151-0599-4c26-ac76-aa0c48214254\",\n        \"uid\": \"mmc-modeling-mapping-and-consequence\",\n        \"office_symbol\": \"MMC\",\n        \"name\": \"Modeling, Mapping, and Consequence\",\n        \"slug\": \"modeling-mapping-and-consequence\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"e46f9c07-064f-4129-997b-a92a62979d93\",\n        \"uid\": \"nwo-water-management\",\n        \"office_symbol\": \"NWO\",\n        \"name\": \"Water Management\",\n        \"slug\": \"water-management\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"e3c50114-0876-4f90-955b-1b0e19c9935b\",\n        \"uid\": \"mvr-rock-island-district\",\n        \"office_symbol\": \"MVR\",\n        \"name\": \"Rock Island District\",\n        \"slug\": \"rock-island-district\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"ed0cd451-2c58-4553-8da2-b3f5ee7ad279\",\n        \"uid\": \"nwd-cbwm\",\n        \"office_symbol\": \"NWD\",\n        \"name\": \"CBWM\",\n        \"slug\": \"cbwm\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"7785b739-9572-4b60-a9d2-b6907ddd39d6\",\n        \"uid\": \"swg-galveston-district\",\n        \"office_symbol\": \"SWG\",\n        \"name\": \"Galveston District\",\n        \"slug\": \"galveston-district\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"7bd53c19-d8f8-4a7f-bc62-09ae39c67c5d\",\n        \"uid\": \"swt-water-management-section\",\n        \"office_symbol\": \"SWT\",\n        \"name\": \"Water Management Section\",\n        \"slug\": \"water-management-section\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"05811915-c4ea-4ad6-97e2-c1cb53483a3e\",\n        \"uid\": \"crrel-ice-engineering\",\n        \"office_symbol\": \"CRREL\",\n        \"name\": \"Ice Engineering\",\n        \"slug\": \"ice-engineering\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"2cf2a9e2-9358-4ae6-929b-56f2aab85064\",\n        \"uid\": \"lrc-chicago-district\",\n        \"office_symbol\": \"LRC\",\n        \"name\": \"Chicago District\",\n        \"slug\": \"chicago-district\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"c2e5c0cd-0058-47c0-8827-d1f67fc76dfb\",\n        \"uid\": \"nwk-river-engineering-and-restoration\",\n        \"office_symbol\": \"NWK\",\n        \"name\": \"River Engineering and Restoration\",\n        \"slug\": \"river-engineering-and-restoration\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"1604ca64-415e-48ea-9e1f-291bcb274533\",\n        \"uid\": \"spa-hydraulic-and-hydrology\",\n        \"office_symbol\": \"SPA\",\n        \"name\": \"Hydraulic and Hydrology\",\n        \"slug\": \"hydraulic-and-hydrology\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"bc0b63fc-83ad-485a-a637-0918f3ae284d\",\n        \"uid\": \"spl-hydrology\",\n        \"office_symbol\": \"SPL\",\n        \"name\": \"Hydrology\",\n        \"slug\": \"hydrology\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"aa7a85d8-4b5f-46ba-b1bc-46cabe7132d0\",\n        \"uid\": \"chl-coastal-and-hydraulics-laboratory\",\n        \"office_symbol\": \"CHL\",\n        \"name\": \"Coastal and Hydraulics Laboratory\",\n        \"slug\": \"coastal-and-hydraulics-laboratory\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"1c28fdc3-8d3c-4a2c-a2e4-6d971bd58b00\",\n        \"uid\": \"poh-hydraulic-and-hydrology\",\n        \"office_symbol\": \"POH\",\n        \"name\": \"Hydraulic and Hydrology\",\n        \"slug\": \"hydraulic-and-hydrology\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"de3c4db9-9885-4675-b74f-fcbc4bd6ff9d\",\n        \"uid\": \"nwo-hydraulic\",\n        \"office_symbol\": \"NWO\",\n        \"name\": \"Hydraulic\",\n        \"slug\": \"hydraulic\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"c57c88a1-5256-48f7-89c2-4eb4d858fcf9\",\n        \"uid\": \"swf-water-resources-branch\",\n        \"office_symbol\": \"SWF\",\n        \"name\": \"Water Resources Branch\",\n        \"slug\": \"water-resources-branch\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"72dc6f5c-4976-4fca-a91e-01b266faa64f\",\n        \"uid\": \"rmc-risk-management-center\",\n        \"office_symbol\": \"RMC\",\n        \"name\": \"Risk Management Center\",\n        \"slug\": \"risk-management-center\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"60e842da-08f5-45f9-be9a-6ab368438d61\",\n        \"uid\": \"nwd-regional-business-technical\",\n        \"office_symbol\": \"NWD\",\n        \"name\": \"Regional Business Technical\",\n        \"slug\": \"regional-business-technical\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"2210df16-7777-4c32-973a-a97c4e8e276e\",\n        \"uid\": \"spa-water-management\",\n        \"office_symbol\": \"SPA\",\n        \"name\": \"Water Management\",\n        \"slug\": \"water-management\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"9e609d9c-cadc-4a81-9338-47a3cff60df6\",\n        \"uid\": \"spk-hydrology\",\n        \"office_symbol\": \"SPK\",\n        \"name\": \"Hydrology\",\n        \"slug\": \"hydrology\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"6538a924-285c-4652-9e46-c724d45cd018\",\n        \"uid\": \"el-environmental-laboratory\",\n        \"office_symbol\": \"EL\",\n        \"name\": \"Environmental Laboratory\",\n        \"slug\": \"environmental-laboratory\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"83e0dbda-92e4-4b11-b932-e3ec9a46c48c\",\n        \"uid\": \"nwo-branch-chief\",\n        \"office_symbol\": \"NWO\",\n        \"name\": \"Branch Chief\",\n        \"slug\": \"branch-chief\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"efd72d0c-0922-4b5e-b08d-8962b683ca2c\",\n        \"uid\": \"spl-water-management\",\n        \"office_symbol\": \"SPL\",\n        \"name\": \"Water Management\",\n        \"slug\": \"water-management\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"e1f6bd25-27a1-443a-8f2f-1a4af770b011\",\n        \"uid\": \"chl-navigation-branch\",\n        \"office_symbol\": \"CHL\",\n        \"name\": \"Navigation Branch\",\n        \"slug\": \"navigation-branch\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"7cfc9b3c-0acd-4f87-9d6c-7893eec01ca9\",\n        \"uid\": \"nwk-branch-chief\",\n        \"office_symbol\": \"NWK\",\n        \"name\": \"Branch Chief\",\n        \"slug\": \"branch-chief\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"1fd867cf-2314-4e05-9550-0cb9131152c6\",\n        \"uid\": \"chl-harbors-entrances-and-structures\",\n        \"office_symbol\": \"CHL\",\n        \"name\": \"Harbors, Entrances and Structures\",\n        \"slug\": \"harbors-entrances-and-structures\",\n        \"last_verified\": null\n    }\n]"
+						}
+					]
+				},
+				{
 					"name": "List Groups by Office",
 					"request": {
 						"method": "GET",
@@ -65,13 +118,6 @@
 								"offices",
 								":office_symbol",
 								"groups"
-							],
-							"query": [
-								{
-									"key": "office_symbol",
-									"value": "lrh",
-									"disabled": true
-								}
 							],
 							"variable": [
 								{
@@ -115,7 +161,7 @@
 							"_postman_previewlanguage": "json",
 							"header": null,
 							"cookie": [],
-							"body": "[\n    {\n        \"uid\": \"lrn-water-resources\",\n        \"symbol\": \"LRN\",\n        \"name\": \"Water Resources\",\n        \"slug\": \"water-resources\",\n        \"last_verified\": null\n    },\n    {\n        \"uid\": \"lrn-water-mangement\",\n        \"symbol\": \"LRN\",\n        \"name\": \"Water Management\",\n        \"slug\": \"water-management\",\n        \"last_verified\": null\n    }\n]"
+							"body": "[\n    {\n        \"uid\": \"lrn-water-resources\",\n        \"office_symbol\": \"LRN\",\n        \"name\": \"Water Resources\",\n        \"slug\": \"water-resources\",\n        \"last_verified\": null\n    },\n    {\n        \"uid\": \"lrn-water-management\",\n        \"office_symbol\": \"LRN\",\n        \"name\": \"Water Management\",\n        \"slug\": \"water-management\",\n        \"last_verified\": null\n    },\n    {\n        \"uid\": \"lrn-nashville-district\",\n        \"office_symbol\": \"LRN\",\n        \"name\": \"Nashville District\",\n        \"slug\": \"nashville-district\",\n        \"last_verified\": null\n    }\n]"
 						}
 					]
 				}
@@ -141,7 +187,7 @@
 							"variable": [
 								{
 									"key": "position_id",
-									"value": "39fc35db-31b1-47c9-88e5-062ef39393a3",
+									"value": "e74de143-c31e-4304-88b4-559a0c1020c0",
 									"description": "UUID for the position"
 								}
 							]
@@ -211,7 +257,7 @@
 							"variable": [
 								{
 									"key": "position_id",
-									"value": "3b7e5ca3-d3c7-4f9e-822f-e95a6f5584eb",
+									"value": "939896bc-ac65-41a1-83c0-e00f4b632ed9",
 									"description": "UUID for the position"
 								}
 							]
@@ -233,14 +279,6 @@
 								"offices",
 								":office_symbol",
 								"positions"
-							],
-							"query": [
-								{
-									"key": "active",
-									"value": "true",
-									"description": "Query to get active positions or not active positions",
-									"disabled": true
-								}
 							],
 							"variable": [
 								{
@@ -287,7 +325,7 @@
 							"_postman_previewlanguage": "json",
 							"header": null,
 							"cookie": [],
-							"body": "[\n    {\n        \"id\": \"00000000-0000-0000-0000-00000000\",\n        \"office_symbol\": \"LRH\",\n        \"position_title\": \"Hydraulic Engineer\",\n        \"code\": \"GS\",\n        \"position_grade\": 12,\n        \"is_active\": true,\n        \"is_supervisor\": false,\n        \"occupation_code\": \"0810\",\n        \"occupation_name\": \"Civil Engineer\",\n        \"group_slug\": \"water-management\"\n    }\n]"
+							"body": "[\n    {\n        \"id\": \"8e9e6bcf-18f5-4cc8-ac1b-71bfd9503820\",\n        \"office_symbol\": \"LRH\",\n        \"group_slug\": \"huntington-district\",\n        \"title\": \"Branch Chief\",\n        \"pay_plan\": \"GS\",\n        \"grade\": 14,\n        \"is_active\": true,\n        \"is_supervisor\": true,\n        \"occupation_code\": \"0000\",\n        \"occupation_name\": \"Miscellaneous\",\n        \"current_occupancy\": null\n    }\n]"
 						}
 					]
 				},
@@ -371,7 +409,7 @@
 							"_postman_previewlanguage": "json",
 							"header": null,
 							"cookie": [],
-							"body": "[\n    {\n        \"office_symbol\": \"LRN\",\n        \"position_title\": \"Water Quality\",\n        \"code\": \"GS\",\n        \"position_grade\": 12,\n        \"is_active\": true,\n        \"is_supervisor\": false,\n        \"occupation_code\": \"0401\",\n        \"occupation_name\": \"General Biologist\",\n        \"group_slug\": \"water-management\"\n    },\n    {\n        \"office_symbol\": \"LRN\",\n        \"position_title\": \"Water Management Section Chief\",\n        \"code\": \"GS\",\n        \"position_grade\": 13,\n        \"is_active\": true,\n        \"is_supervisor\": true,\n        \"occupation_code\": \"0810\",\n        \"occupation_name\": \"Civil Engineer\",\n        \"group_slug\": \"water-management\"\n    }\n]"
+							"body": "[\n    {\n        \"id\": \"cc2c36d4-455a-47d2-ab7c-35bad5ea7410\",\n        \"office_symbol\": \"LRN\",\n        \"group_slug\": \"water-management\",\n        \"title\": \"Water Management Section Chief\",\n        \"pay_plan\": \"GS\",\n        \"grade\": 13,\n        \"is_active\": true,\n        \"is_supervisor\": true,\n        \"occupation_code\": \"0810\",\n        \"occupation_name\": \"Civil Engineering\",\n        \"current_occupancy\": null\n    },\n    {\n        \"id\": \"b91d5fdb-3993-4ff0-8f5c-2abd1400d81f\",\n        \"office_symbol\": \"LRN\",\n        \"group_slug\": \"water-management\",\n        \"title\": \"RTS Navigation\",\n        \"pay_plan\": \"GS\",\n        \"grade\": 13,\n        \"is_active\": true,\n        \"is_supervisor\": false,\n        \"occupation_code\": \"0810\",\n        \"occupation_name\": \"Civil Engineering\",\n        \"current_occupancy\": null\n    },\n    {\n        \"id\": \"707cfa8e-adcf-4479-9f81-001ec8d8ec03\",\n        \"office_symbol\": \"LRN\",\n        \"group_slug\": \"water-management\",\n        \"title\": \"Hydraulic Engineer\",\n        \"pay_plan\": \"GS\",\n        \"grade\": 12,\n        \"is_active\": true,\n        \"is_supervisor\": false,\n        \"occupation_code\": \"0810\",\n        \"occupation_name\": \"Civil Engineering\",\n        \"current_occupancy\": null\n    },\n    {\n        \"id\": \"4f1c4992-c060-42e1-93fd-4c819dbd7410\",\n        \"office_symbol\": \"LRN\",\n        \"group_slug\": \"water-management\",\n        \"title\": \"Hydraulic Engineer\",\n        \"pay_plan\": \"GS\",\n        \"grade\": 12,\n        \"is_active\": true,\n        \"is_supervisor\": false,\n        \"occupation_code\": \"0810\",\n        \"occupation_name\": \"Civil Engineering\",\n        \"current_occupancy\": null\n    },\n    {\n        \"id\": \"df5c7d3f-a904-4341-83b2-1ce1b5dd1f94\",\n        \"office_symbol\": \"LRN\",\n        \"group_slug\": \"water-management\",\n        \"title\": \"Hydraulic Engineer\",\n        \"pay_plan\": \"GS\",\n        \"grade\": 12,\n        \"is_active\": true,\n        \"is_supervisor\": false,\n        \"occupation_code\": \"0810\",\n        \"occupation_name\": \"Civil Engineering\",\n        \"current_occupancy\": null\n    },\n    {\n        \"id\": \"f7813c81-eb74-49ba-be2d-66df03ae9547\",\n        \"office_symbol\": \"LRN\",\n        \"group_slug\": \"water-management\",\n        \"title\": \"Hydrologist, Water Quality\",\n        \"pay_plan\": \"GS\",\n        \"grade\": 12,\n        \"is_active\": true,\n        \"is_supervisor\": false,\n        \"occupation_code\": \"1315\",\n        \"occupation_name\": \"Hydrology\",\n        \"current_occupancy\": null\n    },\n    {\n        \"id\": \"c36d701e-0f82-40b0-b48f-48d9d1f3c55a\",\n        \"office_symbol\": \"LRN\",\n        \"group_slug\": \"water-management\",\n        \"title\": \"Civil Tech\",\n        \"pay_plan\": \"GS\",\n        \"grade\": 11,\n        \"is_active\": true,\n        \"is_supervisor\": false,\n        \"occupation_code\": \"1316\",\n        \"occupation_name\": \"Hydrologic Technician\",\n        \"current_occupancy\": null\n    },\n    {\n        \"id\": \"ecbf99e6-e802-4f5f-90c1-963a75edfabe\",\n        \"office_symbol\": \"LRN\",\n        \"group_slug\": \"water-management\",\n        \"title\": \"Water Quality\",\n        \"pay_plan\": \"GS\",\n        \"grade\": 12,\n        \"is_active\": true,\n        \"is_supervisor\": false,\n        \"occupation_code\": \"0401\",\n        \"occupation_name\": \"Biology\",\n        \"current_occupancy\": null\n    }\n]"
 						}
 					]
 				},
@@ -382,7 +420,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"position_title\": \"Super Trooper Engineer\",\n    \"code\": \"GS\",\n    \"position_grade\": 15,\n    \"is_supervisor\": false,\n    \"occupation_code\": \"0810\"\n}\n",
+							"raw": "{\n    \"title\": \"Super Trooper Engineer\",\n    \"pay_plan\": \"GS\",\n    \"grade\": 15,\n    \"is_supervisor\": false,\n    \"is_active\": false,\n    \"occupation_code\": \"0810\"\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -390,14 +428,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost/offices/:office_symbol/:group/positions",
+							"raw": "localhost/offices/:office_symbol/:group_symbol/positions",
 							"host": [
 								"localhost"
 							],
 							"path": [
 								"offices",
 								":office_symbol",
-								":group",
+								":group_symbol",
 								"positions"
 							],
 							"query": [
@@ -410,13 +448,11 @@
 							"variable": [
 								{
 									"key": "office_symbol",
-									"value": "LRN",
-									"description": "District code"
+									"value": "LRN"
 								},
 								{
-									"key": "group",
-									"value": "water-management",
-									"description": "Office name as a slug"
+									"key": "group_symbol",
+									"value": "water-management"
 								}
 							]
 						}
@@ -482,7 +518,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"position_title\": \"NOT A Super Trooper\",\n    \"code\": \"GS\",\n    \"position_grade\": 15,\n    \"is_supervisor\": false,\n    \"occupation_code\": \"1315\"\n}\n",
+							"raw": "{\n    \"title\": \"NOT A Super Trooper\",\n    \"pay_plan\": \"GS\",\n    \"grade\": 15,\n    \"is_supervisor\": false,\n    \"is_active\": false,\n    \"occupation_code\": \"0810\"\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -490,15 +526,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost/offices/:office_symbol/:group/positions/:position_id",
+							"raw": "localhost/offices/:office_symbol/:group_slug/:position_id",
 							"host": [
 								"localhost"
 							],
 							"path": [
 								"offices",
 								":office_symbol",
-								":group",
-								"positions",
+								":group_slug",
 								":position_id"
 							],
 							"query": [
@@ -511,17 +546,16 @@
 							"variable": [
 								{
 									"key": "office_symbol",
-									"value": "LRN",
+									"value": "lrn",
 									"description": "District code"
 								},
 								{
-									"key": "group",
-									"value": "water-management",
-									"description": "Office name as a slug"
+									"key": "group_slug",
+									"value": "water-management"
 								},
 								{
 									"key": "position_id",
-									"value": "39fc35db-31b1-47c9-88e5-062ef39393a3",
+									"value": "939896bc-ac65-41a1-83c0-e00f4b632ed9",
 									"description": "UUID for the position"
 								}
 							]
@@ -583,7 +617,7 @@
 							"_postman_previewlanguage": "json",
 							"header": null,
 							"cookie": [],
-							"body": "{\n    \"office_symbol\": \"LRN\",\n    \"position_title\": \"NOT A Super Trooper\",\n    \"code\": \"GS\",\n    \"position_grade\": 15,\n    \"is_active\": false,\n    \"is_supervisor\": false,\n    \"occupation_code\": \"1315\",\n    \"occupation_name\": \"Hydrologist\",\n    \"group_slug\": \"water-management\"\n}"
+							"body": "{\n    \"id\": \"939896bc-ac65-41a1-83c0-e00f4b632ed9\",\n    \"office_symbol\": \"LRN\",\n    \"group_slug\": \"water-management\",\n    \"title\": \"NOT A Super Trooper\",\n    \"pay_plan\": \"GS\",\n    \"grade\": 15,\n    \"is_active\": false,\n    \"is_supervisor\": false,\n    \"occupation_code\": \"0810\",\n    \"occupation_name\": \"Civil Engineering\",\n    \"current_occupancy\": null\n}"
 						}
 					]
 				}
@@ -609,7 +643,7 @@
 							"variable": [
 								{
 									"key": "occupancy_id",
-									"value": "f3a3cd1a-97c5-47a0-840a-3be45fae2bc7"
+									"value": "a119ad8a-2b94-4d8f-a3c9-b985904e6f69"
 								}
 							]
 						}
@@ -670,7 +704,7 @@
 							"variable": [
 								{
 									"key": "office_symbol",
-									"value": "lrh"
+									"value": "lrn"
 								}
 							]
 						}
@@ -710,7 +744,7 @@
 							"_postman_previewlanguage": "json",
 							"header": null,
 							"cookie": [],
-							"body": "[\n    {\n        \"id\": \"00000000-0000-0000-0000-000000000000\",\n        \"position_id\": \"00000000-0000-0000-0000-000000000000\",\n        \"title\": null,\n        \"start_date\": \"2005-10-20T00:00:00Z\",\n        \"end_date\": null,\n        \"service_start_date\": \"2001-10-20T00:00:00Z\",\n        \"service_end_date\": null,\n        \"dob\": \"1990-03-01T00:00:00Z\"\n    },\n    {\n        \"id\": \"00000000-0000-0000-0000-000000000000\",\n        \"position_id\": \"00000000-0000-0000-0000-000000000000\",\n        \"title\": null,\n        \"start_date\": \"2001-10-20T00:00:00Z\",\n        \"end_date\": \"2020-04-01T00:00:00Z\",\n        \"service_start_date\": \"1990-04-16T00:00:00Z\",\n        \"service_end_date\": null,\n        \"dob\": \"1970-07-01T00:00:00Z\"\n    }\n]"
+							"body": "[\n    {\n        \"id\": \"a119ad8a-2b94-4d8f-a3c9-b985904e6f69\",\n        \"position_id\": \"a25c9ec2-fc14-4f7e-bde3-177fa9de4208\",\n        \"title\": null,\n        \"start_date\": \"2005-10-20T00:00:00Z\",\n        \"end_date\": null,\n        \"service_start_date\": \"2001-10-20T00:00:00Z\",\n        \"service_end_date\": null,\n        \"dob\": \"1990-03-01T00:00:00Z\"\n    },\n    {\n        \"id\": \"f3a3cd1a-97c5-47a0-840a-3be45fae2bc7\",\n        \"position_id\": \"45eefa59-a7d8-4c24-b509-0bc752ef6a2b\",\n        \"title\": null,\n        \"start_date\": \"2001-10-20T00:00:00Z\",\n        \"end_date\": \"2020-04-01T00:00:00Z\",\n        \"service_start_date\": \"1990-04-16T00:00:00Z\",\n        \"service_end_date\": null,\n        \"dob\": \"1970-07-01T00:00:00Z\"\n    },\n    {\n        \"id\": \"868c4d93-9597-4b5e-9165-ffe6fed4eb6a\",\n        \"position_id\": \"45eefa59-a7d8-4c24-b509-0bc752ef6a2b\",\n        \"title\": null,\n        \"start_date\": \"2020-05-20T00:00:00Z\",\n        \"end_date\": null,\n        \"service_start_date\": \"2020-05-20T00:00:00Z\",\n        \"service_end_date\": null,\n        \"dob\": \"1970-07-01T00:00:00Z\"\n    },\n    {\n        \"id\": \"2adfdf26-9f07-45e7-9dd6-cb86e92fc0c6\",\n        \"position_id\": \"d485b403-20c9-4651-b78d-4a08d0a5f5ba\",\n        \"title\": null,\n        \"start_date\": \"2020-01-01T00:00:00Z\",\n        \"end_date\": \"2020-09-20T00:00:00Z\",\n        \"service_start_date\": \"2020-01-01T00:00:00Z\",\n        \"service_end_date\": \"2020-09-20T00:00:00Z\",\n        \"dob\": \"1990-03-15T00:00:00Z\"\n    }\n]"
 						}
 					]
 				},
@@ -720,14 +754,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost/offices/:office_symbol/:group/occupancy",
+							"raw": "localhost/offices/:office_symbol/:group_slug/occupancy",
 							"host": [
 								"localhost"
 							],
 							"path": [
 								"offices",
 								":office_symbol",
-								":group",
+								":group_slug",
 								"occupancy"
 							],
 							"query": [
@@ -744,7 +778,7 @@
 									"value": "lrh"
 								},
 								{
-									"key": "group",
+									"key": "group_slug",
 									"value": "water-management"
 								}
 							]
