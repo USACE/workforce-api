@@ -25,3 +25,14 @@ func (s Store) ListGroupsByOffice(c echo.Context) error {
 	}
 	return c.JSON(http.StatusOK, sg)
 }
+
+// CreateOfficeGroup
+func (s Store) CreateOfficeGroup(c echo.Context) error {
+	var g models.Group
+	c.Bind(&g)
+	og, err := models.CreateOfficeGroup(s.Connection, g)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, messages.NewMessage(err.Error()))
+	}
+	return c.JSON(http.StatusOK, og)
+}

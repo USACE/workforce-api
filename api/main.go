@@ -12,19 +12,19 @@ import (
 	"github.com/USACE/workforce-api/api/workforce"
 
 	_ "github.com/jackc/pgx/v4"
-	"github.com/kelseyhightower/envconfig"
 	"github.com/labstack/echo/v4"
 )
 
 func main() {
 
 	// parse configuration from environment variables
-	var config app.Config
-	if err := envconfig.Process("workforce", &config); err != nil {
+	// Environment Variable Config
+	cfg, err := app.GetConfig()
+	if err != nil {
 		log.Fatal(err.Error())
 	}
 	// create store (database pool) from configuration
-	st, err := app.NewStore(config)
+	st, err := app.NewStore(*cfg)
 	if err != nil {
 		log.Fatal(err.Error())
 	}
@@ -35,19 +35,34 @@ func main() {
 	// Public Routes
 	public := e.Group("")
 
-	// Private Routes w/ Access Control
+	// Private Routes Supporting CAC (JWT) or Key Auth
 	private := e.Group("")
-	if config.AuthMocked {
-		// @todo. re-add JWTMock
-		// private.Use(middleware.JWTMock)
-		log.Println("Auth is Disabled...")
+
+	// JWT (CAC) Middleware
+	if cfg.AuthMocked {
+		private.Use(middleware.JWTMock(cfg.AuthMocked, true))
 	} else {
-		private.Use(middleware.JWT, middleware.AttachUserInfo)
+		private.Use(middleware.JWT(cfg.AuthMocked, true))
 	}
+	// Key Auth Middleware
+	private.Use(
+		middleware.KeyAuth(cfg.AuthMocked, cfg.ApplicationKey),
+		middleware.AttachUserInfo,
+	)
+
+	// Private Routes w/ Access Control
+	// private := e.Group("")
+	// if config.AuthMocked {
+	// 	// @todo. re-add JWTMock
+	// 	// private.Use(middleware.JWTMock)
+	// 	log.Println("Auth is Disabled...")
+	// } else {
+	// 	private.Use(middleware.JWT, middleware.AttachUserInfo)
+	// }
 
 	// App Routes (Intended to be used by application only)
 	key := e.Group("")
-	key.Use(middleware.KeyAuth(config.ApplicationKey))
+	key.Use(middleware.KeyAuth(cfg.AuthMocked, cfg.ApplicationKey))
 
 	// Health Check
 	public.GET("/health", func(c echo.Context) error {
@@ -74,6 +89,9 @@ func main() {
 	// Groups
 	public.GET("/groups", mp.ListGroups)
 	public.GET("/offices/:office_symbol/groups", mp.ListGroupsByOffice)
+
+	key.POST("/offices/:office_symbol/:group_slug/groups", mp.CreateOfficeGroup)
+	// key.DELETE("/offices/:office_symbol/:group_slug/groups/:group_id", mp.DeleteOfficeGroup)
 
 	// Office Positions/Employees
 	public.GET("/offices/:office_symbol/positions", mp.ListPositions)

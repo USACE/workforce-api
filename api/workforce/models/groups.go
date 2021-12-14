@@ -11,12 +11,35 @@ import (
 
 type Group struct {
 	ID               *uuid.UUID `json:"id,omitempty"`
+	OfficeID         *uuid.UUID `json:"office_id,omitempty"`
 	UID              string     `json:"uid"`
-	OfficeSymbol     string     `json:"office_symbol" db:"office_symbol"`
+	OfficeSymbol     string     `json:"office_symbol" param:"office_symbol" db:"office_symbol"`
 	Name             string     `json:"name"`
-	Slug             string     `json:"slug"`
+	Slug             string     `json:"slug" param:"group_slug"`
 	PositionsAllowed int        `json:"positions_allowed"`
 	LastVerified     *time.Time `json:"last_verified" db:"last_verified"`
+}
+
+// GetGroupByID
+func GetGroupByID(db *pgxpool.Pool, id uuid.UUID) (Group, error) {
+	var g Group
+	if err := pgxscan.Get(context.Background(), db, &g,
+		`SELECT
+			og.id,
+			og.office_id,
+			og.name,
+			og.slug,
+			og.positions_allowed,
+			og.last_verified
+		FROM
+			office_group AS og
+		WHERE
+			og.id = $1::uuid`,
+		id); err != nil {
+		return Group{}, err
+	}
+
+	return g, nil
 }
 
 // ListGroups
@@ -55,4 +78,18 @@ func ListGroupsByOffice(db *pgxpool.Pool, sym string) ([]Group, error) {
 		return nil, err
 	}
 	return gg, nil
+}
+
+// CreateOfficeGroup
+func CreateOfficeGroup(db *pgxpool.Pool, officeGroup Group) (Group, error) {
+	var id uuid.UUID
+	if err := db.QueryRow(context.Background(),
+		`INSERT INTO office_group (office_id, name, slug, positions_allowed) VALUES
+		((SELECT id FROM office AS o WHERE o.symbol ILIKE $1), $2, $3, $4) RETURNING id`,
+		officeGroup.OfficeSymbol, officeGroup.Name, officeGroup.Slug, officeGroup.PositionsAllowed,
+	).Scan(&id); err != nil {
+		return Group{}, err
+	}
+	return GetGroupByID(db, id)
+
 }
