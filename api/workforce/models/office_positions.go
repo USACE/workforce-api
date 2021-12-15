@@ -23,15 +23,6 @@ type Position struct {
 	CurrentOccupancy *Occupancy `json:"current_occupancy"`
 }
 
-type PositionAllocations struct {
-	OccupationCode string `json:"occupation_code"`
-	PayPlan        string `json:"pay_plan"`
-	Grade          int    `json:"grade"`
-	Allocated      int    `json:"allocated"`
-	Filled         int    `json:"filled"`
-	Target         int    `json:"target"`
-}
-
 const baseListPositionSql = `WITH current_occupancy_by_position as (
 	SELECT t.position_id, row_to_json(t) as current_occupancy
 	FROM (
@@ -138,8 +129,9 @@ func UpdateOfficePosition(db *pgxpool.Pool, p Position) (Position, error) {
         pay_plan_id = (SELECT id FROM pay_plan WHERE code = $5),
         grade = $6,
         is_supervisor = $7,
-        is_active = $8
-        WHERE id = $9
+        is_active = $8,
+        is_allocated = $9
+        WHERE id = $10
         RETURNING id`,
 		p.OccupationCode,
 		p.Title,
@@ -149,6 +141,7 @@ func UpdateOfficePosition(db *pgxpool.Pool, p Position) (Position, error) {
 		p.Grade,
 		p.IsSupervisor,
 		p.IsActive,
+		p.IsAllocated,
 		p.ID,
 	).Scan(&id); err != nil {
 		return Position{}, err

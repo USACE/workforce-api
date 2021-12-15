@@ -61,26 +61,26 @@ func main() {
 	public.GET("/pay_plans", mp.ListPayPlanCodes)
 
 	// Offices
-	public.GET("/offices", mp.ListOffices)
+	public.GET("/offices", mp.ListOffices) //CHECK
 
 	// Positions
-	public.GET("/position/:position_id", mp.GetPositionByID)
+	public.GET("/position/:position_id", mp.GetPositionByID) //CHECK
 
 	// Groups
-	public.GET("/groups", mp.ListGroups) // Used in Python script
-	public.GET("/offices/:office_symbol/groups", mp.ListGroupsByOffice)
+	public.GET("/groups", mp.ListGroups)                                // Used in Python script
+	public.GET("/offices/:office_symbol/groups", mp.ListGroupsByOffice) //CHECK
 
-	private.POST("/offices/:office_symbol/groups", mp.CreateOfficeGroup)
+	private.POST("/offices/:office_symbol/groups", mp.CreateOfficeGroup) //CHECK
 	// private.PUT("/offieces/:office_symbol/groups", mp.UpdateOfficeGroup)
-	private.DELETE("/offices/:office_symbol/groups/:group_id", mp.DeleteOfficeGroup)
+	private.DELETE("/offices/:office_symbol/groups/:group_id", mp.DeleteOfficeGroup) //CHECK
 
 	// Office Positions/Employees
-	public.GET("/offices/:office_symbol/positions", mp.ListPositions)
-	public.GET("/offices/:office_symbol/:group_slug/positions", mp.ListPositionsByGroup)
+	public.GET("/offices/:office_symbol/positions", mp.ListPositions)                    //CHECK
+	public.GET("/offices/:office_symbol/:group_slug/positions", mp.ListPositionsByGroup) //CHECK
 
-	private.POST("/offices/:office_symbol/positions", mp.CreateOfficePosition)
-	private.PUT("/offices/:office_symbol/:position_id", mp.UpdateOfficePosition)
-	private.DELETE("/offices/:office_symbol/position/:position_id", mp.DeleteOfficePosition)
+	private.POST("/offices/:office_symbol/positions", mp.CreateOfficePosition)                //CHECK
+	private.PUT("/offices/:office_symbol/positions/:position_id", mp.UpdateOfficePosition)    //CHECK
+	private.DELETE("/offices/:office_symbol/positions/:position_id", mp.DeleteOfficePosition) //CHECK
 
 	// Occupancy
 	private.POST("/offices/:office_symbol/occupancy", mp.CreateOccupancy)

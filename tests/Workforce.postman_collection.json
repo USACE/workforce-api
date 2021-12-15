@@ -203,7 +203,7 @@
 							"variable": [
 								{
 									"key": "office_symbol",
-									"value": "mvk"
+									"value": "lrn"
 								}
 							]
 						}
@@ -249,11 +249,11 @@
 							"variable": [
 								{
 									"key": "office_symbol",
-									"value": "mvk"
+									"value": "lrn"
 								},
 								{
 									"key": "group_id",
-									"value": "dac39f93-8aea-4a23-b4f7-df7f16f03840"
+									"value": "75a51bc1-9bda-4b0a-8705-897707dcb9b9"
 								}
 							]
 						}
@@ -282,7 +282,7 @@
 							"variable": [
 								{
 									"key": "position_id",
-									"value": "39fc35db-31b1-47c9-88e5-062ef39393a3",
+									"value": "964d3ba8-14a1-42d2-a6b7-25be6a853101",
 									"description": "UUID for the position"
 								}
 							]
@@ -320,99 +320,7 @@
 					]
 				},
 				{
-					"name": "Delete Position",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost/offices/:office_symbol/position/:position_id",
-							"host": [
-								"localhost"
-							],
-							"path": [
-								"offices",
-								":office_symbol",
-								"position",
-								":position_id"
-							],
-							"query": [
-								{
-									"key": "",
-									"value": null,
-									"disabled": true
-								}
-							],
-							"variable": [
-								{
-									"key": "office_symbol",
-									"value": "lrn"
-								},
-								{
-									"key": "position_id",
-									"value": "39fc35db-31b1-47c9-88e5-062ef39393a3",
-									"description": "UUID for the position"
-								}
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "Delete Position",
-							"originalRequest": {
-								"method": "DELETE",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "localhost/position/:position_id",
-									"host": [
-										"localhost"
-									],
-									"path": [
-										"position",
-										":position_id"
-									],
-									"query": [
-										{
-											"key": "",
-											"value": null,
-											"disabled": true
-										}
-									],
-									"variable": [
-										{
-											"key": "position_id",
-											"value": "39fc35db-31b1-47c9-88e5-062ef39393a3",
-											"description": "UUID for the position"
-										}
-									]
-								}
-							},
-							"_postman_previewlanguage": "json",
-							"header": null,
-							"cookie": [],
-							"body": "{\n    \"message\": \"Deleted id 39fc35db-31b1-47c9-88e5-062ef39393a3\"\n}"
-						}
-					]
-				},
-				{
-					"name": "Get Position By Office",
+					"name": "Get Office Positions",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -481,14 +389,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost/offices/:office_symbol/:group/positions",
+							"raw": "localhost/offices/:office_symbol/:group_slug/positions",
 							"host": [
 								"localhost"
 							],
 							"path": [
 								"offices",
 								":office_symbol",
-								":group",
+								":group_slug",
 								"positions"
 							],
 							"query": [
@@ -506,9 +414,8 @@
 									"description": "District code"
 								},
 								{
-									"key": "group",
-									"value": "water-management",
-									"description": "Office name as a slug"
+									"key": "group_slug",
+									"value": "nashville-district"
 								}
 							]
 						}
@@ -560,13 +467,13 @@
 					]
 				},
 				{
-					"name": "Create Position by Office and Group",
+					"name": "Create Office Position",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"group_slug\": \"water-is-wet\",\n    \"title\": \"Super Trooper Engineer\",\n    \"pay_plan\": \"GS\",\n    \"grade\": 15,\n    \"is_supervisor\": false,\n    \"is_active\": false,\n    \"occupation_code\": \"0810\"\n}\n",
+							"raw": "{\n    \"group_slug\": \"nashville-district\",\n    \"title\": \"Super Trooper Engineer\",\n    \"pay_plan\": \"GS\",\n    \"grade\": 15,\n    \"is_supervisor\": false,\n    \"is_active\": false,\n    \"occupation_code\": \"0810\"\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -593,14 +500,14 @@
 							"variable": [
 								{
 									"key": "office_symbol",
-									"value": "LRN"
+									"value": "lrn"
 								}
 							]
 						}
 					},
 					"response": [
 						{
-							"name": "Create Position by Office and Group",
+							"name": "Create Position by Office",
 							"originalRequest": {
 								"method": "POST",
 								"header": [],
@@ -653,13 +560,13 @@
 					]
 				},
 				{
-					"name": "Update Position by Office and Group",
+					"name": "Update Office Position",
 					"request": {
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"title\": \"NOT A Super Trooper\",\n    \"group_slug\": \"\",\n    \"pay_plan\": \"GS\",\n    \"grade\": 15,\n    \"is_supervisor\": false,\n    \"is_active\": false,\n    \"occupation_code\": \"0810\"\n}\n",
+							"raw": "{\n    \"title\": \"Super Trooper\",\n    \"group_slug\": \"nashville-district\",\n    \"pay_plan\": \"GS\",\n    \"grade\": 5,\n    \"is_active\": false,\n    \"is_supervisor\": false,\n    \"is_allocated\": false,\n    \"occupation_code\": \"0810\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -667,13 +574,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost/offices/:office_symbol/:position_id",
+							"raw": "localhost/offices/:office_symbol/positions/:position_id",
 							"host": [
 								"localhost"
 							],
 							"path": [
 								"offices",
 								":office_symbol",
+								"positions",
 								":position_id"
 							],
 							"query": [
@@ -691,15 +599,14 @@
 								},
 								{
 									"key": "position_id",
-									"value": "55152718-e22f-4db1-b545-3fc3c2e0786a",
-									"description": "UUID for the position"
+									"value": "d2c3c9b9-0caa-49ea-be51-d59c0854a12d"
 								}
 							]
 						}
 					},
 					"response": [
 						{
-							"name": "Update Position by Office and Group",
+							"name": "Update Office Position",
 							"originalRequest": {
 								"method": "PUT",
 								"header": [],
@@ -713,14 +620,13 @@
 									}
 								},
 								"url": {
-									"raw": "localhost/offices/:office_symbol/:group/positions/:position_id",
+									"raw": "localhost/offices/:office_symbol/positions/:position_id",
 									"host": [
 										"localhost"
 									],
 									"path": [
 										"offices",
 										":office_symbol",
-										":group",
 										"positions",
 										":position_id"
 									],
@@ -738,9 +644,106 @@
 											"description": "District code"
 										},
 										{
-											"key": "group",
+											"key": "position_id",
+											"value": "39fc35db-31b1-47c9-88e5-062ef39393a3",
+											"description": "UUID for the position"
+										},
+										{
 											"value": "water-management",
-											"description": "Office name as a slug"
+											"key": "group"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"id\": \"55152718-e22f-4db1-b545-3fc3c2e0786a\",\n    \"office_symbol\": \"LRN\",\n    \"group_slug\": \"water-resources\",\n    \"title\": \"NOT A Super Trooper\",\n    \"pay_plan\": \"GS\",\n    \"grade\": 15,\n    \"is_active\": false,\n    \"is_supervisor\": false,\n    \"occupation_code\": \"0810\",\n    \"occupation_name\": \"Civil Engineering\",\n    \"current_occupancy\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Office Position",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/offices/:office_symbol/positions/:position_id",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"offices",
+								":office_symbol",
+								"positions",
+								":position_id"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "office_symbol",
+									"value": "lrn"
+								},
+								{
+									"key": "position_id",
+									"value": "82a0b0d6-4260-4a8e-a001-d93e4728fac2",
+									"description": "UUID for the position"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Delete Position",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost/offices/:office_symbol/positions/:position_id",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"offices",
+										":office_symbol",
+										"positions",
+										":position_id"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "office_symbol",
+											"value": null
 										},
 										{
 											"key": "position_id",
@@ -753,7 +756,7 @@
 							"_postman_previewlanguage": "json",
 							"header": null,
 							"cookie": [],
-							"body": "{\n    \"id\": \"55152718-e22f-4db1-b545-3fc3c2e0786a\",\n    \"office_symbol\": \"LRN\",\n    \"group_slug\": \"water-resources\",\n    \"title\": \"NOT A Super Trooper\",\n    \"pay_plan\": \"GS\",\n    \"grade\": 15,\n    \"is_active\": false,\n    \"is_supervisor\": false,\n    \"occupation_code\": \"0810\",\n    \"occupation_name\": \"Civil Engineering\",\n    \"current_occupancy\": null\n}"
+							"body": "{\n    \"message\": \"Deleted id 39fc35db-31b1-47c9-88e5-062ef39393a3\"\n}"
 						}
 					]
 				}
