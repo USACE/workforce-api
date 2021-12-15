@@ -7,17 +7,17 @@ import (
 	"github.com/georgysavva/scany/pgxscan"
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v4/pgxpool"
+	"github.com/mozillazg/go-slugify"
 )
 
 type Group struct {
-	ID               *uuid.UUID `json:"id,omitempty"`
-	OfficeID         *uuid.UUID `json:"office_id,omitempty"`
-	UID              string     `json:"uid"`
-	OfficeSymbol     string     `json:"office_symbol" param:"office_symbol" db:"office_symbol"`
-	Name             string     `json:"name"`
-	Slug             string     `json:"slug" param:"group_slug"`
-	PositionsAllowed int        `json:"positions_allowed"`
-	LastVerified     *time.Time `json:"last_verified" db:"last_verified"`
+	ID           *uuid.UUID `json:"id,omitempty" param:"group_id"`
+	OfficeID     *uuid.UUID `json:"office_id,omitempty"`
+	UID          string     `json:"uid"`
+	OfficeSymbol string     `json:"office_symbol" param:"office_symbol" db:"office_symbol"`
+	Name         string     `json:"name"`
+	Slug         string     `json:"slug" param:"group_slug"`
+	LastVerified *time.Time `json:"last_verified" db:"last_verified"`
 }
 
 // GetGroupByID
@@ -26,15 +26,17 @@ func GetGroupByID(db *pgxpool.Pool, id uuid.UUID) (Group, error) {
 	if err := pgxscan.Get(context.Background(), db, &g,
 		`SELECT
 			og.id,
-			og.office_id,
-			og.name,
+			o.id AS office_id,
+			concat(lower(o.symbol), '-', og.slug) as uid,
+			o.symbol AS office_symbol,
+			o."name",
 			og.slug,
-			og.positions_allowed,
 			og.last_verified
 		FROM
-			office_group AS og
-		WHERE
-			og.id = $1::uuid`,
+			office AS o
+		JOIN office_group AS og ON
+			og.office_id = o.id
+		WHERE og.id = $1::uuid`,
 		id); err != nil {
 		return Group{}, err
 	}
@@ -65,7 +67,7 @@ func ListGroupsByOffice(db *pgxpool.Pool, sym string) ([]Group, error) {
 	gg := make([]Group, 0)
 	rows, err := db.Query(context.Background(),
 		`SELECT concat(lower(f.symbol), '-', g.slug) AS uid,
-			f.symbol AS office_symbol, g.name, g.slug, g.positions_allowed, g.last_verified
+			f.symbol AS office_symbol, g.name, g.slug, g.last_verified
 		FROM office_group g
 		JOIN office f ON f.id = g.office_id
 		WHERE f.symbol ILIKE $1`,
@@ -83,13 +85,30 @@ func ListGroupsByOffice(db *pgxpool.Pool, sym string) ([]Group, error) {
 // CreateOfficeGroup
 func CreateOfficeGroup(db *pgxpool.Pool, officeGroup Group) (Group, error) {
 	var id uuid.UUID
+	officeGroup.Slug = slugify.Slugify(officeGroup.Name)
 	if err := db.QueryRow(context.Background(),
-		`INSERT INTO office_group (office_id, name, slug, positions_allowed) VALUES
-		((SELECT id FROM office AS o WHERE o.symbol ILIKE $1), $2, $3, $4) RETURNING id`,
-		officeGroup.OfficeSymbol, officeGroup.Name, officeGroup.Slug, officeGroup.PositionsAllowed,
+		`INSERT INTO office_group (office_id, name, slug) VALUES
+		((SELECT id FROM office AS o WHERE o.symbol ILIKE $1), $2, $3) RETURNING id`,
+		officeGroup.OfficeSymbol, officeGroup.Name, officeGroup.Slug,
 	).Scan(&id); err != nil {
 		return Group{}, err
 	}
 	return GetGroupByID(db, id)
 
+}
+
+// DeleteOfficeGroup
+func DeleteOfficeGroup(db *pgxpool.Pool, officeGroup Group) (int64, error) {
+	var cnt int64
+	res, err := db.Exec(context.Background(),
+		`DELETE FROM office_group AS og
+		WHERE office_id = (SELECT id FROM office AS o WHERE o.symbol ILIKE $1)
+		AND og.id = $2`,
+		officeGroup.OfficeSymbol, officeGroup.ID,
+	)
+	if err != nil {
+		return cnt, err
+	}
+	cnt = res.RowsAffected()
+	return cnt, nil
 }

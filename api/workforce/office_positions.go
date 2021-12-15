@@ -62,13 +62,13 @@ func (s Store) CreateOfficePosition(c echo.Context) error {
 	return c.JSON(http.StatusOK, up)
 }
 
-// UpdatePosition
-func (s Store) UpdatePosition(c echo.Context) error {
+// UpdateOfficePosition
+func (s Store) UpdateOfficePosition(c echo.Context) error {
 	var p models.Position
 	if err := c.Bind(&p); err != nil {
 		return c.JSON(http.StatusInternalServerError, err)
 	}
-	up, err := models.UpdatePosition(s.Connection, p)
+	up, err := models.UpdateOfficePosition(s.Connection, p)
 	if err != nil {
 		if err == pgx.ErrNoRows {
 			return c.JSON(http.StatusNotFound, messages.DefaultMessageNotFound)
@@ -78,13 +78,11 @@ func (s Store) UpdatePosition(c echo.Context) error {
 	return c.JSON(http.StatusOK, up)
 }
 
-// DeletePosition
-func (s Store) DeletePosition(c echo.Context) error {
-	id, err := uuid.Parse(c.Param("position_id"))
-	if err != nil {
-		return c.JSON(http.StatusInternalServerError, err.Error())
-	}
-	i, err := models.DeletePosition(s.Connection, id)
+// DeleteOfficePosition
+func (s Store) DeleteOfficePosition(c echo.Context) error {
+	id, _ := uuid.Parse(c.Param("position_id"))
+	o := c.Param("office_symbol")
+	i, err := models.DeleteOfficePosition(s.Connection, id, o)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err)
 	}

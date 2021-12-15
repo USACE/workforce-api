@@ -38,31 +38,12 @@ func main() {
 	// Private Routes Supporting CAC (JWT) or Key Auth
 	private := e.Group("")
 
-	// JWT (CAC) Middleware
-	if cfg.AuthMocked {
-		private.Use(middleware.JWTMock(cfg.AuthMocked, true))
-	} else {
-		private.Use(middleware.JWT(cfg.AuthMocked, true))
-	}
-	// Key Auth Middleware
-	private.Use(
-		middleware.KeyAuth(cfg.AuthMocked, cfg.ApplicationKey),
-		middleware.AttachUserInfo,
-	)
-
 	// Private Routes w/ Access Control
-	// private := e.Group("")
-	// if config.AuthMocked {
-	// 	// @todo. re-add JWTMock
-	// 	// private.Use(middleware.JWTMock)
-	// 	log.Println("Auth is Disabled...")
-	// } else {
-	// 	private.Use(middleware.JWT, middleware.AttachUserInfo)
-	// }
-
-	// App Routes (Intended to be used by application only)
-	key := e.Group("")
-	key.Use(middleware.KeyAuth(cfg.AuthMocked, cfg.ApplicationKey))
+	if cfg.AuthMocked {
+		private.Use(middleware.JWTMock, middleware.AttachUserInfo)
+	} else {
+		private.Use(middleware.JWT, middleware.AttachUserInfo)
+	}
 
 	// Health Check
 	public.GET("/health", func(c echo.Context) error {
@@ -75,7 +56,7 @@ func main() {
 	// Manpower Store
 	mp := workforce.Store{Connection: st.Connection}
 
-	// Codes
+	// Codes --> Used in Python script
 	public.GET("/occupation_codes", mp.ListOccupationCodes)
 	public.GET("/pay_plans", mp.ListPayPlanCodes)
 
@@ -84,27 +65,28 @@ func main() {
 
 	// Positions
 	public.GET("/position/:position_id", mp.GetPositionByID)
-	key.DELETE("/position/:position_id", mp.DeletePosition)
 
 	// Groups
-	public.GET("/groups", mp.ListGroups)
+	public.GET("/groups", mp.ListGroups) // Used in Python script
 	public.GET("/offices/:office_symbol/groups", mp.ListGroupsByOffice)
 
-	key.POST("/offices/:office_symbol/:group_slug/groups", mp.CreateOfficeGroup)
-	// key.DELETE("/offices/:office_symbol/:group_slug/groups/:group_id", mp.DeleteOfficeGroup)
+	private.POST("/offices/:office_symbol/groups", mp.CreateOfficeGroup)
+	// private.PUT("/offieces/:office_symbol/groups", mp.UpdateOfficeGroup)
+	private.DELETE("/offices/:office_symbol/groups/:group_id", mp.DeleteOfficeGroup)
 
 	// Office Positions/Employees
 	public.GET("/offices/:office_symbol/positions", mp.ListPositions)
 	public.GET("/offices/:office_symbol/:group_slug/positions", mp.ListPositionsByGroup)
 
-	key.POST("/offices/:office_symbol/:group_slug/positions", mp.CreateOfficePosition)
-	key.PUT("/offices/:office_symbol/:group_slug/:position_id", mp.UpdatePosition)
+	private.POST("/offices/:office_symbol/positions", mp.CreateOfficePosition)
+	private.PUT("/offices/:office_symbol/:position_id", mp.UpdateOfficePosition)
+	private.DELETE("/offices/:office_symbol/position/:position_id", mp.DeleteOfficePosition)
 
 	// Occupancy
-	key.POST("/occupancy", mp.CreateOccupancy)
+	private.POST("/offices/:office_symbol/occupancy", mp.CreateOccupancy)
 	public.GET("/occupancy/:occupancy_id", mp.GetOccupancyByID)
 	public.GET("/offices/:office_symbol/occupancy", mp.ListOccupancy)
-	public.GET("offices/:office_symbol/:group_slug/occupancy", mp.ListOccupancyByGroup)
+	public.GET("/offices/:office_symbol/:group_slug/occupancy", mp.ListOccupancyByGroup)
 	// key.PUT("", mp.UpdateOccupancy)
 	// key.DELETE("", mp.DeleteOccupancy)
 

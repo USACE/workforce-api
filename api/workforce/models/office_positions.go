@@ -17,9 +17,19 @@ type Position struct {
 	Grade            int        `json:"grade"`
 	IsActive         bool       `json:"is_active"`
 	IsSupervisor     bool       `json:"is_supervisor"`
+	IsAllocated      bool       `json:"is_allocated"`
 	OccupationCode   string     `json:"occupation_code"`
 	OccupationName   string     `json:"occupation_name"`
 	CurrentOccupancy *Occupancy `json:"current_occupancy"`
+}
+
+type PositionAllocations struct {
+	OccupationCode string `json:"occupation_code"`
+	PayPlan        string `json:"pay_plan"`
+	Grade          int    `json:"grade"`
+	Allocated      int    `json:"allocated"`
+	Filled         int    `json:"filled"`
+	Target         int    `json:"target"`
 }
 
 const baseListPositionSql = `WITH current_occupancy_by_position as (
@@ -118,7 +128,7 @@ func CreateOfficePosition(db *pgxpool.Pool, p Position) (Position, error) {
 }
 
 // UpdatePosition
-func UpdatePosition(db *pgxpool.Pool, p Position) (Position, error) {
+func UpdateOfficePosition(db *pgxpool.Pool, p Position) (Position, error) {
 	var id uuid.UUID
 	if err := db.QueryRow(context.Background(),
 		`UPDATE position SET
@@ -148,7 +158,7 @@ func UpdatePosition(db *pgxpool.Pool, p Position) (Position, error) {
 }
 
 // DeletePosition
-func DeletePosition(db *pgxpool.Pool, id uuid.UUID) (int64, error) {
+func DeleteOfficePosition(db *pgxpool.Pool, id uuid.UUID, officeSymbol string) (int64, error) {
 	var cnt int64
 	res, err := db.Exec(context.Background(), `DELETE FROM position WHERE id = $1`, id)
 	if err != nil {

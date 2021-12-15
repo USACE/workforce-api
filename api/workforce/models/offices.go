@@ -9,16 +9,11 @@ import (
 )
 
 type Office struct {
-	ID               uuid.UUID `json:"id"`
-	Name             string    `json:"name"`
-	Symbol           string    `json:"symbol"`
-	PositionsTarget  int       `json:"positions_target"`
-	PositionsAllowed int       `json:"positions_allowed"`
-	PositionsFilled  int       `json:"positions_filled"`
+	ID     uuid.UUID `json:"id"`
+	Name   string    `json:"name"`
+	Symbol string    `json:"symbol"`
 	ParentOffice
 }
-
-// Vacancies      int       `json:"positions_open"`
 
 type ParentOffice struct {
 	ID     *uuid.UUID `json:"parent_id" db:"parent_id"`
@@ -31,21 +26,16 @@ func ListOffices(db *pgxpool.Pool) ([]Office, error) {
 	if err := pgxscan.Select(context.Background(), db, &oo,
 		`SELECT
 			o.id,
-			o.name,
+			o."name",
 			o.symbol,
-			count(o.id) AS positions_filled,
-			og.positions_allowed
+			o2.id AS parent_id,
+			o2.name AS parent_name,
+			o2.symbol AS parent_symbol
 		FROM
-			"position" AS p
-		JOIN office_group AS og ON
-			og.id = p.office_group_id
-		JOIN office AS o ON
-			o.id = og.office_id
-		JOIN occupancy AS o2 ON
-			o2.position_id = p.id
-		WHERE
-			p.is_active IS TRUE
-		GROUP BY o.id, og.positions_allowed`,
+			office AS o
+		JOIN office AS o2 ON
+			o2.id = o.parent_id
+		ORDER BY o2.symbol, o.symbol`,
 	); err != nil {
 		return oo, err
 	}

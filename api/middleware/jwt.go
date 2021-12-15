@@ -2,7 +2,6 @@ package middleware
 
 import (
 	"github.com/golang-jwt/jwt"
-	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
 
@@ -22,41 +21,16 @@ tLLHT5MavkIhYxaAh33D8s8CAwEAAQ==
 -----END PUBLIC KEY-----`
 
 // JWT is Fully Configured JWT Middleware to Support CWBI-Auth
-func JWT(isDisabled bool, skipIfKey bool) echo.MiddlewareFunc {
-	return middleware.JWTWithConfig(middleware.JWTConfig{
-		SigningMethod: "RS512",
-		KeyFunc: func(t *jwt.Token) (interface{}, error) {
-			return jwt.ParseRSAPublicKeyFromPEM([]byte(publicKey))
-		},
-		Skipper: func(c echo.Context) bool {
-			if isDisabled {
-				return true
-			}
-			if skipIfKey && c.QueryParam("key") != "" {
-				return true
-			}
-			return false
-		},
-	})
-}
+var JWT = middleware.JWTWithConfig(middleware.JWTConfig{
+	SigningMethod: "RS512",
+	KeyFunc: func(t *jwt.Token) (interface{}, error) {
+		return jwt.ParseRSAPublicKeyFromPEM([]byte(publicKey))
+	},
+})
 
 // JWTMock is JWT Middleware
-func JWTMock(isDisabled bool, skipIfKey bool) echo.MiddlewareFunc {
-	return middleware.JWTWithConfig(
-		middleware.JWTConfig{
-			SigningKey: []byte("mock"),
-			// `skipIfKey` behavior allows skipping of the middleware
-			// if ?key= is in Query Params. This is useful for routes
-			// where JWT Auth or simple Key Auth is allowed.
-			Skipper: func(c echo.Context) bool {
-				if isDisabled {
-					return true
-				}
-				if skipIfKey && c.QueryParam("key") != "" {
-					return true
-				}
-				return false
-			},
-		},
-	)
-}
+var JWTMock = middleware.JWTWithConfig(
+	middleware.JWTConfig{
+		SigningKey: []byte("mock"),
+	},
+)

@@ -13,6 +13,7 @@ import (
 // CreateOccupancy
 func (s Store) CreateOccupancy(c echo.Context) error {
 	var co models.Occupancy
+
 	if err := c.Bind(&co); err != nil {
 		return c.JSON(http.StatusBadRequest, err)
 	}
