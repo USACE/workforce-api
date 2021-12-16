@@ -53,8 +53,9 @@ func CreateOccupancy(db *pgxpool.Pool, o Occupancy) (Occupancy, error) {
 }
 
 // UpdateOccupancy
-// func UpdateOccupancy(db *pgxpool.Pool) {
-
+// func UpdateOccupancy(db *pgxpool.Pool, occupancy Occupancy) (Occupancy, error) {
+// 	var id uuid.UUID
+// 	return GetOccupancyByID(db, id)
 // }
 
 // ListOccupancy

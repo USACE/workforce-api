@@ -523,7 +523,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"group_slug\": \"nashville-district\",\n    \"title\": \"Super Trooper Engineer\",\n    \"pay_plan\": \"GS\",\n    \"grade\": 15,\n    \"is_supervisor\": false,\n    \"is_active\": false,\n    \"occupation_code\": \"0810\"\n}\n",
+							"raw": "{\n    \"group_slug\": \"nashville-district\",\n    \"title\": \"Super Trooper Engineer\",\n    \"pay_plan\": \"GS\",\n    \"grade\": 15,\n    \"is_supervisor\": false,\n    \"is_active\": false,\n    \"is_allocated\": true,\n    \"occupation_code\": \"0810\"\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -649,7 +649,7 @@
 								},
 								{
 									"key": "position_id",
-									"value": "d2c3c9b9-0caa-49ea-be51-d59c0854a12d"
+									"value": "e809cb6c-8d79-4ad3-9872-be98d9540cfe"
 								}
 							]
 						}
@@ -1059,6 +1059,89 @@
 					"response": [
 						{
 							"name": "Create Occupancy",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"position_id\": \"2c8746e3-5aed-4db9-854b-8aedf28bc856\",\n    \"title\": \"PITA\",\n    \"start_date\": \"2021-01-01T12:00:00Z\",\n    \"end_date\": null,\n    \"service_start_date\": \"2000-01-01T12:00:00Z\",\n    \"service_end_date\": null,\n    \"dob\": \"1990-01-01T12:00:00Z\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost/occupancy",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"occupancy"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "{\n    \"id\": \"00000000-0000-0000-0000-000000000000\",\n    \"position_id\": \"00000000-0000-0000-0000-000000000000\",\n    \"title\": \"PITA\",\n    \"start_date\": \"2021-01-01T00:00:00Z\",\n    \"end_date\": null,\n    \"service_start_date\": \"2000-01-01T00:00:00Z\",\n    \"service_end_date\": null,\n    \"dob\": \"1990-01-01T00:00:00Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Occupancy",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"position_id\": \"6ce9f21b-3722-4fdf-b72c-a028d7201ec6\",\n    \"title\": \"THIS IS MY NEW TITLE\",\n    \"start_date\": \"2005-10-20T00:00:00Z\",\n    \"end_date\": null,\n    \"service_start_date\": \"2001-10-20T00:00:00Z\",\n    \"service_end_date\": null,\n    \"dob\": \"1990-03-01T00:00:00Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/offices/:office_symbol/occupancy/:occupancy_id",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"offices",
+								":office_symbol",
+								"occupancy",
+								":occupancy_id"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "office_symbol",
+									"value": "lrn"
+								},
+								{
+									"key": "occupancy_id",
+									"value": "a119ad8a-2b94-4d8f-a3c9-b985904e6f69"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update Occupancy",
 							"originalRequest": {
 								"method": "POST",
 								"header": [],
