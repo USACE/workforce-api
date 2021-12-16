@@ -13,7 +13,6 @@ import (
 // CreateOccupancy
 func (s Store) CreateOccupancy(c echo.Context) error {
 	var co models.Occupancy
-
 	if err := c.Bind(&co); err != nil {
 		return c.JSON(http.StatusBadRequest, err)
 	}
@@ -23,6 +22,11 @@ func (s Store) CreateOccupancy(c echo.Context) error {
 	}
 	return c.JSON(http.StatusOK, o)
 }
+
+// UpdateOccupancy
+// func (s Store) UpdateOccupancy(c echo.Context) error {
+// 	return c.JSON(http.StatusOK, "OK")
+// }
 
 // GetOccupancyByID
 func (s Store) GetOccupancyByID(c echo.Context) error {
@@ -41,8 +45,8 @@ func (s Store) GetOccupancyByID(c echo.Context) error {
 }
 
 //ListOccupancy
-func (s Store) ListOccupancy(c echo.Context) error {
-	oo, err := models.ListOccupancy(s.Connection, c.Param("office_symbol"))
+func (s Store) ListOccupancyByOffice(c echo.Context) error {
+	oo, err := models.ListOccupancyByOffice(s.Connection, c.Param("office_symbol"))
 	if err != nil {
 		if err == pgx.ErrNoRows {
 			return c.JSON(http.StatusNoContent, oo)

@@ -52,8 +52,13 @@ func CreateOccupancy(db *pgxpool.Pool, o Occupancy) (Occupancy, error) {
 	return GetOccupancyByID(db, id)
 }
 
+// UpdateOccupancy
+// func UpdateOccupancy(db *pgxpool.Pool) {
+
+// }
+
 // ListOccupancy
-func ListOccupancy(db *pgxpool.Pool, officeSymbol string) ([]Occupancy, error) {
+func ListOccupancyByOffice(db *pgxpool.Pool, officeSymbol string) ([]Occupancy, error) {
 	oo := make([]Occupancy, 0)
 	if err := pgxscan.Select(context.Background(), db, &oo,
 		baseListOccupancySql+" WHERE office_symbol ILIKE $1",

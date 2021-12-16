@@ -3,7 +3,6 @@ module github.com/USACE/workforce-api/api
 go 1.16
 
 require (
-	github.com/aws/aws-sdk-go v1.41.9
 	github.com/georgysavva/scany v0.2.9
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/google/uuid v1.3.0

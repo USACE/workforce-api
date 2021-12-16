@@ -29,7 +29,7 @@ func GetGroupByID(db *pgxpool.Pool, id uuid.UUID) (Group, error) {
 			o.id AS office_id,
 			concat(lower(o.symbol), '-', og.slug) as uid,
 			o.symbol AS office_symbol,
-			o."name",
+			og."name",
 			og.slug,
 			og.last_verified
 		FROM
@@ -95,6 +95,22 @@ func CreateOfficeGroup(db *pgxpool.Pool, officeGroup Group) (Group, error) {
 	}
 	return GetGroupByID(db, id)
 
+}
+
+// UpdateOfficeGroup
+func UpdateOfficeGroup(db *pgxpool.Pool, officeGroup Group) (Group, error) {
+	var id uuid.UUID
+	if err := db.QueryRow(context.Background(),
+		`UPDATE office_group SET
+		name = $1
+		WHERE id = $2 AND
+		office_id = (SELECT id FROM office WHERE symbol ILIKE $3)
+		RETURNING id`,
+		officeGroup.Name, officeGroup.ID, officeGroup.OfficeSymbol,
+	).Scan(&id); err != nil {
+		return Group{Name: "NO NEW NAME"}, nil
+	}
+	return GetGroupByID(db, id)
 }
 
 // DeleteOfficeGroup

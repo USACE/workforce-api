@@ -30,10 +30,25 @@ func (s Store) ListGroupsByOffice(c echo.Context) error {
 // CreateOfficeGroup
 func (s Store) CreateOfficeGroup(c echo.Context) error {
 	var g models.Group
-	c.Bind(&g)
+	if err := c.Bind(&g); err != nil {
+		return c.JSON(http.StatusInternalServerError, messages.NewMessage(err.Error()))
+	}
 	og, err := models.CreateOfficeGroup(s.Connection, g)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, messages.NewMessage(err.Error()))
+	}
+	return c.JSON(http.StatusOK, og)
+}
+
+// UpdateOfficeGroup
+func (s Store) UpdateOfficeGroup(c echo.Context) error {
+	var g models.Group
+	if err := c.Bind(&g); err != nil {
+		return c.JSON(http.StatusBadRequest, err)
+	}
+	og, err := models.UpdateOfficeGroup(s.Connection, g)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, messages.NewMessage(err.Error()))
 	}
 	return c.JSON(http.StatusOK, og)
 }

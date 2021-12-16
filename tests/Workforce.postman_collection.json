@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "a0e79b23-eaf7-48bd-a9f1-3631c4b2835b",
+		"_postman_id": "07674ab2-1c11-4c8c-8e15-25c0d053a20b",
 		"name": "Workforce",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -40,7 +40,7 @@
 								}
 							},
 							"_postman_previewlanguage": "json",
-							"header": null,
+							"header": [],
 							"cookie": [],
 							"body": "[\n    {\n        \"id\": \"9f7be684-bd9e-4784-8282-2694a6e938a2\",\n        \"name\": \"Coastal and Hydraulics Laboratory\",\n        \"symbol\": \"CHL\",\n        \"parent_id\": \"ad667c3d-59de-47cc-81f0-7d55eae779d9\",\n        \"parent_name\": \"Engineering Research and Development Center\",\n        \"parent_symbol\": \"ERDC\"\n    },\n    {\n        \"id\": \"2f4ad9c7-4b82-4f29-ab4e-56c6458e9f26\",\n        \"name\": \"Cold Regions Research and Engineering Laboratory\",\n        \"symbol\": \"CRREL\",\n        \"parent_id\": \"ad667c3d-59de-47cc-81f0-7d55eae779d9\",\n        \"parent_name\": \"Engineering Research and Development Center\",\n        \"parent_symbol\": \"ERDC\"\n    }\n]"
 						}
@@ -98,7 +98,7 @@
 								}
 							},
 							"_postman_previewlanguage": "json",
-							"header": null,
+							"header": [],
 							"cookie": [],
 							"body": "[\n    {\n        \"id\": \"c5fbbb80-3cb5-4407-a8b0-d5fd105714fc\",\n        \"uid\": \"lrn-water-resources\",\n        \"office_symbol\": \"LRN\",\n        \"name\": \"Water Resources\",\n        \"slug\": \"water-resources\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"5db16a83-f38b-4a16-8aa1-ea1175c6003e\",\n        \"uid\": \"lrn-water-management\",\n        \"office_symbol\": \"LRN\",\n        \"name\": \"Water Management\",\n        \"slug\": \"water-management\",\n        \"last_verified\": null\n    }\n]"
 						}
@@ -159,7 +159,7 @@
 								}
 							},
 							"_postman_previewlanguage": "json",
-							"header": null,
+							"header": [],
 							"cookie": [],
 							"body": "[\n    {\n        \"uid\": \"lrn-water-resources\",\n        \"office_symbol\": \"LRN\",\n        \"name\": \"Water Resources\",\n        \"slug\": \"water-resources\",\n        \"last_verified\": null\n    },\n    {\n        \"uid\": \"lrn-water-management\",\n        \"office_symbol\": \"LRN\",\n        \"name\": \"Water Management\",\n        \"slug\": \"water-management\",\n        \"last_verified\": null\n    }\n]"
 						}
@@ -204,6 +204,56 @@
 								{
 									"key": "office_symbol",
 									"value": "lrn"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Office Group",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"NEW NAME\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/offices/:office_symbol/groups/:group_id",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"offices",
+								":office_symbol",
+								"groups",
+								":group_id"
+							],
+							"variable": [
+								{
+									"key": "office_symbol",
+									"value": "lrn"
+								},
+								{
+									"key": "group_id",
+									"value": "5c87698f-ebe1-42aa-a0b9-51cf919e2c4c"
 								}
 							]
 						}
@@ -313,7 +363,7 @@
 								}
 							},
 							"_postman_previewlanguage": "json",
-							"header": null,
+							"header": [],
 							"cookie": [],
 							"body": "{\n    \"id\": \"39fc35db-31b1-47c9-88e5-062ef39393a3\",\n    \"office_symbol\": \"LRN\",\n    \"group_slug\": \"water-resources\",\n    \"title\": \"Water Resources Section Chief\",\n    \"pay_plan\": \"GS\",\n    \"grade\": 13,\n    \"is_active\": true,\n    \"is_supervisor\": true,\n    \"occupation_code\": \"0810\",\n    \"occupation_name\": \"Civil Engineering\",\n    \"current_occupancy\": null\n}"
 						}
@@ -377,7 +427,7 @@
 								}
 							},
 							"_postman_previewlanguage": "json",
-							"header": null,
+							"header": [],
 							"cookie": [],
 							"body": "[\n    {\n        \"id\": \"8e9e6bcf-18f5-4cc8-ac1b-71bfd9503820\",\n        \"office_symbol\": \"LRH\",\n        \"group_slug\": \"huntington-district\",\n        \"title\": \"Branch Chief\",\n        \"pay_plan\": \"GS\",\n        \"grade\": 14,\n        \"is_active\": true,\n        \"is_supervisor\": true,\n        \"occupation_code\": \"0000\",\n        \"occupation_name\": \"Miscellaneous\",\n        \"current_occupancy\": null\n    },\n    {\n        \"id\": \"cd01ddcd-a7a8-4f85-ad59-f0fd7404c8d4\",\n        \"office_symbol\": \"LRH\",\n        \"group_slug\": \"huntington-district\",\n        \"title\": \"Branch Chief\",\n        \"pay_plan\": \"GS\",\n        \"grade\": 14,\n        \"is_active\": false,\n        \"is_supervisor\": true,\n        \"occupation_code\": \"0000\",\n        \"occupation_name\": \"Miscellaneous\",\n        \"current_occupancy\": null\n    }\n]"
 						}
@@ -460,7 +510,7 @@
 								}
 							},
 							"_postman_previewlanguage": "json",
-							"header": null,
+							"header": [],
 							"cookie": [],
 							"body": "[\n    {\n        \"id\": \"cc2c36d4-455a-47d2-ab7c-35bad5ea7410\",\n        \"office_symbol\": \"LRN\",\n        \"group_slug\": \"water-management\",\n        \"title\": \"Water Management Section Chief\",\n        \"pay_plan\": \"GS\",\n        \"grade\": 13,\n        \"is_active\": true,\n        \"is_supervisor\": true,\n        \"occupation_code\": \"0810\",\n        \"occupation_name\": \"Civil Engineering\",\n        \"current_occupancy\": null\n    },\n    {\n        \"id\": \"b91d5fdb-3993-4ff0-8f5c-2abd1400d81f\",\n        \"office_symbol\": \"LRN\",\n        \"group_slug\": \"water-management\",\n        \"title\": \"RTS Navigation\",\n        \"pay_plan\": \"GS\",\n        \"grade\": 13,\n        \"is_active\": true,\n        \"is_supervisor\": false,\n        \"occupation_code\": \"0810\",\n        \"occupation_name\": \"Civil Engineering\",\n        \"current_occupancy\": null\n    }\n]"
 						}
@@ -493,7 +543,7 @@
 							"query": [
 								{
 									"key": "",
-									"value": null,
+									"value": "",
 									"disabled": true
 								}
 							],
@@ -553,7 +603,7 @@
 								}
 							},
 							"_postman_previewlanguage": "json",
-							"header": null,
+							"header": [],
 							"cookie": [],
 							"body": "{\n    \"id\": \"55152718-e22f-4db1-b545-3fc3c2e0786a\",\n    \"office_symbol\": \"LRN\",\n    \"group_slug\": \"water-management\",\n    \"title\": \"Super Trooper Engineer\",\n    \"pay_plan\": \"GS\",\n    \"grade\": 15,\n    \"is_active\": false,\n    \"is_supervisor\": false,\n    \"occupation_code\": \"0810\",\n    \"occupation_name\": \"Civil Engineering\",\n    \"current_occupancy\": null\n}"
 						}
@@ -649,14 +699,14 @@
 											"description": "UUID for the position"
 										},
 										{
-											"value": "water-management",
-											"key": "group"
+											"key": "group",
+											"value": "water-management"
 										}
 									]
 								}
 							},
 							"_postman_previewlanguage": "json",
-							"header": null,
+							"header": [],
 							"cookie": [],
 							"body": "{\n    \"id\": \"55152718-e22f-4db1-b545-3fc3c2e0786a\",\n    \"office_symbol\": \"LRN\",\n    \"group_slug\": \"water-resources\",\n    \"title\": \"NOT A Super Trooper\",\n    \"pay_plan\": \"GS\",\n    \"grade\": 15,\n    \"is_active\": false,\n    \"is_supervisor\": false,\n    \"occupation_code\": \"0810\",\n    \"occupation_name\": \"Civil Engineering\",\n    \"current_occupancy\": null\n}"
 						}
@@ -690,7 +740,7 @@
 							"query": [
 								{
 									"key": "",
-									"value": null,
+									"value": "",
 									"disabled": true
 								}
 							],
@@ -754,7 +804,7 @@
 								}
 							},
 							"_postman_previewlanguage": "json",
-							"header": null,
+							"header": [],
 							"cookie": [],
 							"body": "{\n    \"message\": \"Deleted id 39fc35db-31b1-47c9-88e5-062ef39393a3\"\n}"
 						}
@@ -811,7 +861,7 @@
 								}
 							},
 							"_postman_previewlanguage": "json",
-							"header": null,
+							"header": [],
 							"cookie": [],
 							"body": "{\n    \"id\": \"a119ad8a-2b94-4d8f-a3c9-b985904e6f69\",\n    \"position_id\": \"a25c9ec2-fc14-4f7e-bde3-177fa9de4208\",\n    \"title\": null,\n    \"start_date\": \"2005-10-20T00:00:00Z\",\n    \"end_date\": null,\n    \"service_start_date\": \"2001-10-20T00:00:00Z\",\n    \"service_end_date\": null,\n    \"dob\": \"1990-03-01T00:00:00Z\"\n}"
 						}
@@ -843,7 +893,7 @@
 							"variable": [
 								{
 									"key": "office_symbol",
-									"value": "lrh"
+									"value": "lrn"
 								}
 							]
 						}
@@ -881,7 +931,7 @@
 								}
 							},
 							"_postman_previewlanguage": "json",
-							"header": null,
+							"header": [],
 							"cookie": [],
 							"body": "[\n    {\n        \"id\": \"a119ad8a-2b94-4d8f-a3c9-b985904e6f69\",\n        \"position_id\": \"a25c9ec2-fc14-4f7e-bde3-177fa9de4208\",\n        \"title\": null,\n        \"start_date\": \"2005-10-20T00:00:00Z\",\n        \"end_date\": null,\n        \"service_start_date\": \"2001-10-20T00:00:00Z\",\n        \"service_end_date\": null,\n        \"dob\": \"1990-03-01T00:00:00Z\"\n    },\n    {\n        \"id\": \"f3a3cd1a-97c5-47a0-840a-3be45fae2bc7\",\n        \"position_id\": \"45eefa59-a7d8-4c24-b509-0bc752ef6a2b\",\n        \"title\": null,\n        \"start_date\": \"2001-10-20T00:00:00Z\",\n        \"end_date\": \"2020-04-01T00:00:00Z\",\n        \"service_start_date\": \"1990-04-16T00:00:00Z\",\n        \"service_end_date\": null,\n        \"dob\": \"1970-07-01T00:00:00Z\"\n    }\n]"
 						}
@@ -914,11 +964,11 @@
 							"variable": [
 								{
 									"key": "office_symbol",
-									"value": "lrh"
+									"value": "lrn"
 								},
 								{
 									"key": "group_slug",
-									"value": "water-management"
+									"value": "nashville-district"
 								}
 							]
 						}
@@ -961,7 +1011,7 @@
 								}
 							},
 							"_postman_previewlanguage": "json",
-							"header": null,
+							"header": [],
 							"cookie": [],
 							"body": "[\n    {\n        \"id\": \"a119ad8a-2b94-4d8f-a3c9-b985904e6f69\",\n        \"position_id\": \"a25c9ec2-fc14-4f7e-bde3-177fa9de4208\",\n        \"title\": null,\n        \"start_date\": \"2005-10-20T00:00:00Z\",\n        \"end_date\": null,\n        \"service_start_date\": \"2001-10-20T00:00:00Z\",\n        \"service_end_date\": null,\n        \"dob\": \"1990-03-01T00:00:00Z\"\n    },\n    {\n        \"id\": \"f3a3cd1a-97c5-47a0-840a-3be45fae2bc7\",\n        \"position_id\": \"45eefa59-a7d8-4c24-b509-0bc752ef6a2b\",\n        \"title\": null,\n        \"start_date\": \"2001-10-20T00:00:00Z\",\n        \"end_date\": \"2020-04-01T00:00:00Z\",\n        \"service_start_date\": \"1990-04-16T00:00:00Z\",\n        \"service_end_date\": null,\n        \"dob\": \"1970-07-01T00:00:00Z\"\n    }\n]"
 						}
@@ -974,7 +1024,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"position_id\": \"a25c9ec2-fc14-4f7e-bde3-177fa9de4208\",\n    \"title\": \"THIS IS MY NEW TITLE\",\n    \"start_date\": \"2005-10-20T00:00:00Z\",\n    \"end_date\": null,\n    \"service_start_date\": \"2001-10-20T00:00:00Z\",\n    \"service_end_date\": null,\n    \"dob\": \"1990-03-01T00:00:00Z\"\n}",
+							"raw": "{\n    \"position_id\": \"964d3ba8-14a1-42d2-a6b7-25be6a853101\",\n    \"title\": \"THIS IS MY NEW TITLE\",\n    \"start_date\": \"2005-10-20T00:00:00Z\",\n    \"end_date\": null,\n    \"service_start_date\": \"2001-10-20T00:00:00Z\",\n    \"service_end_date\": null,\n    \"dob\": \"1990-03-01T00:00:00Z\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -982,20 +1032,19 @@
 							}
 						},
 						"url": {
-							"raw": "localhost/offices/:office_symbol/:group_slug/occupancy",
+							"raw": "localhost/offices/:office_symbol/occupancy",
 							"host": [
 								"localhost"
 							],
 							"path": [
 								"offices",
 								":office_symbol",
-								":group_slug",
 								"occupancy"
 							],
 							"query": [
 								{
 									"key": "",
-									"value": null,
+									"value": "",
 									"disabled": true
 								}
 							],
@@ -1003,10 +1052,6 @@
 								{
 									"key": "office_symbol",
 									"value": "mvk"
-								},
-								{
-									"key": "group_slug",
-									"value": "water-control-water-manage-section"
 								}
 							]
 						}
@@ -1044,7 +1089,7 @@
 								}
 							},
 							"_postman_previewlanguage": "json",
-							"header": null,
+							"header": [],
 							"cookie": [],
 							"body": "{\n    \"id\": \"00000000-0000-0000-0000-000000000000\",\n    \"position_id\": \"00000000-0000-0000-0000-000000000000\",\n    \"title\": \"PITA\",\n    \"start_date\": \"2021-01-01T00:00:00Z\",\n    \"end_date\": null,\n    \"service_start_date\": \"2000-01-01T00:00:00Z\",\n    \"service_end_date\": null,\n    \"dob\": \"1990-01-01T00:00:00Z\"\n}"
 						}
