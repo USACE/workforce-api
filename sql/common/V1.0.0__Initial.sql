@@ -199,7 +199,6 @@ CREATE TABLE IF NOT EXISTS office_group (
 CREATE TABLE IF NOT EXISTS position (
     id UUID PRIMARY KEY NOT NULL DEFAULT uuid_generate_v4(),
     occupation_code_id UUID REFERENCES occupation_code(id),
-    spreadsheet_series VARCHAR,
     title VARCHAR,
     office_group_id UUID NOT NULL REFERENCES office_group(id),
     pay_plan_id UUID NOT NULL REFERENCES pay_plan(id),
