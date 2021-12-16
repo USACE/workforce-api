@@ -1,0 +1,1131 @@
+{
+	"info": {
+		"_postman_id": "07674ab2-1c11-4c8c-8e15-25c0d053a20b",
+		"name": "Workforce",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Offices",
+			"item": [
+				{
+					"name": "List District Offices",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/offices",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"offices"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "List District Offices",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost/offices",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"offices"
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": \"9f7be684-bd9e-4784-8282-2694a6e938a2\",\n        \"name\": \"Coastal and Hydraulics Laboratory\",\n        \"symbol\": \"CHL\",\n        \"parent_id\": \"ad667c3d-59de-47cc-81f0-7d55eae779d9\",\n        \"parent_name\": \"Engineering Research and Development Center\",\n        \"parent_symbol\": \"ERDC\"\n    },\n    {\n        \"id\": \"2f4ad9c7-4b82-4f29-ab4e-56c6458e9f26\",\n        \"name\": \"Cold Regions Research and Engineering Laboratory\",\n        \"symbol\": \"CRREL\",\n        \"parent_id\": \"ad667c3d-59de-47cc-81f0-7d55eae779d9\",\n        \"parent_name\": \"Engineering Research and Development Center\",\n        \"parent_symbol\": \"ERDC\"\n    }\n]"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Groups",
+			"item": [
+				{
+					"name": "List Groups",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/groups",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"groups"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "List Groups by Office",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost/offices/:office_symbol/groups",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"offices",
+										":office_symbol",
+										"groups"
+									],
+									"query": [
+										{
+											"key": "office_symbol",
+											"value": "lrh",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "office_symbol",
+											"value": "lrn"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": \"c5fbbb80-3cb5-4407-a8b0-d5fd105714fc\",\n        \"uid\": \"lrn-water-resources\",\n        \"office_symbol\": \"LRN\",\n        \"name\": \"Water Resources\",\n        \"slug\": \"water-resources\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"5db16a83-f38b-4a16-8aa1-ea1175c6003e\",\n        \"uid\": \"lrn-water-management\",\n        \"office_symbol\": \"LRN\",\n        \"name\": \"Water Management\",\n        \"slug\": \"water-management\",\n        \"last_verified\": null\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "List Groups by Office",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/offices/:office_symbol/groups",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"offices",
+								":office_symbol",
+								"groups"
+							],
+							"variable": [
+								{
+									"key": "office_symbol",
+									"value": "lrn"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "List Groups by Office",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost/offices/:office_symbol/groups",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"offices",
+										":office_symbol",
+										"groups"
+									],
+									"query": [
+										{
+											"key": "office_symbol",
+											"value": "lrh",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "office_symbol",
+											"value": "lrn"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "[\n    {\n        \"uid\": \"lrn-water-resources\",\n        \"office_symbol\": \"LRN\",\n        \"name\": \"Water Resources\",\n        \"slug\": \"water-resources\",\n        \"last_verified\": null\n    },\n    {\n        \"uid\": \"lrn-water-management\",\n        \"office_symbol\": \"LRN\",\n        \"name\": \"Water Management\",\n        \"slug\": \"water-management\",\n        \"last_verified\": null\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Create Office Group",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Water Is Wet\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/offices/:office_symbol/groups",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"offices",
+								":office_symbol",
+								"groups"
+							],
+							"variable": [
+								{
+									"key": "office_symbol",
+									"value": "lrn"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Office Group",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"NEW NAME\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/offices/:office_symbol/groups/:group_id",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"offices",
+								":office_symbol",
+								"groups",
+								":group_id"
+							],
+							"variable": [
+								{
+									"key": "office_symbol",
+									"value": "lrn"
+								},
+								{
+									"key": "group_id",
+									"value": "5c87698f-ebe1-42aa-a0b9-51cf919e2c4c"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Office Group",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/offices/:office_symbol/groups/:group_id",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"offices",
+								":office_symbol",
+								"groups",
+								":group_id"
+							],
+							"variable": [
+								{
+									"key": "office_symbol",
+									"value": "lrn"
+								},
+								{
+									"key": "group_id",
+									"value": "75a51bc1-9bda-4b0a-8705-897707dcb9b9"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Positions",
+			"item": [
+				{
+					"name": "Get Position By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/position/:position_id",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"position",
+								":position_id"
+							],
+							"variable": [
+								{
+									"key": "position_id",
+									"value": "964d3ba8-14a1-42d2-a6b7-25be6a853101",
+									"description": "UUID for the position"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get Position By ID",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost/position/:position_id",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"position",
+										":position_id"
+									],
+									"variable": [
+										{
+											"key": "position_id",
+											"value": "39fc35db-31b1-47c9-88e5-062ef39393a3",
+											"description": "UUID for the position"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "{\n    \"id\": \"39fc35db-31b1-47c9-88e5-062ef39393a3\",\n    \"office_symbol\": \"LRN\",\n    \"group_slug\": \"water-resources\",\n    \"title\": \"Water Resources Section Chief\",\n    \"pay_plan\": \"GS\",\n    \"grade\": 13,\n    \"is_active\": true,\n    \"is_supervisor\": true,\n    \"occupation_code\": \"0810\",\n    \"occupation_name\": \"Civil Engineering\",\n    \"current_occupancy\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Office Positions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/offices/:office_symbol/positions",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"offices",
+								":office_symbol",
+								"positions"
+							],
+							"variable": [
+								{
+									"key": "office_symbol",
+									"value": "lrh",
+									"description": "District code"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get Position By Office",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost/offices/:office_symbol/positions",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"offices",
+										":office_symbol",
+										"positions"
+									],
+									"query": [
+										{
+											"key": "active",
+											"value": "true",
+											"description": "Query to get active positions or not active positions",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "office_symbol",
+											"value": "lrh",
+											"description": "District code"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": \"8e9e6bcf-18f5-4cc8-ac1b-71bfd9503820\",\n        \"office_symbol\": \"LRH\",\n        \"group_slug\": \"huntington-district\",\n        \"title\": \"Branch Chief\",\n        \"pay_plan\": \"GS\",\n        \"grade\": 14,\n        \"is_active\": true,\n        \"is_supervisor\": true,\n        \"occupation_code\": \"0000\",\n        \"occupation_name\": \"Miscellaneous\",\n        \"current_occupancy\": null\n    },\n    {\n        \"id\": \"cd01ddcd-a7a8-4f85-ad59-f0fd7404c8d4\",\n        \"office_symbol\": \"LRH\",\n        \"group_slug\": \"huntington-district\",\n        \"title\": \"Branch Chief\",\n        \"pay_plan\": \"GS\",\n        \"grade\": 14,\n        \"is_active\": false,\n        \"is_supervisor\": true,\n        \"occupation_code\": \"0000\",\n        \"occupation_name\": \"Miscellaneous\",\n        \"current_occupancy\": null\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Get Position By Office and Group",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/offices/:office_symbol/:group_slug/positions",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"offices",
+								":office_symbol",
+								":group_slug",
+								"positions"
+							],
+							"query": [
+								{
+									"key": "active",
+									"value": "false",
+									"description": "Query to get active positions or not active positions",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "office_symbol",
+									"value": "lrn",
+									"description": "District code"
+								},
+								{
+									"key": "group_slug",
+									"value": "nashville-district"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get Position By Office and Group",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost/offices/:office_symbol/:group/positions",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"offices",
+										":office_symbol",
+										":group",
+										"positions"
+									],
+									"query": [
+										{
+											"key": "active",
+											"value": "true",
+											"description": "Query to get active positions or not active positions",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "office_symbol",
+											"value": "lrn",
+											"description": "District code"
+										},
+										{
+											"key": "group",
+											"value": "water-management",
+											"description": "Office name as a slug"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": \"cc2c36d4-455a-47d2-ab7c-35bad5ea7410\",\n        \"office_symbol\": \"LRN\",\n        \"group_slug\": \"water-management\",\n        \"title\": \"Water Management Section Chief\",\n        \"pay_plan\": \"GS\",\n        \"grade\": 13,\n        \"is_active\": true,\n        \"is_supervisor\": true,\n        \"occupation_code\": \"0810\",\n        \"occupation_name\": \"Civil Engineering\",\n        \"current_occupancy\": null\n    },\n    {\n        \"id\": \"b91d5fdb-3993-4ff0-8f5c-2abd1400d81f\",\n        \"office_symbol\": \"LRN\",\n        \"group_slug\": \"water-management\",\n        \"title\": \"RTS Navigation\",\n        \"pay_plan\": \"GS\",\n        \"grade\": 13,\n        \"is_active\": true,\n        \"is_supervisor\": false,\n        \"occupation_code\": \"0810\",\n        \"occupation_name\": \"Civil Engineering\",\n        \"current_occupancy\": null\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Create Office Position",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"group_slug\": \"nashville-district\",\n    \"title\": \"Super Trooper Engineer\",\n    \"pay_plan\": \"GS\",\n    \"grade\": 15,\n    \"is_supervisor\": false,\n    \"is_active\": false,\n    \"occupation_code\": \"0810\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/offices/:office_symbol/positions",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"offices",
+								":office_symbol",
+								"positions"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "office_symbol",
+									"value": "lrn"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create Position by Office",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"position_title\": \"Super Trooper Engineer\",\n    \"code\": \"GS\",\n    \"position_grade\": 15,\n    \"is_supervisor\": false,\n    \"occupation_code\": \"0810\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost/offices/:office_symbol/:group/positions",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"offices",
+										":office_symbol",
+										":group",
+										"positions"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "office_symbol",
+											"value": "LRN",
+											"description": "District code"
+										},
+										{
+											"key": "group",
+											"value": "water-management",
+											"description": "Office name as a slug"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "{\n    \"id\": \"55152718-e22f-4db1-b545-3fc3c2e0786a\",\n    \"office_symbol\": \"LRN\",\n    \"group_slug\": \"water-management\",\n    \"title\": \"Super Trooper Engineer\",\n    \"pay_plan\": \"GS\",\n    \"grade\": 15,\n    \"is_active\": false,\n    \"is_supervisor\": false,\n    \"occupation_code\": \"0810\",\n    \"occupation_name\": \"Civil Engineering\",\n    \"current_occupancy\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Office Position",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Super Trooper\",\n    \"group_slug\": \"nashville-district\",\n    \"pay_plan\": \"GS\",\n    \"grade\": 5,\n    \"is_active\": false,\n    \"is_supervisor\": false,\n    \"is_allocated\": false,\n    \"occupation_code\": \"0810\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/offices/:office_symbol/positions/:position_id",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"offices",
+								":office_symbol",
+								"positions",
+								":position_id"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "office_symbol",
+									"value": "lrn",
+									"description": "District code"
+								},
+								{
+									"key": "position_id",
+									"value": "d2c3c9b9-0caa-49ea-be51-d59c0854a12d"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update Office Position",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"position_title\": \"NOT A Super Trooper\",\n    \"code\": \"GS\",\n    \"position_grade\": 15,\n    \"is_supervisor\": false,\n    \"occupation_code\": \"1315\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost/offices/:office_symbol/positions/:position_id",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"offices",
+										":office_symbol",
+										"positions",
+										":position_id"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": "",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "office_symbol",
+											"value": "LRN",
+											"description": "District code"
+										},
+										{
+											"key": "position_id",
+											"value": "39fc35db-31b1-47c9-88e5-062ef39393a3",
+											"description": "UUID for the position"
+										},
+										{
+											"key": "group",
+											"value": "water-management"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "{\n    \"id\": \"55152718-e22f-4db1-b545-3fc3c2e0786a\",\n    \"office_symbol\": \"LRN\",\n    \"group_slug\": \"water-resources\",\n    \"title\": \"NOT A Super Trooper\",\n    \"pay_plan\": \"GS\",\n    \"grade\": 15,\n    \"is_active\": false,\n    \"is_supervisor\": false,\n    \"occupation_code\": \"0810\",\n    \"occupation_name\": \"Civil Engineering\",\n    \"current_occupancy\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Office Position",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/offices/:office_symbol/positions/:position_id",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"offices",
+								":office_symbol",
+								"positions",
+								":position_id"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "office_symbol",
+									"value": "lrn"
+								},
+								{
+									"key": "position_id",
+									"value": "82a0b0d6-4260-4a8e-a001-d93e4728fac2",
+									"description": "UUID for the position"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Delete Position",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost/offices/:office_symbol/positions/:position_id",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"offices",
+										":office_symbol",
+										"positions",
+										":position_id"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "office_symbol",
+											"value": null
+										},
+										{
+											"key": "position_id",
+											"value": "39fc35db-31b1-47c9-88e5-062ef39393a3",
+											"description": "UUID for the position"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Deleted id 39fc35db-31b1-47c9-88e5-062ef39393a3\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Occupancy",
+			"item": [
+				{
+					"name": "Get Occupancy By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/occupancy/:occupancy_id",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"occupancy",
+								":occupancy_id"
+							],
+							"variable": [
+								{
+									"key": "occupancy_id",
+									"value": "a119ad8a-2b94-4d8f-a3c9-b985904e6f69"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get Occupancy By ID",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost/occupancy/:occupancy_id",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"occupancy",
+										":occupancy_id"
+									],
+									"variable": [
+										{
+											"key": "occupancy_id",
+											"value": "f3a3cd1a-97c5-47a0-840a-3be45fae2bc7"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "{\n    \"id\": \"a119ad8a-2b94-4d8f-a3c9-b985904e6f69\",\n    \"position_id\": \"a25c9ec2-fc14-4f7e-bde3-177fa9de4208\",\n    \"title\": null,\n    \"start_date\": \"2005-10-20T00:00:00Z\",\n    \"end_date\": null,\n    \"service_start_date\": \"2001-10-20T00:00:00Z\",\n    \"service_end_date\": null,\n    \"dob\": \"1990-03-01T00:00:00Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Occupancy by Office",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/offices/:office_symbol/occupancy",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"offices",
+								":office_symbol",
+								"occupancy"
+							],
+							"query": [
+								{
+									"key": "active",
+									"value": "true",
+									"description": "Query to get active positions or not active positions",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "office_symbol",
+									"value": "lrn"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get Occupancy by Office",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost/offices/:office_symbol/occupancy",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"offices",
+										":office_symbol",
+										"occupancy"
+									],
+									"query": [
+										{
+											"key": "active",
+											"value": "true",
+											"description": "Query to get active positions or not active positions",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "office_symbol",
+											"value": "lrh"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": \"a119ad8a-2b94-4d8f-a3c9-b985904e6f69\",\n        \"position_id\": \"a25c9ec2-fc14-4f7e-bde3-177fa9de4208\",\n        \"title\": null,\n        \"start_date\": \"2005-10-20T00:00:00Z\",\n        \"end_date\": null,\n        \"service_start_date\": \"2001-10-20T00:00:00Z\",\n        \"service_end_date\": null,\n        \"dob\": \"1990-03-01T00:00:00Z\"\n    },\n    {\n        \"id\": \"f3a3cd1a-97c5-47a0-840a-3be45fae2bc7\",\n        \"position_id\": \"45eefa59-a7d8-4c24-b509-0bc752ef6a2b\",\n        \"title\": null,\n        \"start_date\": \"2001-10-20T00:00:00Z\",\n        \"end_date\": \"2020-04-01T00:00:00Z\",\n        \"service_start_date\": \"1990-04-16T00:00:00Z\",\n        \"service_end_date\": null,\n        \"dob\": \"1970-07-01T00:00:00Z\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Get Occupancy by Office and Group",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/offices/:office_symbol/:group_slug/occupancy",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"offices",
+								":office_symbol",
+								":group_slug",
+								"occupancy"
+							],
+							"query": [
+								{
+									"key": "active",
+									"value": "true",
+									"description": "Query to get active positions or not active positions",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "office_symbol",
+									"value": "lrn"
+								},
+								{
+									"key": "group_slug",
+									"value": "nashville-district"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get Occupancy by Office and Group",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost/offices/:office_symbol/:group/occupancy",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"offices",
+										":office_symbol",
+										":group",
+										"occupancy"
+									],
+									"query": [
+										{
+											"key": "active",
+											"value": "true",
+											"description": "Query to get active positions or not active positions",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "office_symbol",
+											"value": "lrh"
+										},
+										{
+											"key": "group",
+											"value": "water-management"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": \"a119ad8a-2b94-4d8f-a3c9-b985904e6f69\",\n        \"position_id\": \"a25c9ec2-fc14-4f7e-bde3-177fa9de4208\",\n        \"title\": null,\n        \"start_date\": \"2005-10-20T00:00:00Z\",\n        \"end_date\": null,\n        \"service_start_date\": \"2001-10-20T00:00:00Z\",\n        \"service_end_date\": null,\n        \"dob\": \"1990-03-01T00:00:00Z\"\n    },\n    {\n        \"id\": \"f3a3cd1a-97c5-47a0-840a-3be45fae2bc7\",\n        \"position_id\": \"45eefa59-a7d8-4c24-b509-0bc752ef6a2b\",\n        \"title\": null,\n        \"start_date\": \"2001-10-20T00:00:00Z\",\n        \"end_date\": \"2020-04-01T00:00:00Z\",\n        \"service_start_date\": \"1990-04-16T00:00:00Z\",\n        \"service_end_date\": null,\n        \"dob\": \"1970-07-01T00:00:00Z\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Create Occupancy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"position_id\": \"964d3ba8-14a1-42d2-a6b7-25be6a853101\",\n    \"title\": \"THIS IS MY NEW TITLE\",\n    \"start_date\": \"2005-10-20T00:00:00Z\",\n    \"end_date\": null,\n    \"service_start_date\": \"2001-10-20T00:00:00Z\",\n    \"service_end_date\": null,\n    \"dob\": \"1990-03-01T00:00:00Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/offices/:office_symbol/occupancy",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"offices",
+								":office_symbol",
+								"occupancy"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "office_symbol",
+									"value": "mvk"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create Occupancy",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"position_id\": \"2c8746e3-5aed-4db9-854b-8aedf28bc856\",\n    \"title\": \"PITA\",\n    \"start_date\": \"2021-01-01T12:00:00Z\",\n    \"end_date\": null,\n    \"service_start_date\": \"2000-01-01T12:00:00Z\",\n    \"service_end_date\": null,\n    \"dob\": \"1990-01-01T12:00:00Z\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost/occupancy",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"occupancy"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "{\n    \"id\": \"00000000-0000-0000-0000-000000000000\",\n    \"position_id\": \"00000000-0000-0000-0000-000000000000\",\n    \"title\": \"PITA\",\n    \"start_date\": \"2021-01-01T00:00:00Z\",\n    \"end_date\": null,\n    \"service_start_date\": \"2000-01-01T00:00:00Z\",\n    \"service_end_date\": null,\n    \"dob\": \"1990-01-01T00:00:00Z\"\n}"
+						}
+					]
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImJZYVZSTS0xVmp1LWR2N2NEZ0k5ZnJkNVRtZFl1RU5QbWRoV0NaZU1TWmMifQ.eyJleHAiOjE4Mzk1MDU1MzUsImlhdCI6MTYzOTUwNTIzNSwianRpIjoiOTBmN2YzYmYtZTkzNC00NWM2LTg1OGUtNzVjMGM2NDdkZTNkIiwiaXNzIjoiaHR0cHM6Ly9tb2NrLXNlcnZlciIsImF1ZCI6WyJjdW11bHVzIiwid29ya2ZvcmNlIiwiYWNjb3VudCJdLCJzdWIiOiI5MmUxMGQ5My1iNDU0LTQ0Y2ItOWM3Zi01ZGVhZjBkMTZmMTUiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJ3b3JrZm9yY2UiLCJzZXNzaW9uX3N0YXRlIjoiYzI4YTMzZmUtNzM4MC00OTI4LWFkNDYtN2JmZTFiY2M2OTVkIiwiYWNyIjoiMSIsInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJkZWZhdWx0LXJvbGVzLXdhdGVyIiwib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7Indvcmtmb3JjZSI6eyJyb2xlcyI6WyJhcHBsaWNhdGlvbi5hZG1pbiJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSIsInByZWZlcnJlZF91c2VybmFtZSI6Indvcmtmb3JjZS5hZG1pbiIsImdpdmVuX25hbWUiOiIiLCJmYW1pbHlfbmFtZSI6IiJ9.Aip3doJZ13paloCD-tNY88zuMpkWbKYTASrTXITcvTg",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

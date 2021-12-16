@@ -17,6 +17,7 @@
         "WORKFORCE_DB_NAME": "postgres",
         "WORKFORCE_DB_HOST": "localhost",
         "WORKFORCE_DB_SSLMODE": "disable",
+        "AUTH_MOCKED": "TRUE",
         "AWS_S3_BUCKET": "cwbi-data-develop",
         "AWS_S3_ENDPOINT": "http://minio:9000",
         "AWS_S3_DISABLE_SSL": "TRUE",
