@@ -10,9 +10,9 @@ import (
 )
 
 type Occupancy struct {
-	ID               uuid.UUID  `json:"id"`
+	ID               uuid.UUID  `json:"id" param:"occupancy_id"`
 	PositionID       uuid.UUID  `json:"position_id"`
-	Title            *string    `json:"title"`
+	Title            string     `json:"title"`
 	StartDate        *time.Time `json:"start_date"`
 	EndDate          *time.Time `json:"end_date"`
 	ServiceStartDate *time.Time `json:"service_start_date"`
@@ -53,10 +53,27 @@ func CreateOccupancy(db *pgxpool.Pool, o Occupancy) (Occupancy, error) {
 }
 
 // UpdateOccupancy
-// func UpdateOccupancy(db *pgxpool.Pool, occupancy Occupancy) (Occupancy, error) {
-// 	var id uuid.UUID
-// 	return GetOccupancyByID(db, id)
-// }
+func UpdateOccupancy(db *pgxpool.Pool, occupancy Occupancy) (Occupancy, error) {
+	var id uuid.UUID
+	if err := db.QueryRow(context.Background(),
+		`UPDATE occupancy SET
+		title = $1,
+		start_date = $2,
+		end_date = $3,
+		service_start_date = $4,
+		service_end_date = $5,
+		dob = $6
+		WHERE id = $7 AND
+		position_id = $8
+		RETURNING id`,
+		occupancy.Title, occupancy.StartDate, occupancy.EndDate,
+		occupancy.ServiceStartDate, occupancy.ServiceEndDate, occupancy.Dob,
+		occupancy.ID, occupancy.PositionID,
+	).Scan(&id); err != nil {
+		return Occupancy{Title: "ERROR"}, nil
+	}
+	return GetOccupancyByID(db, id)
+}
 
 // ListOccupancy
 func ListOccupancyByOffice(db *pgxpool.Pool, officeSymbol string) ([]Occupancy, error) {

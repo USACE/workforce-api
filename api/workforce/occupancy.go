@@ -24,18 +24,18 @@ func (s Store) CreateOccupancy(c echo.Context) error {
 }
 
 // UpdateOccupancy
-// func (s Store) UpdateOccupancy(c echo.Context) error {
-// 	var o models.Occupancy
-// 	if err := c.Bind(&o); err != nil {
-// 		return c.JSON(http.StatusBadRequest, err)
-// 	}
-// 	oc, err := models.UpdateOccupancy(s.Connection, o)
-// 	if err != nil {
-// 		return c.JSON(http.StatusInternalServerError, messages.NewMessage(err.Error()))
-// 	}
+func (s Store) UpdateOccupancy(c echo.Context) error {
+	var o models.Occupancy
+	if err := c.Bind(&o); err != nil {
+		return c.JSON(http.StatusBadRequest, err)
+	}
+	oc, err := models.UpdateOccupancy(s.Connection, o)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, messages.NewMessage(err.Error()))
+	}
 
-// 	return c.JSON(http.StatusOK, oc)
-// }
+	return c.JSON(http.StatusOK, oc)
+}
 
 // GetOccupancyByID
 func (s Store) GetOccupancyByID(c echo.Context) error {
