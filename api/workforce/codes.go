@@ -14,7 +14,7 @@ func (s Store) ListPayPlanCodes(c echo.Context) error {
 	cc, err := models.ListPayPlanCodes(s.Connection)
 	if err != nil {
 		if err == pgx.ErrNoRows {
-			return c.JSON(http.StatusNoContent, cc)
+			return c.NoContent(http.StatusNoContent)
 		}
 		return c.JSON(http.StatusInternalServerError, messages.NewMessage(err.Error()))
 	}
@@ -26,7 +26,7 @@ func (s Store) ListOccupationCodes(c echo.Context) error {
 	cc, err := models.ListOccupationCodes(s.Connection)
 	if err != nil {
 		if err == pgx.ErrNoRows {
-			return c.JSON(http.StatusNoContent, cc)
+			return c.NoContent(http.StatusNoContent)
 		}
 		return c.JSON(http.StatusInternalServerError, messages.NewMessage(err.Error()))
 	}

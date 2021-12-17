@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "966e72d6-c61d-480f-9e0d-52e17d79f02f",
-		"name": "Workforce",
+		"name": "workforce",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -10,6 +10,22 @@
 			"item": [
 				{
 					"name": "List District Offices",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"List Offices: status code is 200 OK returning JSON\", function () {",
+									"    pm.response.to.be.ok;",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -23,28 +39,7 @@
 							]
 						}
 					},
-					"response": [
-						{
-							"name": "List District Offices",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{base_url}}/offices",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"offices"
-									]
-								}
-							},
-							"_postman_previewlanguage": "json",
-							"header": [],
-							"cookie": [],
-							"body": "[\n    {\n        \"id\": \"9f7be684-bd9e-4784-8282-2694a6e938a2\",\n        \"name\": \"Coastal and Hydraulics Laboratory\",\n        \"symbol\": \"CHL\",\n        \"parent_id\": \"ad667c3d-59de-47cc-81f0-7d55eae779d9\",\n        \"parent_name\": \"Engineering Research and Development Center\",\n        \"parent_symbol\": \"ERDC\"\n    },\n    {\n        \"id\": \"2f4ad9c7-4b82-4f29-ab4e-56c6458e9f26\",\n        \"name\": \"Cold Regions Research and Engineering Laboratory\",\n        \"symbol\": \"CRREL\",\n        \"parent_id\": \"ad667c3d-59de-47cc-81f0-7d55eae779d9\",\n        \"parent_name\": \"Engineering Research and Development Center\",\n        \"parent_symbol\": \"ERDC\"\n    }\n]"
-						}
-					]
+					"response": []
 				}
 			]
 		},
@@ -53,6 +48,21 @@
 			"item": [
 				{
 					"name": "List Groups",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"List Groups: status code is 200 OK returning JSON\", function () {",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -66,46 +76,27 @@
 							]
 						}
 					},
-					"response": [
-						{
-							"name": "List Groups by Office",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{base_url}}/offices/:office_symbol/groups",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"offices",
-										":office_symbol",
-										"groups"
-									],
-									"query": [
-										{
-											"key": "office_symbol",
-											"value": "lrh",
-											"disabled": true
-										}
-									],
-									"variable": [
-										{
-											"key": "office_symbol",
-											"value": "lrn"
-										}
-									]
-								}
-							},
-							"_postman_previewlanguage": "json",
-							"header": [],
-							"cookie": [],
-							"body": "[\n    {\n        \"id\": \"c5fbbb80-3cb5-4407-a8b0-d5fd105714fc\",\n        \"uid\": \"lrn-water-resources\",\n        \"office_symbol\": \"LRN\",\n        \"name\": \"Water Resources\",\n        \"slug\": \"water-resources\",\n        \"last_verified\": null\n    },\n    {\n        \"id\": \"5db16a83-f38b-4a16-8aa1-ea1175c6003e\",\n        \"uid\": \"lrn-water-management\",\n        \"office_symbol\": \"LRN\",\n        \"name\": \"Water Management\",\n        \"slug\": \"water-management\",\n        \"last_verified\": null\n    }\n]"
-						}
-					]
+					"response": []
 				},
 				{
 					"name": "List Groups by Office",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"List Groups by Office: Status code is 200 OK returning JSON\", function () {",
+									"    pm.response.to.be.ok;",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -122,48 +113,12 @@
 							"variable": [
 								{
 									"key": "office_symbol",
-									"value": "lrn"
+									"value": "LRN"
 								}
 							]
 						}
 					},
-					"response": [
-						{
-							"name": "List Groups by Office",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{base_url}}/offices/:office_symbol/groups",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"offices",
-										":office_symbol",
-										"groups"
-									],
-									"query": [
-										{
-											"key": "office_symbol",
-											"value": "lrh",
-											"disabled": true
-										}
-									],
-									"variable": [
-										{
-											"key": "office_symbol",
-											"value": "lrn"
-										}
-									]
-								}
-							},
-							"_postman_previewlanguage": "json",
-							"header": [],
-							"cookie": [],
-							"body": "[\n    {\n        \"uid\": \"lrn-water-resources\",\n        \"office_symbol\": \"LRN\",\n        \"name\": \"Water Resources\",\n        \"slug\": \"water-resources\",\n        \"last_verified\": null\n    },\n    {\n        \"uid\": \"lrn-water-management\",\n        \"office_symbol\": \"LRN\",\n        \"name\": \"Water Management\",\n        \"slug\": \"water-management\",\n        \"last_verified\": null\n    }\n]"
-						}
-					]
+					"response": []
 				},
 				{
 					"name": "Create Office Group",
@@ -176,6 +131,23 @@
 								],
 								"type": "text/javascript"
 							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Create Office Group: successful POST request\", function () {",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
+									"",
+									"    var jsonData = pm.response.json();",
+									"    pm.collectionVariables.set(\"office_symbol\", jsonData.office_symbol);",
+									"    pm.collectionVariables.set(\"group_slug\", jsonData.slug);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
 						}
 					],
 					"request": {
@@ -183,7 +155,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Water Is Wet\"\n}",
+							"raw": "{\n    \"name\": \"Water Water Everywhere\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -203,7 +175,7 @@
 							"variable": [
 								{
 									"key": "office_symbol",
-									"value": "lrn"
+									"value": "LRN"
 								}
 							]
 						}
@@ -218,6 +190,19 @@
 							"script": {
 								"exec": [
 									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Update Office Groups: status code is 200 OK returning JSON\", function () {",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"    pm.response.to.have.status(200);",
+									"});"
 								],
 								"type": "text/javascript"
 							}
@@ -236,25 +221,15 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/offices/:office_symbol/groups/:group_slug",
+							"raw": "{{base_url}}/offices/{{office_symbol}}/groups/{{group_slug}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"offices",
-								":office_symbol",
+								"{{office_symbol}}",
 								"groups",
-								":group_slug"
-							],
-							"variable": [
-								{
-									"key": "office_symbol",
-									"value": "lrn"
-								},
-								{
-									"key": "group_slug",
-									"value": "nashville-district"
-								}
+								"{{group_slug}}"
 							]
 						}
 					},
@@ -268,6 +243,17 @@
 							"script": {
 								"exec": [
 									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Delete Office Group: status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
 								],
 								"type": "text/javascript"
 							}
@@ -286,25 +272,15 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/offices/:office_symbol/groups/:group_slug",
+							"raw": "{{base_url}}/offices/{{office_symbol}}/groups/{{group_slug}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"offices",
-								":office_symbol",
+								"{{office_symbol}}",
 								"groups",
-								":group_slug"
-							],
-							"variable": [
-								{
-									"key": "office_symbol",
-									"value": "lrn"
-								},
-								{
-									"key": "group_slug",
-									"value": "nashville-district"
-								}
+								"{{group_slug}}"
 							]
 						}
 					},
@@ -317,6 +293,21 @@
 			"item": [
 				{
 					"name": "Get Position By ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Get Position by ID: status code is 200 OK returning JSON\", function () {",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -332,45 +323,31 @@
 							"variable": [
 								{
 									"key": "position_id",
-									"value": "964d3ba8-14a1-42d2-a6b7-25be6a853101",
+									"value": "93329f20-b6ca-4c0d-afac-a43a9316fcb6",
 									"description": "UUID for the position"
 								}
 							]
 						}
 					},
-					"response": [
-						{
-							"name": "Get Position By ID",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{base_url}}/position/:position_id",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"position",
-										":position_id"
-									],
-									"variable": [
-										{
-											"key": "position_id",
-											"value": "39fc35db-31b1-47c9-88e5-062ef39393a3",
-											"description": "UUID for the position"
-										}
-									]
-								}
-							},
-							"_postman_previewlanguage": "json",
-							"header": [],
-							"cookie": [],
-							"body": "{\n    \"id\": \"39fc35db-31b1-47c9-88e5-062ef39393a3\",\n    \"office_symbol\": \"LRN\",\n    \"group_slug\": \"water-resources\",\n    \"title\": \"Water Resources Section Chief\",\n    \"pay_plan\": \"GS\",\n    \"grade\": 13,\n    \"is_active\": true,\n    \"is_supervisor\": true,\n    \"occupation_code\": \"0810\",\n    \"occupation_name\": \"Civil Engineering\",\n    \"current_occupancy\": null\n}"
-						}
-					]
+					"response": []
 				},
 				{
 					"name": "Get Office Positions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Get Office Positions: status code is 200 OK returning JSON\", function () {",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -387,54 +364,31 @@
 							"variable": [
 								{
 									"key": "office_symbol",
-									"value": "lrh",
+									"value": "LRN",
 									"description": "District code"
 								}
 							]
 						}
 					},
-					"response": [
-						{
-							"name": "Get Position By Office",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{base_url}}/offices/:office_symbol/positions",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"offices",
-										":office_symbol",
-										"positions"
-									],
-									"query": [
-										{
-											"key": "active",
-											"value": "true",
-											"description": "Query to get active positions or not active positions",
-											"disabled": true
-										}
-									],
-									"variable": [
-										{
-											"key": "office_symbol",
-											"value": "lrh",
-											"description": "District code"
-										}
-									]
-								}
-							},
-							"_postman_previewlanguage": "json",
-							"header": [],
-							"cookie": [],
-							"body": "[\n    {\n        \"id\": \"8e9e6bcf-18f5-4cc8-ac1b-71bfd9503820\",\n        \"office_symbol\": \"LRH\",\n        \"group_slug\": \"huntington-district\",\n        \"title\": \"Branch Chief\",\n        \"pay_plan\": \"GS\",\n        \"grade\": 14,\n        \"is_active\": true,\n        \"is_supervisor\": true,\n        \"occupation_code\": \"0000\",\n        \"occupation_name\": \"Miscellaneous\",\n        \"current_occupancy\": null\n    },\n    {\n        \"id\": \"cd01ddcd-a7a8-4f85-ad59-f0fd7404c8d4\",\n        \"office_symbol\": \"LRH\",\n        \"group_slug\": \"huntington-district\",\n        \"title\": \"Branch Chief\",\n        \"pay_plan\": \"GS\",\n        \"grade\": 14,\n        \"is_active\": false,\n        \"is_supervisor\": true,\n        \"occupation_code\": \"0000\",\n        \"occupation_name\": \"Miscellaneous\",\n        \"current_occupancy\": null\n    }\n]"
-						}
-					]
+					"response": []
 				},
 				{
 					"name": "Get Position By Office and Group",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Get Positions by Office and Group: status code is 200 OK returning JSON\", function () {",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -460,7 +414,7 @@
 							"variable": [
 								{
 									"key": "office_symbol",
-									"value": "lrn",
+									"value": "LRN",
 									"description": "District code"
 								},
 								{
@@ -470,54 +424,29 @@
 							]
 						}
 					},
-					"response": [
-						{
-							"name": "Get Position By Office and Group",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{base_url}}/offices/:office_symbol/:group/positions",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"offices",
-										":office_symbol",
-										":group",
-										"positions"
-									],
-									"query": [
-										{
-											"key": "active",
-											"value": "true",
-											"description": "Query to get active positions or not active positions",
-											"disabled": true
-										}
-									],
-									"variable": [
-										{
-											"key": "office_symbol",
-											"value": "lrn",
-											"description": "District code"
-										},
-										{
-											"key": "group",
-											"value": "water-management",
-											"description": "Office name as a slug"
-										}
-									]
-								}
-							},
-							"_postman_previewlanguage": "json",
-							"header": [],
-							"cookie": [],
-							"body": "[\n    {\n        \"id\": \"cc2c36d4-455a-47d2-ab7c-35bad5ea7410\",\n        \"office_symbol\": \"LRN\",\n        \"group_slug\": \"water-management\",\n        \"title\": \"Water Management Section Chief\",\n        \"pay_plan\": \"GS\",\n        \"grade\": 13,\n        \"is_active\": true,\n        \"is_supervisor\": true,\n        \"occupation_code\": \"0810\",\n        \"occupation_name\": \"Civil Engineering\",\n        \"current_occupancy\": null\n    },\n    {\n        \"id\": \"b91d5fdb-3993-4ff0-8f5c-2abd1400d81f\",\n        \"office_symbol\": \"LRN\",\n        \"group_slug\": \"water-management\",\n        \"title\": \"RTS Navigation\",\n        \"pay_plan\": \"GS\",\n        \"grade\": 13,\n        \"is_active\": true,\n        \"is_supervisor\": false,\n        \"occupation_code\": \"0810\",\n        \"occupation_name\": \"Civil Engineering\",\n        \"current_occupancy\": null\n    }\n]"
-						}
-					]
+					"response": []
 				},
 				{
 					"name": "Create Office Position",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Create Office Position: successful POST request\", function () {",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
+									"",
+									"    var jsonData = pm.response.json();",
+									"    pm.collectionVariables.set(\"office_symbol\", jsonData.office_symbol);",
+									"    pm.collectionVariables.set(\"position_id\", jsonData.id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -550,67 +479,30 @@
 							"variable": [
 								{
 									"key": "office_symbol",
-									"value": "lrn"
+									"value": "LRN"
 								}
 							]
 						}
 					},
-					"response": [
-						{
-							"name": "Create Position by Office",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"position_title\": \"Super Trooper Engineer\",\n    \"code\": \"GS\",\n    \"position_grade\": 15,\n    \"is_supervisor\": false,\n    \"occupation_code\": \"0810\"\n}\n",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{base_url}}/offices/:office_symbol/:group/positions",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"offices",
-										":office_symbol",
-										":group",
-										"positions"
-									],
-									"query": [
-										{
-											"key": "",
-											"value": null,
-											"disabled": true
-										}
-									],
-									"variable": [
-										{
-											"key": "office_symbol",
-											"value": "LRN",
-											"description": "District code"
-										},
-										{
-											"key": "group",
-											"value": "water-management",
-											"description": "Office name as a slug"
-										}
-									]
-								}
-							},
-							"_postman_previewlanguage": "json",
-							"header": [],
-							"cookie": [],
-							"body": "{\n    \"id\": \"55152718-e22f-4db1-b545-3fc3c2e0786a\",\n    \"office_symbol\": \"LRN\",\n    \"group_slug\": \"water-management\",\n    \"title\": \"Super Trooper Engineer\",\n    \"pay_plan\": \"GS\",\n    \"grade\": 15,\n    \"is_active\": false,\n    \"is_supervisor\": false,\n    \"occupation_code\": \"0810\",\n    \"occupation_name\": \"Civil Engineering\",\n    \"current_occupancy\": null\n}"
-						}
-					]
+					"response": []
 				},
 				{
 					"name": "Update Office Position",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Update Office Position: status code is 200 OK returning JSON\", function () {",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "PUT",
 						"header": [],
@@ -624,15 +516,15 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/offices/:office_symbol/positions/:position_id",
+							"raw": "{{base_url}}/offices/{{office_symbol}}/positions/{{position_id}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"offices",
-								":office_symbol",
+								"{{office_symbol}}",
 								"positions",
-								":position_id"
+								"{{position_id}}"
 							],
 							"query": [
 								{
@@ -640,80 +532,26 @@
 									"value": "",
 									"disabled": true
 								}
-							],
-							"variable": [
-								{
-									"key": "office_symbol",
-									"value": "lrn",
-									"description": "District code"
-								},
-								{
-									"key": "position_id",
-									"value": "d2c3c9b9-0caa-49ea-be51-d59c0854a12d"
-								}
 							]
 						}
 					},
-					"response": [
-						{
-							"name": "Update Office Position",
-							"originalRequest": {
-								"method": "PUT",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"position_title\": \"NOT A Super Trooper\",\n    \"code\": \"GS\",\n    \"position_grade\": 15,\n    \"is_supervisor\": false,\n    \"occupation_code\": \"1315\"\n}\n",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{base_url}}/offices/:office_symbol/positions/:position_id",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"offices",
-										":office_symbol",
-										"positions",
-										":position_id"
-									],
-									"query": [
-										{
-											"key": "",
-											"value": "",
-											"disabled": true
-										}
-									],
-									"variable": [
-										{
-											"key": "office_symbol",
-											"value": "LRN",
-											"description": "District code"
-										},
-										{
-											"key": "position_id",
-											"value": "39fc35db-31b1-47c9-88e5-062ef39393a3",
-											"description": "UUID for the position"
-										},
-										{
-											"key": "group",
-											"value": "water-management"
-										}
-									]
-								}
-							},
-							"_postman_previewlanguage": "json",
-							"header": [],
-							"cookie": [],
-							"body": "{\n    \"id\": \"55152718-e22f-4db1-b545-3fc3c2e0786a\",\n    \"office_symbol\": \"LRN\",\n    \"group_slug\": \"water-resources\",\n    \"title\": \"NOT A Super Trooper\",\n    \"pay_plan\": \"GS\",\n    \"grade\": 15,\n    \"is_active\": false,\n    \"is_supervisor\": false,\n    \"occupation_code\": \"0810\",\n    \"occupation_name\": \"Civil Engineering\",\n    \"current_occupancy\": null\n}"
-						}
-					]
+					"response": []
 				},
 				{
 					"name": "Delete Office Position",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Delete Office Position: status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -727,15 +565,15 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/offices/:office_symbol/positions/:position_id",
+							"raw": "{{base_url}}/offices/{{office_symbol}}/positions/{{position_id}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"offices",
-								":office_symbol",
+								"{{office_symbol}}",
 								"positions",
-								":position_id"
+								"{{position_id}}"
 							],
 							"query": [
 								{
@@ -743,72 +581,10 @@
 									"value": "",
 									"disabled": true
 								}
-							],
-							"variable": [
-								{
-									"key": "office_symbol",
-									"value": "lrn"
-								},
-								{
-									"key": "position_id",
-									"value": "82a0b0d6-4260-4a8e-a001-d93e4728fac2",
-									"description": "UUID for the position"
-								}
 							]
 						}
 					},
-					"response": [
-						{
-							"name": "Delete Position",
-							"originalRequest": {
-								"method": "DELETE",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{base_url}}/offices/:office_symbol/positions/:position_id",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"offices",
-										":office_symbol",
-										"positions",
-										":position_id"
-									],
-									"query": [
-										{
-											"key": "",
-											"value": null,
-											"disabled": true
-										}
-									],
-									"variable": [
-										{
-											"key": "office_symbol",
-											"value": null
-										},
-										{
-											"key": "position_id",
-											"value": "39fc35db-31b1-47c9-88e5-062ef39393a3",
-											"description": "UUID for the position"
-										}
-									]
-								}
-							},
-							"_postman_previewlanguage": "json",
-							"header": [],
-							"cookie": [],
-							"body": "{\n    \"message\": \"Deleted id 39fc35db-31b1-47c9-88e5-062ef39393a3\"\n}"
-						}
-					]
+					"response": []
 				}
 			]
 		},
@@ -817,6 +593,22 @@
 			"item": [
 				{
 					"name": "Get Occupancy By ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Get Occupancy by ID: status code is 200 OK returning JSON\", function () {",
+									"    pm.response.to.be.ok;",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -837,38 +629,26 @@
 							]
 						}
 					},
-					"response": [
-						{
-							"name": "Get Occupancy By ID",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{base_url}}/occupancy/:occupancy_id",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"occupancy",
-										":occupancy_id"
-									],
-									"variable": [
-										{
-											"key": "occupancy_id",
-											"value": "f3a3cd1a-97c5-47a0-840a-3be45fae2bc7"
-										}
-									]
-								}
-							},
-							"_postman_previewlanguage": "json",
-							"header": [],
-							"cookie": [],
-							"body": "{\n    \"id\": \"a119ad8a-2b94-4d8f-a3c9-b985904e6f69\",\n    \"position_id\": \"a25c9ec2-fc14-4f7e-bde3-177fa9de4208\",\n    \"title\": null,\n    \"start_date\": \"2005-10-20T00:00:00Z\",\n    \"end_date\": null,\n    \"service_start_date\": \"2001-10-20T00:00:00Z\",\n    \"service_end_date\": null,\n    \"dob\": \"1990-03-01T00:00:00Z\"\n}"
-						}
-					]
+					"response": []
 				},
 				{
 					"name": "Get Occupancy by Office",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"List Occupancy by Office: status code is 200 OK returning JSON\", function () {",
+									"    pm.response.to.be.ok;",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -893,52 +673,31 @@
 							"variable": [
 								{
 									"key": "office_symbol",
-									"value": "lrn"
+									"value": "LRN"
 								}
 							]
 						}
 					},
-					"response": [
-						{
-							"name": "Get Occupancy by Office",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{base_url}}/offices/:office_symbol/occupancy",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"offices",
-										":office_symbol",
-										"occupancy"
-									],
-									"query": [
-										{
-											"key": "active",
-											"value": "true",
-											"description": "Query to get active positions or not active positions",
-											"disabled": true
-										}
-									],
-									"variable": [
-										{
-											"key": "office_symbol",
-											"value": "lrh"
-										}
-									]
-								}
-							},
-							"_postman_previewlanguage": "json",
-							"header": [],
-							"cookie": [],
-							"body": "[\n    {\n        \"id\": \"a119ad8a-2b94-4d8f-a3c9-b985904e6f69\",\n        \"position_id\": \"a25c9ec2-fc14-4f7e-bde3-177fa9de4208\",\n        \"title\": null,\n        \"start_date\": \"2005-10-20T00:00:00Z\",\n        \"end_date\": null,\n        \"service_start_date\": \"2001-10-20T00:00:00Z\",\n        \"service_end_date\": null,\n        \"dob\": \"1990-03-01T00:00:00Z\"\n    },\n    {\n        \"id\": \"f3a3cd1a-97c5-47a0-840a-3be45fae2bc7\",\n        \"position_id\": \"45eefa59-a7d8-4c24-b509-0bc752ef6a2b\",\n        \"title\": null,\n        \"start_date\": \"2001-10-20T00:00:00Z\",\n        \"end_date\": \"2020-04-01T00:00:00Z\",\n        \"service_start_date\": \"1990-04-16T00:00:00Z\",\n        \"service_end_date\": null,\n        \"dob\": \"1970-07-01T00:00:00Z\"\n    }\n]"
-						}
-					]
+					"response": []
 				},
 				{
 					"name": "Get Occupancy by Office and Group",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"List Occupancy by Office and Group: status code is 200 OK returning JSON\", function () {",
+									"    pm.response.to.be.ok;",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -964,7 +723,7 @@
 							"variable": [
 								{
 									"key": "office_symbol",
-									"value": "lrn"
+									"value": "LRN"
 								},
 								{
 									"key": "group_slug",
@@ -973,58 +732,34 @@
 							]
 						}
 					},
-					"response": [
-						{
-							"name": "Get Occupancy by Office and Group",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{base_url}}/offices/:office_symbol/:group/occupancy",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"offices",
-										":office_symbol",
-										":group",
-										"occupancy"
-									],
-									"query": [
-										{
-											"key": "active",
-											"value": "true",
-											"description": "Query to get active positions or not active positions",
-											"disabled": true
-										}
-									],
-									"variable": [
-										{
-											"key": "office_symbol",
-											"value": "lrh"
-										},
-										{
-											"key": "group",
-											"value": "water-management"
-										}
-									]
-								}
-							},
-							"_postman_previewlanguage": "json",
-							"header": [],
-							"cookie": [],
-							"body": "[\n    {\n        \"id\": \"a119ad8a-2b94-4d8f-a3c9-b985904e6f69\",\n        \"position_id\": \"a25c9ec2-fc14-4f7e-bde3-177fa9de4208\",\n        \"title\": null,\n        \"start_date\": \"2005-10-20T00:00:00Z\",\n        \"end_date\": null,\n        \"service_start_date\": \"2001-10-20T00:00:00Z\",\n        \"service_end_date\": null,\n        \"dob\": \"1990-03-01T00:00:00Z\"\n    },\n    {\n        \"id\": \"f3a3cd1a-97c5-47a0-840a-3be45fae2bc7\",\n        \"position_id\": \"45eefa59-a7d8-4c24-b509-0bc752ef6a2b\",\n        \"title\": null,\n        \"start_date\": \"2001-10-20T00:00:00Z\",\n        \"end_date\": \"2020-04-01T00:00:00Z\",\n        \"service_start_date\": \"1990-04-16T00:00:00Z\",\n        \"service_end_date\": null,\n        \"dob\": \"1970-07-01T00:00:00Z\"\n    }\n]"
-						}
-					]
+					"response": []
 				},
 				{
 					"name": "Create Occupancy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Create Position Occupancy: successful POST request\", function () {",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
+									"",
+									"    var jsonData = pm.response.json();",
+									"    pm.collectionVariables.set(\"occupancy_id\", jsonData.id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"position_id\": \"964d3ba8-14a1-42d2-a6b7-25be6a853101\",\n    \"title\": \"THIS IS MY NEW TITLE\",\n    \"start_date\": \"2005-10-20T00:00:00Z\",\n    \"end_date\": null,\n    \"service_start_date\": \"2001-10-20T00:00:00Z\",\n    \"service_end_date\": null,\n    \"dob\": \"1990-03-01T00:00:00Z\"\n}",
+							"raw": "{\n    \"position_id\": \"93329f20-b6ca-4c0d-afac-a43a9316fcb6\",\n    \"title\": \"New Position Title\",\n    \"start_date\": \"2005-10-20T00:00:00Z\",\n    \"end_date\": null,\n    \"service_start_date\": \"2001-10-20T00:00:00Z\",\n    \"service_end_date\": null,\n    \"dob\": \"1990-03-01T00:00:00Z\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1051,52 +786,30 @@
 							"variable": [
 								{
 									"key": "office_symbol",
-									"value": "mvk"
+									"value": "LRN"
 								}
 							]
 						}
 					},
-					"response": [
-						{
-							"name": "Create Occupancy",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"position_id\": \"2c8746e3-5aed-4db9-854b-8aedf28bc856\",\n    \"title\": \"PITA\",\n    \"start_date\": \"2021-01-01T12:00:00Z\",\n    \"end_date\": null,\n    \"service_start_date\": \"2000-01-01T12:00:00Z\",\n    \"service_end_date\": null,\n    \"dob\": \"1990-01-01T12:00:00Z\"\n}\n",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{base_url}}/occupancy",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"occupancy"
-									],
-									"query": [
-										{
-											"key": "",
-											"value": null,
-											"disabled": true
-										}
-									]
-								}
-							},
-							"_postman_previewlanguage": "json",
-							"header": [],
-							"cookie": [],
-							"body": "{\n    \"id\": \"00000000-0000-0000-0000-000000000000\",\n    \"position_id\": \"00000000-0000-0000-0000-000000000000\",\n    \"title\": \"PITA\",\n    \"start_date\": \"2021-01-01T00:00:00Z\",\n    \"end_date\": null,\n    \"service_start_date\": \"2000-01-01T00:00:00Z\",\n    \"service_end_date\": null,\n    \"dob\": \"1990-01-01T00:00:00Z\"\n}"
-						}
-					]
+					"response": []
 				},
 				{
-					"name": "Create Occupancy Copy",
+					"name": "Update Occupancy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Update Position Occupancy: status code is 200 OK returning JSON\", function () {",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "PUT",
 						"header": [],
@@ -1110,31 +823,21 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/offices/:office_symbol/occupancy/:occupancy_id",
+							"raw": "{{base_url}}/offices/{{office_symbol}}/occupancy/{{occupancy_id}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"offices",
-								":office_symbol",
+								"{{office_symbol}}",
 								"occupancy",
-								":occupancy_id"
+								"{{occupancy_id}}"
 							],
 							"query": [
 								{
 									"key": "",
 									"value": "",
 									"disabled": true
-								}
-							],
-							"variable": [
-								{
-									"key": "office_symbol",
-									"value": "mvk"
-								},
-								{
-									"key": "occupancy_id",
-									"value": "5540d5c2-bb10-46b9-8bbb-f54130d2edd4"
 								}
 							]
 						}
@@ -1172,6 +875,24 @@
 					""
 				]
 			}
+		}
+	],
+	"variable": [
+		{
+			"key": "position_id",
+			"value": ""
+		},
+		{
+			"key": "office_symbol",
+			"value": ""
+		},
+		{
+			"key": "group_slug",
+			"value": ""
+		},
+		{
+			"key": "occupancy_id",
+			"value": ""
 		}
 	]
 }

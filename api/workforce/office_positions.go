@@ -18,7 +18,7 @@ func (s Store) GetPositionByID(c echo.Context) error {
 	p, err := models.GetPositionByID(s.Connection, id)
 	if err != nil {
 		if err == pgx.ErrNoRows {
-			return c.JSON(http.StatusNoContent, p)
+			return c.NoContent(http.StatusNoContent)
 		}
 		return c.JSON(http.StatusInternalServerError, messages.NewMessage(err.Error()))
 	}
@@ -27,11 +27,11 @@ func (s Store) GetPositionByID(c echo.Context) error {
 
 // ListPositions lists positions for a single office
 func (s Store) ListPositions(c echo.Context) error {
-	w, err := models.ListPositions(s.Connection, c.Param("office_symbol"))
+	pp, err := models.ListPositions(s.Connection, c.Param("office_symbol"))
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, messages.NewMessage(err.Error()))
 	}
-	return c.JSON(http.StatusOK, w)
+	return c.JSON(http.StatusOK, pp)
 }
 
 // ListPositionsByGroup
@@ -39,7 +39,7 @@ func (s Store) ListPositionsByGroup(c echo.Context) error {
 	pp, err := models.ListPositionsByGroup(s.Connection, c.Param("office_symbol"), c.Param("group_slug"))
 	if err != nil {
 		if err == pgx.ErrNoRows {
-			return c.JSON(http.StatusNoContent, pp)
+			return c.NoContent(http.StatusNoContent)
 		}
 		return c.JSON(http.StatusInternalServerError, messages.NewMessage(err.Error()))
 	}
@@ -50,28 +50,28 @@ func (s Store) ListPositionsByGroup(c echo.Context) error {
 func (s Store) CreateOfficePosition(c echo.Context) error {
 	var p models.Position
 	if err := c.Bind(&p); err != nil {
-		return c.JSON(http.StatusBadRequest, err)
+		return c.JSON(http.StatusBadRequest, messages.NewMessage(err.Error()))
 	}
 	up, err := models.CreateOfficePosition(s.Connection, p)
 	if err != nil {
 		if err == pgx.ErrNoRows {
-			return c.JSON(http.StatusNotFound, messages.DefaultMessageNotFound)
+			return c.NoContent(http.StatusNoContent)
 		}
 		return c.JSON(http.StatusInternalServerError, messages.NewMessage(err.Error()))
 	}
-	return c.JSON(http.StatusOK, up)
+	return c.JSON(http.StatusCreated, up)
 }
 
 // UpdateOfficePosition
 func (s Store) UpdateOfficePosition(c echo.Context) error {
 	var p models.Position
 	if err := c.Bind(&p); err != nil {
-		return c.JSON(http.StatusInternalServerError, err)
+		return c.JSON(http.StatusBadRequest, messages.NewMessage(err.Error()))
 	}
 	up, err := models.UpdateOfficePosition(s.Connection, p)
 	if err != nil {
 		if err == pgx.ErrNoRows {
-			return c.JSON(http.StatusNotFound, messages.DefaultMessageNotFound)
+			return c.NoContent(http.StatusNoContent)
 		}
 		return c.JSON(http.StatusInternalServerError, messages.NewMessage(err.Error()))
 	}
