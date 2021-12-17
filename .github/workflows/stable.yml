@@ -6,8 +6,8 @@ on:
     paths:
       - 'api/**'
       - 'sql/**'
-      - './Dockerfile'
-      - '.github/workflows/stable.yml'
+      - 'Dockerfile'
+      - '**/workflows/stable.yml'
   workflow_dispatch:
 jobs:
 
