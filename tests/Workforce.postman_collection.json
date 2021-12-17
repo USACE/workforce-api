@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "07674ab2-1c11-4c8c-8e15-25c0d053a20b",
+		"_postman_id": "5d9e220f-cc30-4994-acf1-7d3e462ff5ff",
 		"name": "Workforce",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -236,7 +236,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost/offices/:office_symbol/groups/:group_id",
+							"raw": "localhost/offices/:office_symbol/groups/:group_slug",
 							"host": [
 								"localhost"
 							],
@@ -244,7 +244,7 @@
 								"offices",
 								":office_symbol",
 								"groups",
-								":group_id"
+								":group_slug"
 							],
 							"variable": [
 								{
@@ -252,8 +252,8 @@
 									"value": "lrn"
 								},
 								{
-									"key": "group_id",
-									"value": "5c87698f-ebe1-42aa-a0b9-51cf919e2c4c"
+									"key": "group_slug",
+									"value": "nashville-district"
 								}
 							]
 						}
@@ -286,7 +286,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost/offices/:office_symbol/groups/:group_id",
+							"raw": "localhost/offices/:office_symbol/groups/:group_slug",
 							"host": [
 								"localhost"
 							],
@@ -294,7 +294,7 @@
 								"offices",
 								":office_symbol",
 								"groups",
-								":group_id"
+								":group_slug"
 							],
 							"variable": [
 								{
@@ -302,8 +302,8 @@
 									"value": "lrn"
 								},
 								{
-									"key": "group_id",
-									"value": "75a51bc1-9bda-4b0a-8705-897707dcb9b9"
+									"key": "group_slug",
+									"value": "water-is-wet"
 								}
 							]
 						}
@@ -1177,6 +1177,45 @@
 							"body": "{\n    \"id\": \"00000000-0000-0000-0000-000000000000\",\n    \"position_id\": \"00000000-0000-0000-0000-000000000000\",\n    \"title\": \"PITA\",\n    \"start_date\": \"2021-01-01T00:00:00Z\",\n    \"end_date\": null,\n    \"service_start_date\": \"2000-01-01T00:00:00Z\",\n    \"service_end_date\": null,\n    \"dob\": \"1990-01-01T00:00:00Z\"\n}"
 						}
 					]
+				},
+				{
+					"name": "Delete Occupancy",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"position_id\": \"6ce9f21b-3722-4fdf-b72c-a028d7201ec6\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/offices/:office_symbol/occupancy/:occupancy_id",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"offices",
+								":office_symbol",
+								"occupancy",
+								":occupancy_id"
+							],
+							"variable": [
+								{
+									"key": "office_symbol",
+									"value": "lrn"
+								},
+								{
+									"key": "occupancy_id",
+									"value": "a119ad8a-2b94-4d8f-a3c9-b985904e6f69"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
