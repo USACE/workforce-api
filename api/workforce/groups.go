@@ -30,13 +30,13 @@ func (s Store) ListGroupsByOffice(c echo.Context) error {
 func (s Store) CreateOfficeGroup(c echo.Context) error {
 	var g models.Group
 	if err := c.Bind(&g); err != nil {
-		return c.JSON(http.StatusInternalServerError, messages.NewMessage(err.Error()))
+		return c.JSON(http.StatusBadRequest, messages.NewMessage(err.Error()))
 	}
 	og, err := models.CreateOfficeGroup(s.Connection, g)
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, messages.NewMessage(err.Error()))
+		return c.JSON(http.StatusInternalServerError, messages.NewMessage(err.Error()))
 	}
-	return c.JSON(http.StatusOK, og)
+	return c.JSON(http.StatusCreated, og)
 }
 
 // UpdateOfficeGroup
@@ -61,8 +61,8 @@ func (s Store) DeleteOfficeGroup(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, err)
 	}
 	if int(i) < 1 {
-		return c.JSON(http.StatusOK, messages.NewMessage("no office group deleted"))
+		return c.NoContent(http.StatusNotFound)
 	}
 
-	return c.JSON(http.StatusOK, messages.NewMessage("office group deleted"))
+	return c.NoContent(http.StatusOK)
 }

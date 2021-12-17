@@ -14,13 +14,13 @@ import (
 func (s Store) CreateOccupancy(c echo.Context) error {
 	var co models.Occupancy
 	if err := c.Bind(&co); err != nil {
-		return c.JSON(http.StatusBadRequest, err)
+		return c.JSON(http.StatusBadRequest, messages.NewMessage(err.Error()))
 	}
 	o, err := models.CreateOccupancy(s.Connection, co)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, messages.NewMessage(err.Error()))
 	}
-	return c.JSON(http.StatusOK, o)
+	return c.JSON(http.StatusCreated, o)
 }
 
 // UpdateOccupancy

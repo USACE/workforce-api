@@ -14,7 +14,7 @@ func (s Store) ListOffices(c echo.Context) error {
 	oo, err := models.ListOffices(s.Connection)
 	if err != nil {
 		if err == pgx.ErrNoRows {
-			return c.JSON(http.StatusNoContent, oo)
+			return c.NoContent(http.StatusNoContent)
 		}
 		return c.JSON(http.StatusInternalServerError, messages.NewMessage(err.Error()))
 	}
