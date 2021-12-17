@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "5d9e220f-cc30-4994-acf1-7d3e462ff5ff",
+		"_postman_id": "701c28d5-65c0-499b-96a2-a405ee3fae99",
 		"name": "Workforce",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -14,9 +14,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost/offices",
+							"raw": "{{base_url}}/offices",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
 							"path": [
 								"offices"
@@ -30,9 +30,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost/offices",
+									"raw": "{{base_url}}/offices",
 									"host": [
-										"localhost"
+										"{{base_url}}"
 									],
 									"path": [
 										"offices"
@@ -57,9 +57,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost/groups",
+							"raw": "{{base_url}}/groups",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
 							"path": [
 								"groups"
@@ -73,9 +73,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost/offices/:office_symbol/groups",
+									"raw": "{{base_url}}/offices/:office_symbol/groups",
 									"host": [
-										"localhost"
+										"{{base_url}}"
 									],
 									"path": [
 										"offices",
@@ -110,9 +110,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost/offices/:office_symbol/groups",
+							"raw": "{{base_url}}/offices/:office_symbol/groups",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
 							"path": [
 								"offices",
@@ -134,9 +134,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost/offices/:office_symbol/groups",
+									"raw": "{{base_url}}/offices/:office_symbol/groups",
 									"host": [
-										"localhost"
+										"{{base_url}}"
 									],
 									"path": [
 										"offices",
@@ -191,9 +191,9 @@
 							}
 						},
 						"url": {
-							"raw": "localhost/offices/:office_symbol/groups",
+							"raw": "{{base_url}}/offices/:office_symbol/groups",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
 							"path": [
 								"offices",
@@ -236,9 +236,9 @@
 							}
 						},
 						"url": {
-							"raw": "localhost/offices/:office_symbol/groups/:group_slug",
+							"raw": "{{base_url}}/offices/:office_symbol/groups/:group_slug",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
 							"path": [
 								"offices",
@@ -286,9 +286,9 @@
 							}
 						},
 						"url": {
-							"raw": "localhost/offices/:office_symbol/groups/:group_slug",
+							"raw": "{{base_url}}/offices/:office_symbol/groups/:group_slug",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
 							"path": [
 								"offices",
@@ -303,7 +303,7 @@
 								},
 								{
 									"key": "group_slug",
-									"value": "water-is-wet"
+									"value": "nashville-district"
 								}
 							]
 						}
@@ -321,9 +321,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost/position/:position_id",
+							"raw": "{{base_url}}/position/:position_id",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
 							"path": [
 								"position",
@@ -345,9 +345,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost/position/:position_id",
+									"raw": "{{base_url}}/position/:position_id",
 									"host": [
-										"localhost"
+										"{{base_url}}"
 									],
 									"path": [
 										"position",
@@ -375,9 +375,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost/offices/:office_symbol/positions",
+							"raw": "{{base_url}}/offices/:office_symbol/positions",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
 							"path": [
 								"offices",
@@ -400,9 +400,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost/offices/:office_symbol/positions",
+									"raw": "{{base_url}}/offices/:office_symbol/positions",
 									"host": [
-										"localhost"
+										"{{base_url}}"
 									],
 									"path": [
 										"offices",
@@ -439,9 +439,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost/offices/:office_symbol/:group_slug/positions",
+							"raw": "{{base_url}}/offices/:office_symbol/:group_slug/positions",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
 							"path": [
 								"offices",
@@ -477,9 +477,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost/offices/:office_symbol/:group/positions",
+									"raw": "{{base_url}}/offices/:office_symbol/:group/positions",
 									"host": [
-										"localhost"
+										"{{base_url}}"
 									],
 									"path": [
 										"offices",
@@ -523,7 +523,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"group_slug\": \"nashville-district\",\n    \"title\": \"Super Trooper Engineer\",\n    \"pay_plan\": \"GS\",\n    \"grade\": 15,\n    \"is_supervisor\": false,\n    \"is_active\": false,\n    \"is_allocated\": true,\n    \"occupation_code\": \"0810\"\n}\n",
+							"raw": "{\n    \"group_slug\": \"nashville-district\",\n    \"title\": \"Super Trooper Engineer\",\n    \"pay_plan\": \"GS\",\n    \"grade\": 15,\n    \"is_supervisor\": false,\n    \"is_active\": false,\n    \"occupation_code\": \"0810\"\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -531,9 +531,9 @@
 							}
 						},
 						"url": {
-							"raw": "localhost/offices/:office_symbol/positions",
+							"raw": "{{base_url}}/offices/:office_symbol/positions",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
 							"path": [
 								"offices",
@@ -571,9 +571,9 @@
 									}
 								},
 								"url": {
-									"raw": "localhost/offices/:office_symbol/:group/positions",
+									"raw": "{{base_url}}/offices/:office_symbol/:group/positions",
 									"host": [
-										"localhost"
+										"{{base_url}}"
 									],
 									"path": [
 										"offices",
@@ -624,9 +624,9 @@
 							}
 						},
 						"url": {
-							"raw": "localhost/offices/:office_symbol/positions/:position_id",
+							"raw": "{{base_url}}/offices/:office_symbol/positions/:position_id",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
 							"path": [
 								"offices",
@@ -649,7 +649,7 @@
 								},
 								{
 									"key": "position_id",
-									"value": "e809cb6c-8d79-4ad3-9872-be98d9540cfe"
+									"value": "d2c3c9b9-0caa-49ea-be51-d59c0854a12d"
 								}
 							]
 						}
@@ -670,9 +670,9 @@
 									}
 								},
 								"url": {
-									"raw": "localhost/offices/:office_symbol/positions/:position_id",
+									"raw": "{{base_url}}/offices/:office_symbol/positions/:position_id",
 									"host": [
-										"localhost"
+										"{{base_url}}"
 									],
 									"path": [
 										"offices",
@@ -727,9 +727,9 @@
 							}
 						},
 						"url": {
-							"raw": "localhost/offices/:office_symbol/positions/:position_id",
+							"raw": "{{base_url}}/offices/:office_symbol/positions/:position_id",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
 							"path": [
 								"offices",
@@ -773,9 +773,9 @@
 									}
 								},
 								"url": {
-									"raw": "localhost/offices/:office_symbol/positions/:position_id",
+									"raw": "{{base_url}}/offices/:office_symbol/positions/:position_id",
 									"host": [
-										"localhost"
+										"{{base_url}}"
 									],
 									"path": [
 										"offices",
@@ -821,9 +821,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost/occupancy/:occupancy_id",
+							"raw": "{{base_url}}/occupancy/:occupancy_id",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
 							"path": [
 								"occupancy",
@@ -844,9 +844,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost/occupancy/:occupancy_id",
+									"raw": "{{base_url}}/occupancy/:occupancy_id",
 									"host": [
-										"localhost"
+										"{{base_url}}"
 									],
 									"path": [
 										"occupancy",
@@ -873,9 +873,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost/offices/:office_symbol/occupancy",
+							"raw": "{{base_url}}/offices/:office_symbol/occupancy",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
 							"path": [
 								"offices",
@@ -905,9 +905,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost/offices/:office_symbol/occupancy",
+									"raw": "{{base_url}}/offices/:office_symbol/occupancy",
 									"host": [
-										"localhost"
+										"{{base_url}}"
 									],
 									"path": [
 										"offices",
@@ -943,9 +943,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost/offices/:office_symbol/:group_slug/occupancy",
+							"raw": "{{base_url}}/offices/:office_symbol/:group_slug/occupancy",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
 							"path": [
 								"offices",
@@ -980,9 +980,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost/offices/:office_symbol/:group/occupancy",
+									"raw": "{{base_url}}/offices/:office_symbol/:group/occupancy",
 									"host": [
-										"localhost"
+										"{{base_url}}"
 									],
 									"path": [
 										"offices",
@@ -1032,9 +1032,9 @@
 							}
 						},
 						"url": {
-							"raw": "localhost/offices/:office_symbol/occupancy",
+							"raw": "{{base_url}}/offices/:office_symbol/occupancy",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
 							"path": [
 								"offices",
@@ -1072,9 +1072,9 @@
 									}
 								},
 								"url": {
-									"raw": "localhost/occupancy",
+									"raw": "{{base_url}}/occupancy",
 									"host": [
-										"localhost"
+										"{{base_url}}"
 									],
 									"path": [
 										"occupancy"
@@ -1094,128 +1094,6 @@
 							"body": "{\n    \"id\": \"00000000-0000-0000-0000-000000000000\",\n    \"position_id\": \"00000000-0000-0000-0000-000000000000\",\n    \"title\": \"PITA\",\n    \"start_date\": \"2021-01-01T00:00:00Z\",\n    \"end_date\": null,\n    \"service_start_date\": \"2000-01-01T00:00:00Z\",\n    \"service_end_date\": null,\n    \"dob\": \"1990-01-01T00:00:00Z\"\n}"
 						}
 					]
-				},
-				{
-					"name": "Update Occupancy",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"position_id\": \"6ce9f21b-3722-4fdf-b72c-a028d7201ec6\",\n    \"title\": \"THIS IS MY NEW TITLE\",\n    \"start_date\": \"2005-10-20T00:00:00Z\",\n    \"end_date\": null,\n    \"service_start_date\": \"2001-10-20T00:00:00Z\",\n    \"service_end_date\": null,\n    \"dob\": \"1990-03-01T00:00:00Z\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost/offices/:office_symbol/occupancy/:occupancy_id",
-							"host": [
-								"localhost"
-							],
-							"path": [
-								"offices",
-								":office_symbol",
-								"occupancy",
-								":occupancy_id"
-							],
-							"query": [
-								{
-									"key": "",
-									"value": "",
-									"disabled": true
-								}
-							],
-							"variable": [
-								{
-									"key": "office_symbol",
-									"value": "lrn"
-								},
-								{
-									"key": "occupancy_id",
-									"value": "a119ad8a-2b94-4d8f-a3c9-b985904e6f69"
-								}
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "Update Occupancy",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"position_id\": \"2c8746e3-5aed-4db9-854b-8aedf28bc856\",\n    \"title\": \"PITA\",\n    \"start_date\": \"2021-01-01T12:00:00Z\",\n    \"end_date\": null,\n    \"service_start_date\": \"2000-01-01T12:00:00Z\",\n    \"service_end_date\": null,\n    \"dob\": \"1990-01-01T12:00:00Z\"\n}\n",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "localhost/occupancy",
-									"host": [
-										"localhost"
-									],
-									"path": [
-										"occupancy"
-									],
-									"query": [
-										{
-											"key": "",
-											"value": null,
-											"disabled": true
-										}
-									]
-								}
-							},
-							"_postman_previewlanguage": "json",
-							"header": [],
-							"cookie": [],
-							"body": "{\n    \"id\": \"00000000-0000-0000-0000-000000000000\",\n    \"position_id\": \"00000000-0000-0000-0000-000000000000\",\n    \"title\": \"PITA\",\n    \"start_date\": \"2021-01-01T00:00:00Z\",\n    \"end_date\": null,\n    \"service_start_date\": \"2000-01-01T00:00:00Z\",\n    \"service_end_date\": null,\n    \"dob\": \"1990-01-01T00:00:00Z\"\n}"
-						}
-					]
-				},
-				{
-					"name": "Delete Occupancy",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"position_id\": \"6ce9f21b-3722-4fdf-b72c-a028d7201ec6\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost/offices/:office_symbol/occupancy/:occupancy_id",
-							"host": [
-								"localhost"
-							],
-							"path": [
-								"offices",
-								":office_symbol",
-								"occupancy",
-								":occupancy_id"
-							],
-							"variable": [
-								{
-									"key": "office_symbol",
-									"value": "lrn"
-								},
-								{
-									"key": "occupancy_id",
-									"value": "a119ad8a-2b94-4d8f-a3c9-b985904e6f69"
-								}
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		}
@@ -1225,7 +1103,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImJZYVZSTS0xVmp1LWR2N2NEZ0k5ZnJkNVRtZFl1RU5QbWRoV0NaZU1TWmMifQ.eyJleHAiOjE4Mzk1MDU1MzUsImlhdCI6MTYzOTUwNTIzNSwianRpIjoiOTBmN2YzYmYtZTkzNC00NWM2LTg1OGUtNzVjMGM2NDdkZTNkIiwiaXNzIjoiaHR0cHM6Ly9tb2NrLXNlcnZlciIsImF1ZCI6WyJjdW11bHVzIiwid29ya2ZvcmNlIiwiYWNjb3VudCJdLCJzdWIiOiI5MmUxMGQ5My1iNDU0LTQ0Y2ItOWM3Zi01ZGVhZjBkMTZmMTUiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJ3b3JrZm9yY2UiLCJzZXNzaW9uX3N0YXRlIjoiYzI4YTMzZmUtNzM4MC00OTI4LWFkNDYtN2JmZTFiY2M2OTVkIiwiYWNyIjoiMSIsInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJkZWZhdWx0LXJvbGVzLXdhdGVyIiwib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7Indvcmtmb3JjZSI6eyJyb2xlcyI6WyJhcHBsaWNhdGlvbi5hZG1pbiJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSIsInByZWZlcnJlZF91c2VybmFtZSI6Indvcmtmb3JjZS5hZG1pbiIsImdpdmVuX25hbWUiOiIiLCJmYW1pbHlfbmFtZSI6IiJ9.Aip3doJZ13paloCD-tNY88zuMpkWbKYTASrTXITcvTg",
+				"value": "{{jwt_existing_admin}}",
 				"type": "string"
 			}
 		]
