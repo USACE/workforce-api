@@ -70,10 +70,24 @@ func UpdateOccupancy(db *pgxpool.Pool, occupancy Occupancy) (Occupancy, error) {
 		occupancy.ServiceStartDate, occupancy.ServiceEndDate, occupancy.Dob,
 		occupancy.ID, occupancy.PositionID,
 	).Scan(&id); err != nil {
-		return Occupancy{Title: "ERROR"}, nil
+		return Occupancy{}, nil
 	}
 	return GetOccupancyByID(db, id)
 }
+
+// DeleteOccupancy
+// func DeleteOccupancy(db *pgxpool.Pool, id uuid.UUID, positionID uuid.UUID) (int64, error) {
+// 	var cnt int64
+// 	res, err := db.Exec(context.Background(),
+// 		`DELETE FROM occupancy WHERE id = $1 AND position_id = $2`,
+// 		id, positionID,
+// 	)
+// 	if err != nil {
+// 		return cnt, err
+// 	}
+// 	cnt = res.RowsAffected()
+// 	return cnt, nil
+// }
 
 // ListOccupancy
 func ListOccupancyByOffice(db *pgxpool.Pool, officeSymbol string) ([]Occupancy, error) {

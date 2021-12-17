@@ -107,7 +107,7 @@ func UpdateOfficeGroup(db *pgxpool.Pool, officeGroup Group) (Group, error) {
 		RETURNING id`,
 		officeGroup.Name, officeGroup.Slug, officeGroup.OfficeSymbol,
 	).Scan(&id); err != nil {
-		return Group{Name: "NO NEW NAME"}, nil
+		return Group{}, nil
 	}
 	return GetGroupByID(db, id)
 }

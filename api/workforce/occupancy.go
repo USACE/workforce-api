@@ -37,6 +37,24 @@ func (s Store) UpdateOccupancy(c echo.Context) error {
 	return c.JSON(http.StatusOK, oc)
 }
 
+// DeleteOccupancy
+// func (s Store) DeleteOccupancy(c echo.Context) error {
+// 	p := struct {
+// 		PositionID uuid.UUID `json:"position_id"`
+// 	}{}
+// 	id, _ := uuid.Parse(c.Param("occupancy_id"))
+// 	c.Bind(&p)
+// 	i, err := models.DeleteOccupancy(s.Connection, id, p.PositionID)
+// 	if err != nil {
+// 		return c.JSON(http.StatusInternalServerError, err)
+// 	}
+// 	if int(i) < 1 {
+// 		return c.JSON(http.StatusOK, messages.NewMessage("no office group deleted"))
+// 	}
+
+// 	return c.JSON(http.StatusOK, messages.NewMessage("office group deleted"))
+// }
+
 // GetOccupancyByID
 func (s Store) GetOccupancyByID(c echo.Context) error {
 	id, err := uuid.Parse(c.Param("occupancy_id"))
