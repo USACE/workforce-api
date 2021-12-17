@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "701c28d5-65c0-499b-96a2-a405ee3fae99",
+		"_postman_id": "966e72d6-c61d-480f-9e0d-52e17d79f02f",
 		"name": "Workforce",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -1094,6 +1094,52 @@
 							"body": "{\n    \"id\": \"00000000-0000-0000-0000-000000000000\",\n    \"position_id\": \"00000000-0000-0000-0000-000000000000\",\n    \"title\": \"PITA\",\n    \"start_date\": \"2021-01-01T00:00:00Z\",\n    \"end_date\": null,\n    \"service_start_date\": \"2000-01-01T00:00:00Z\",\n    \"service_end_date\": null,\n    \"dob\": \"1990-01-01T00:00:00Z\"\n}"
 						}
 					]
+				},
+				{
+					"name": "Create Occupancy Copy",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"position_id\": \"964d3ba8-14a1-42d2-a6b7-25be6a853101\",\n    \"title\": \"NICE NEW TITLE\",\n    \"start_date\": \"2005-10-20T00:00:00Z\",\n    \"end_date\": null,\n    \"service_start_date\": \"2001-10-20T00:00:00Z\",\n    \"service_end_date\": null,\n    \"dob\": \"1990-03-01T00:00:00Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/offices/:office_symbol/occupancy/:occupancy_id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"offices",
+								":office_symbol",
+								"occupancy",
+								":occupancy_id"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "office_symbol",
+									"value": "mvk"
+								},
+								{
+									"key": "occupancy_id",
+									"value": "5540d5c2-bb10-46b9-8bbb-f54130d2edd4"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}

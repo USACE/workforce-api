@@ -33,7 +33,6 @@ func (s Store) UpdateOccupancy(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, messages.NewMessage(err.Error()))
 	}
-
 	return c.JSON(http.StatusOK, oc)
 }
 
