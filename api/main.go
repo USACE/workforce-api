@@ -61,34 +61,34 @@ func main() {
 	public.GET("/pay_plans", mp.ListPayPlanCodes)
 
 	// Offices
-	public.GET("/offices", mp.ListOffices) //CHECK
+	public.GET("/offices", mp.ListOffices)
 
 	// Positions
-	public.GET("/position/:position_id", mp.GetPositionByID) //CHECK
+	public.GET("/position/:position_id", mp.GetPositionByID)
 
 	// Groups
-	public.GET("/groups", mp.ListGroups)                                // Used in Python script
-	public.GET("/offices/:office_symbol/groups", mp.ListGroupsByOffice) //CHECK
+	public.GET("/groups", mp.ListGroups) // Used in Python script
+	public.GET("/offices/:office_symbol/groups", mp.ListGroupsByOffice)
 
-	private.POST("/offices/:office_symbol/groups", mp.CreateOfficeGroup)               //CHECK
-	private.PUT("/offices/:office_symbol/groups/:group_slug", mp.UpdateOfficeGroup)    //CHECK
-	private.DELETE("/offices/:office_symbol/groups/:group_slug", mp.DeleteOfficeGroup) //CHECK
+	private.POST("/offices/:office_symbol/groups", mp.CreateOfficeGroup)
+	private.PUT("/offices/:office_symbol/groups/:group_slug", mp.UpdateOfficeGroup)
+	private.DELETE("/offices/:office_symbol/groups/:group_slug", mp.DeleteOfficeGroup)
 
 	// Office Positions/Employees
-	public.GET("/offices/:office_symbol/positions", mp.ListPositions)                    //CHECK
-	public.GET("/offices/:office_symbol/:group_slug/positions", mp.ListPositionsByGroup) //CHECK
+	public.GET("/offices/:office_symbol/positions", mp.ListPositions)
+	public.GET("/offices/:office_symbol/:group_slug/positions", mp.ListPositionsByGroup)
 
-	private.POST("/offices/:office_symbol/positions", mp.CreateOfficePosition)                //CHECK
-	private.PUT("/offices/:office_symbol/positions/:position_id", mp.UpdateOfficePosition)    //CHECK
-	private.DELETE("/offices/:office_symbol/positions/:position_id", mp.DeleteOfficePosition) //CHECK
+	private.POST("/offices/:office_symbol/positions", mp.CreateOfficePosition)
+	private.PUT("/offices/:office_symbol/positions/:position_id", mp.UpdateOfficePosition)
+	private.DELETE("/offices/:office_symbol/positions/:position_id", mp.DeleteOfficePosition)
 
 	// Occupancy
-	private.POST("/offices/:office_symbol/occupancy", mp.CreateOccupancy)              //CHECK
-	private.PUT("/offices/:office_symbol/occupancy/:occupancy_id", mp.UpdateOccupancy) //CHECK
+	private.POST("/offices/:office_symbol/occupancy", mp.CreateOccupancy)
+	private.PUT("/offices/:office_symbol/occupancy/:occupancy_id", mp.UpdateOccupancy)
 	// private.DELETE("/offices/:office_symbol/occupancy/:occupancy_id", mp.DeleteOccupancy)
-	public.GET("/occupancy/:occupancy_id", mp.GetOccupancyByID)                          //CHECK
-	public.GET("/offices/:office_symbol/occupancy", mp.ListOccupancyByOffice)            //CHECK
-	public.GET("/offices/:office_symbol/:group_slug/occupancy", mp.ListOccupancyByGroup) //CHECK
+	public.GET("/occupancy/:occupancy_id", mp.GetOccupancyByID)
+	public.GET("/offices/:office_symbol/occupancy", mp.ListOccupancyByOffice)
+	public.GET("/offices/:office_symbol/:group_slug/occupancy", mp.ListOccupancyByGroup)
 
 	// Server
 	s := &http2.Server{

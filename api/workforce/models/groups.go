@@ -113,13 +113,13 @@ func UpdateOfficeGroup(db *pgxpool.Pool, officeGroup Group) (Group, error) {
 }
 
 // DeleteOfficeGroup
-func DeleteOfficeGroup(db *pgxpool.Pool, officeGroup Group) (int64, error) {
+func DeleteOfficeGroup(db *pgxpool.Pool, office string, group string) (int64, error) {
 	var cnt int64
 	res, err := db.Exec(context.Background(),
 		`DELETE FROM office_group AS og
 		WHERE office_id = (SELECT id FROM office AS o WHERE o.symbol ILIKE $1)
-		AND og.id = $2`,
-		officeGroup.OfficeSymbol, officeGroup.ID,
+		AND og.slug = $2`,
+		office, group,
 	)
 	if err != nil {
 		return cnt, err

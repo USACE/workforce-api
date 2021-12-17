@@ -54,9 +54,9 @@ func (s Store) UpdateOfficeGroup(c echo.Context) error {
 
 // DeleteOfficeGroup
 func (s Store) DeleteOfficeGroup(c echo.Context) error {
-	var g models.Group
-	c.Bind(&g)
-	i, err := models.DeleteOfficeGroup(s.Connection, g)
+	o := c.Param("office_symbol")
+	g := c.Param("group_slug")
+	i, err := models.DeleteOfficeGroup(s.Connection, o, g)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err)
 	}
