@@ -10,9 +10,9 @@ import (
 )
 
 type Occupancy struct {
-	ID               uuid.UUID  `json:"id"`
+	ID               uuid.UUID  `json:"id" param:"occupancy_id"`
 	PositionID       uuid.UUID  `json:"position_id"`
-	Title            *string    `json:"title"`
+	Title            string     `json:"title"`
 	StartDate        *time.Time `json:"start_date"`
 	EndDate          *time.Time `json:"end_date"`
 	ServiceStartDate *time.Time `json:"service_start_date"`
@@ -53,8 +53,40 @@ func CreateOccupancy(db *pgxpool.Pool, o Occupancy) (Occupancy, error) {
 }
 
 // UpdateOccupancy
-// func UpdateOccupancy(db *pgxpool.Pool) {
+func UpdateOccupancy(db *pgxpool.Pool, occupancy Occupancy) (Occupancy, error) {
+	var id uuid.UUID
+	if err := db.QueryRow(context.Background(),
+		`UPDATE occupancy SET
+		title = $1,
+		start_date = $2,
+		end_date = $3,
+		service_start_date = $4,
+		service_end_date = $5,
+		dob = $6
+		WHERE id = $7 AND
+		position_id = $8
+		RETURNING id`,
+		occupancy.Title, occupancy.StartDate, occupancy.EndDate,
+		occupancy.ServiceStartDate, occupancy.ServiceEndDate, occupancy.Dob,
+		occupancy.ID, occupancy.PositionID,
+	).Scan(&id); err != nil {
+		return Occupancy{}, nil
+	}
+	return GetOccupancyByID(db, id)
+}
 
+// DeleteOccupancy
+// func DeleteOccupancy(db *pgxpool.Pool, id uuid.UUID, positionID uuid.UUID) (int64, error) {
+// 	var cnt int64
+// 	res, err := db.Exec(context.Background(),
+// 		`DELETE FROM occupancy WHERE id = $1 AND position_id = $2`,
+// 		id, positionID,
+// 	)
+// 	if err != nil {
+// 		return cnt, err
+// 	}
+// 	cnt = res.RowsAffected()
+// 	return cnt, nil
 // }
 
 // ListOccupancy

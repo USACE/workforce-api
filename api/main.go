@@ -70,9 +70,9 @@ func main() {
 	public.GET("/groups", mp.ListGroups)                                // Used in Python script
 	public.GET("/offices/:office_symbol/groups", mp.ListGroupsByOffice) //CHECK
 
-	private.POST("/offices/:office_symbol/groups", mp.CreateOfficeGroup)             //CHECK
-	private.PUT("/offices/:office_symbol/groups/:group_id", mp.UpdateOfficeGroup)    //CHECK
-	private.DELETE("/offices/:office_symbol/groups/:group_id", mp.DeleteOfficeGroup) //CHECK
+	private.POST("/offices/:office_symbol/groups", mp.CreateOfficeGroup)               //CHECK
+	private.PUT("/offices/:office_symbol/groups/:group_slug", mp.UpdateOfficeGroup)    //CHECK
+	private.DELETE("/offices/:office_symbol/groups/:group_slug", mp.DeleteOfficeGroup) //CHECK
 
 	// Office Positions/Employees
 	public.GET("/offices/:office_symbol/positions", mp.ListPositions)                    //CHECK
@@ -83,9 +83,9 @@ func main() {
 	private.DELETE("/offices/:office_symbol/positions/:position_id", mp.DeleteOfficePosition) //CHECK
 
 	// Occupancy
-	private.POST("/offices/:office_symbol/occupancy", mp.CreateOccupancy) //CHECK
-	// private.PUT("/offices/:office_symbol/occupancy", mp.UpdateOccupancy)
-	// private.DELETE("", mp.DeleteOccupancy)
+	private.POST("/offices/:office_symbol/occupancy", mp.CreateOccupancy)              //CHECK
+	private.PUT("/offices/:office_symbol/occupancy/:occupancy_id", mp.UpdateOccupancy) //CHECK
+	// private.DELETE("/offices/:office_symbol/occupancy/:occupancy_id", mp.DeleteOccupancy)
 	public.GET("/occupancy/:occupancy_id", mp.GetOccupancyByID)                          //CHECK
 	public.GET("/offices/:office_symbol/occupancy", mp.ListOccupancyByOffice)            //CHECK
 	public.GET("/offices/:office_symbol/:group_slug/occupancy", mp.ListOccupancyByGroup) //CHECK

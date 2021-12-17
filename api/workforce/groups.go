@@ -1,7 +1,6 @@
 package workforce
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/USACE/workforce-api/api/messages"
@@ -58,13 +57,12 @@ func (s Store) DeleteOfficeGroup(c echo.Context) error {
 	var g models.Group
 	c.Bind(&g)
 	i, err := models.DeleteOfficeGroup(s.Connection, g)
-
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err)
 	}
 	if int(i) < 1 {
-		return c.JSON(http.StatusOK, messages.NewMessage("no position deleted"))
+		return c.JSON(http.StatusOK, messages.NewMessage("no office group deleted"))
 	}
 
-	return c.JSON(http.StatusOK, messages.NewMessage(fmt.Sprintf("Deleted id %s", g.ID)))
+	return c.JSON(http.StatusOK, messages.NewMessage("office group deleted"))
 }

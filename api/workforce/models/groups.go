@@ -101,14 +101,13 @@ func CreateOfficeGroup(db *pgxpool.Pool, officeGroup Group) (Group, error) {
 func UpdateOfficeGroup(db *pgxpool.Pool, officeGroup Group) (Group, error) {
 	var id uuid.UUID
 	if err := db.QueryRow(context.Background(),
-		`UPDATE office_group SET
-		name = $1
-		WHERE id = $2 AND
+		`UPDATE office_group SET name = $1
+		WHERE slug = $2 AND
 		office_id = (SELECT id FROM office WHERE symbol ILIKE $3)
 		RETURNING id`,
-		officeGroup.Name, officeGroup.ID, officeGroup.OfficeSymbol,
+		officeGroup.Name, officeGroup.Slug, officeGroup.OfficeSymbol,
 	).Scan(&id); err != nil {
-		return Group{Name: "NO NEW NAME"}, nil
+		return Group{}, nil
 	}
 	return GetGroupByID(db, id)
 }

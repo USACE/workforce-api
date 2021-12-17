@@ -46,6 +46,7 @@ SELECT p.id,
 	   p.grade,
 	   p.is_active,
 	   p.is_supervisor,
+	   p.is_allocated,
 	   c1.code              as occupation_code,
 	   c1.name              as occupation_name,
 	   c2.current_occupancy
@@ -96,13 +97,13 @@ func ListPositionsByGroup(db *pgxpool.Pool, officeSymbol string, groupSlug strin
 func CreateOfficePosition(db *pgxpool.Pool, p Position) (Position, error) {
 	var id uuid.UUID
 	if err := db.QueryRow(context.Background(),
-		`INSERT INTO position (occupation_code_id, title, office_group_id, pay_plan_id, grade, is_supervisor, is_active)
+		`INSERT INTO position (occupation_code_id, title, office_group_id, pay_plan_id, grade, is_supervisor, is_active, is_allocated)
 		VALUES (
 			(SELECT id FROM occupation_code WHERE code = $1),
 			$2,
 			(SELECT id FROM office_group WHERE office_id = (SELECT id FROM office WHERE symbol ILIKE $3) AND slug = $4),
 			(SELECT id FROM pay_plan WHERE code = $5),
-			$6, $7, $8) RETURNING id`,
+			$6, $7, $8, $9) RETURNING id`,
 		p.OccupationCode,
 		p.Title,
 		p.OfficeSymbol,
@@ -111,6 +112,7 @@ func CreateOfficePosition(db *pgxpool.Pool, p Position) (Position, error) {
 		p.Grade,
 		p.IsSupervisor,
 		p.IsActive,
+		p.IsAllocated,
 	).Scan(&id); err != nil {
 		return Position{}, err
 	}
