@@ -7,7 +7,7 @@ on:
       - 'api/**'
       - 'sql/**'
       - './Dockerfile'
-      - '.github/workflows/stable.yml'
+      - './.github/workflows/stable.yml'
   workflow_dispatch:
 jobs:
 
