@@ -3,6 +3,11 @@ name: API Develop
 on:
   push:
     branches: [develop]
+    paths:
+      - 'api/**'
+      - 'sql/**'
+      - './Dockerfile'
+      - './.github/workflows/develop.yml'
   workflow_dispatch:
 jobs:
 
