@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "5d9e220f-cc30-4994-acf1-7d3e462ff5ff",
+		"_postman_id": "0992fb6e-504c-41d2-96f3-86f0ffff0545",
 		"name": "Workforce",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -14,9 +14,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost/offices",
+							"raw": "{{base_url}}/offices",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
 							"path": [
 								"offices"
@@ -57,9 +57,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost/groups",
+							"raw": "{{base_url}}/groups",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
 							"path": [
 								"groups"
@@ -110,9 +110,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost/offices/:office_symbol/groups",
+							"raw": "{{base_url}}/offices/:office_symbol/groups",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
 							"path": [
 								"offices",
@@ -191,9 +191,9 @@
 							}
 						},
 						"url": {
-							"raw": "localhost/offices/:office_symbol/groups",
+							"raw": "{{base_url}}/offices/:office_symbol/groups",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
 							"path": [
 								"offices",
@@ -236,9 +236,9 @@
 							}
 						},
 						"url": {
-							"raw": "localhost/offices/:office_symbol/groups/:group_slug",
+							"raw": "{{base_url}}/offices/:office_symbol/groups/:group_slug",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
 							"path": [
 								"offices",
@@ -286,9 +286,9 @@
 							}
 						},
 						"url": {
-							"raw": "localhost/offices/:office_symbol/groups/:group_slug",
+							"raw": "{{base_url}}/offices/:office_symbol/groups/:group_slug",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
 							"path": [
 								"offices",
@@ -321,9 +321,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost/position/:position_id",
+							"raw": "{{base_url}}/position/:position_id",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
 							"path": [
 								"position",
@@ -375,9 +375,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost/offices/:office_symbol/positions",
+							"raw": "{{base_url}}/offices/:office_symbol/positions",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
 							"path": [
 								"offices",
@@ -439,9 +439,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost/offices/:office_symbol/:group_slug/positions",
+							"raw": "{{base_url}}/offices/:office_symbol/:group_slug/positions",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
 							"path": [
 								"offices",
@@ -531,9 +531,9 @@
 							}
 						},
 						"url": {
-							"raw": "localhost/offices/:office_symbol/positions",
+							"raw": "{{base_url}}/offices/:office_symbol/positions",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
 							"path": [
 								"offices",
@@ -624,9 +624,9 @@
 							}
 						},
 						"url": {
-							"raw": "localhost/offices/:office_symbol/positions/:position_id",
+							"raw": "{{base_url}}/offices/:office_symbol/positions/:position_id",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
 							"path": [
 								"offices",
@@ -727,9 +727,9 @@
 							}
 						},
 						"url": {
-							"raw": "localhost/offices/:office_symbol/positions/:position_id",
+							"raw": "{{base_url}}/offices/:office_symbol/positions/:position_id",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
 							"path": [
 								"offices",
@@ -821,9 +821,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost/occupancy/:occupancy_id",
+							"raw": "{{base_url}}/occupancy/:occupancy_id",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
 							"path": [
 								"occupancy",
@@ -873,9 +873,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost/offices/:office_symbol/occupancy",
+							"raw": "{{base_url}}/offices/:office_symbol/occupancy",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
 							"path": [
 								"offices",
@@ -943,9 +943,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost/offices/:office_symbol/:group_slug/occupancy",
+							"raw": "{{base_url}}/offices/:office_symbol/:group_slug/occupancy",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
 							"path": [
 								"offices",
@@ -1032,9 +1032,9 @@
 							}
 						},
 						"url": {
-							"raw": "localhost/offices/:office_symbol/occupancy",
+							"raw": "{{base_url}}/offices/:office_symbol/occupancy",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
 							"path": [
 								"offices",
@@ -1110,9 +1110,9 @@
 							}
 						},
 						"url": {
-							"raw": "localhost/offices/:office_symbol/occupancy/:occupancy_id",
+							"raw": "{{base_url}}/offices/:office_symbol/occupancy/:occupancy_id",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
 							"path": [
 								"offices",
@@ -1193,9 +1193,9 @@
 							}
 						},
 						"url": {
-							"raw": "localhost/offices/:office_symbol/occupancy/:occupancy_id",
+							"raw": "{{base_url}}/offices/:office_symbol/occupancy/:occupancy_id",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
 							"path": [
 								"offices",
