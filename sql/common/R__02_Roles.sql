@@ -70,6 +70,7 @@ GRANT SELECT ON
     position,
     v_office_positions,
     v_office_occupancy,
+    v_occupation_metrics,
     data_call,
     data_call_completed
 TO workforce_reader;

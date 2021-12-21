@@ -65,3 +65,51 @@ JOIN office AS o2 ON o2.id = og.office_id
 JOIN office AS o3 ON o2.parent_id = o3.id 
 ORDER BY office_symbol, occupation_code
 );
+
+-- VIEW FOR OCCUPATION METRICS
+CREATE OR REPLACE VIEW v_occupation_metrics AS (
+    WITH all_positions AS (
+
+	SELECT 
+	oc.name, 
+	count(oc.name) AS name_cnt,
+	count(p.id) filter (where p.is_allocated) AS allocated_cnt,
+	count(o.id) filter (where o.end_date IS null) AS filled_cnt
+	FROM position p
+	JOIN occupation_code oc ON oc.id = p.occupation_code_id 
+	LEFT JOIN occupancy o ON o.position_id = p.id AND o.end_date IS null
+	GROUP BY oc.name
+	ORDER BY name_cnt DESC , allocated_cnt DESC
+),
+	top_positions AS (
+	
+	SELECT name, name_cnt, allocated_cnt, filled_cnt 
+	FROM all_positions
+	LIMIT 6
+),
+	other_positions AS (
+
+	SELECT name, name_cnt, allocated_cnt, filled_cnt 
+	FROM all_positions 
+	WHERE name NOT IN (SELECT name FROM top_positions)
+	
+)
+
+-- Get the top x number of positions (ordered by count)
+SELECT 
+	name, name_cnt, 
+	0 AS sort_field, 
+	allocated_cnt, 
+	filled_cnt
+FROM top_positions
+UNION 
+-- Get the rest and sum into 'Other'
+SELECT 
+	'Other' AS name, 
+	sum(name_cnt) AS name_cnt, 
+	1 AS sort_field, 
+	sum(allocated_cnt) AS allocated_cnt, 
+	sum(filled_cnt) AS filled_cnt
+FROM other_positions 
+ORDER BY sort_field, name_cnt DESC
+);
