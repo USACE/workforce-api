@@ -56,6 +56,9 @@ func main() {
 	// Manpower Store
 	mp := workforce.Store{Connection: st.Connection}
 
+	// Metrics
+	public.GET("/metrics/series", mp.SeriesMetrics)
+
 	// Codes --> Used in Python script
 	public.GET("/occupation_codes", mp.ListOccupationCodes)
 	public.GET("/pay_plans", mp.ListPayPlanCodes)
