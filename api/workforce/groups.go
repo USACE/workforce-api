@@ -17,9 +17,9 @@ func (s Store) ListGroups(c echo.Context) error {
 	return c.JSON(http.StatusOK, sg)
 }
 
-// ListGroupsByOffice
-func (s Store) ListGroupsByOffice(c echo.Context) error {
-	sg, err := models.ListGroupsByOffice(s.Connection, c.Param("office_symbol"))
+// ListOfficeGroups lists all groups for a single office
+func (s Store) ListOfficeGroups(c echo.Context) error {
+	sg, err := models.ListOfficeGroups(s.Connection, c.Param("office_symbol"))
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, messages.NewMessage(err.Error()))
 	}
