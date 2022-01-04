@@ -10,30 +10,61 @@ import (
 )
 
 type Occupancy struct {
-	ID               uuid.UUID  `json:"id" param:"occupancy_id"`
-	PositionID       uuid.UUID  `json:"position_id"`
-	Title            string     `json:"title"`
-	StartDate        *time.Time `json:"start_date"`
-	EndDate          *time.Time `json:"end_date"`
-	ServiceStartDate *time.Time `json:"service_start_date"`
-	ServiceEndDate   *time.Time `json:"service_end_date"`
-	Dob              *time.Time `json:"dob"`
+	ID               uuid.UUID     `json:"id" db:"occupancy_id" param:"occupancy_id"`
+	PositionID       uuid.UUID     `json:"position_id"`
+	Title            string        `json:"title" db:"occupancy_title"`
+	StartDate        *time.Time    `json:"start_date"`
+	EndDate          *time.Time    `json:"end_date"`
+	ServiceStartDate *time.Time    `json:"service_start_date"`
+	ServiceEndDate   *time.Time    `json:"service_end_date"`
+	Dob              *time.Time    `json:"dob"`
+	Credentials      []Credentials `json:"credentials"`
 }
 
-const baseListOccupancySql = `SELECT id, position_id, title,
-start_date, end_date, service_start_date, service_end_date, dob
-FROM v_office_occupancy AS v`
+// baseOccupancySql
+func baseOccupancySql() string {
+	return `WITH office_with_parent as(
+			SELECT o.id, o."name", o.symbol AS office_symbol,
+			p."name" AS parent_name, p.symbol AS parent_symbol
+			FROM office AS o LEFT JOIN office AS p ON o.parent_id = p.id
+		),
+		occupancy_credentials AS (
+			SELECT o.id, json_agg(c.rtj) AS credentials
+			FROM occupancy AS o
+			LEFT JOIN occupant_credentials AS oc ON o.id = oc.occupancy_id
+			LEFT JOIN (
+				SELECT id, row_to_json(r) AS rtj
+				FROM (SELECT cr.id, cr."abbrev", cr."name", ct."name" AS type
+				FROM credential AS cr
+				JOIN occupant_credentials AS oc ON oc.credential_id = cr.id
+				JOIN credential_type AS ct ON ct.id = cr.credential_type_id
+				) AS r
+			) AS c ON c.id = oc.credential_id
+			GROUP BY o.id
+		),
+		position_credentials AS (
+			SELECT *, o.id AS occupancy_id, o.title AS occupancy_title
+			FROM "position" p
+			JOIN occupancy o ON p.id = o.position_id
+			JOIN occupation_code oc ON p.occupation_code_id = oc.id
+			JOIN pay_plan pp ON p.pay_plan_id = pp.id
+			JOIN office_group og ON p.office_group_id = og.id
+			JOIN office_with_parent AS owp ON owp.id = og.office_id
+			JOIN occupancy_credentials AS occ ON occ.id = o.id
+			ORDER BY owp.office_symbol, oc.code
+			)
+		SELECT occupancy_id, position_id, occupancy_title, start_date::timestamptz,
+		end_date::timestamptz, service_start_date::timestamptz, service_end_date::timestamptz, dob, credentials
+		FROM position_credentials`
+}
 
 // GetOccupancyByID with Occupancy as the receiver
 func GetOccupancyByID(db *pgxpool.Pool, id uuid.UUID) (Occupancy, error) {
 	var o Occupancy
 	if err := pgxscan.Get(context.Background(), db, &o,
-		`SELECT o.id, o.position_id, o.title, o.start_date, o.end_date,
-		o.service_start_date, o.service_end_date, o.dob
-		FROM occupancy AS o
-		WHERE id = $1`, id,
+		baseOccupancySql()+" WHERE occupancy_id = $1", id,
 	); err != nil {
-		return Occupancy{}, nil
+		return Occupancy{}, err
 	}
 	return o, nil
 }
@@ -53,7 +84,7 @@ func CreateOccupancy(db *pgxpool.Pool, o Occupancy) (Occupancy, error) {
 }
 
 // UpdateOccupancy
-func UpdateOccupancy(db *pgxpool.Pool, occupancy Occupancy) (Occupancy, error) {
+func UpdateOccupancy(db *pgxpool.Pool, o Occupancy) (Occupancy, error) {
 	var id uuid.UUID
 	if err := db.QueryRow(context.Background(),
 		`UPDATE occupancy SET
@@ -66,11 +97,11 @@ func UpdateOccupancy(db *pgxpool.Pool, occupancy Occupancy) (Occupancy, error) {
 		WHERE id = $7 AND
 		position_id = $8
 		RETURNING id`,
-		occupancy.Title, occupancy.StartDate, occupancy.EndDate,
-		occupancy.ServiceStartDate, occupancy.ServiceEndDate, occupancy.Dob,
-		occupancy.ID, occupancy.PositionID,
+		o.Title, o.StartDate, o.EndDate,
+		o.ServiceStartDate, o.ServiceEndDate, o.Dob,
+		o.ID, o.PositionID,
 	).Scan(&id); err != nil {
-		return Occupancy{}, nil
+		return Occupancy{}, err
 	}
 	return GetOccupancyByID(db, id)
 }
@@ -93,7 +124,7 @@ func UpdateOccupancy(db *pgxpool.Pool, occupancy Occupancy) (Occupancy, error) {
 func ListOccupancyByOffice(db *pgxpool.Pool, officeSymbol string) ([]Occupancy, error) {
 	oo := make([]Occupancy, 0)
 	if err := pgxscan.Select(context.Background(), db, &oo,
-		baseListOccupancySql+" WHERE office_symbol ILIKE $1",
+		baseOccupancySql()+" WHERE office_symbol ILIKE $1",
 		officeSymbol,
 	); err != nil {
 		return oo, err
@@ -105,7 +136,7 @@ func ListOccupancyByOffice(db *pgxpool.Pool, officeSymbol string) ([]Occupancy, 
 func ListOccupancyByGroup(db *pgxpool.Pool, officeSymbol string, groupSlug string) ([]Occupancy, error) {
 	oo := make([]Occupancy, 0)
 	if err := pgxscan.Select(context.Background(), db, &oo,
-		baseListOccupancySql+" WHERE v.office_symbol ILIKE $1 AND v.group_slug = $2",
+		baseOccupancySql()+" WHERE office_symbol ILIKE $1 AND slug = $2",
 		officeSymbol, groupSlug,
 	); err != nil {
 		return oo, err

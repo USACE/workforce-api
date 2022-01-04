@@ -93,6 +93,9 @@ func main() {
 	public.GET("/offices/:office_symbol/occupancy", mp.ListOccupancyByOffice)
 	public.GET("/offices/:office_symbol/:group_slug/occupancy", mp.ListOccupancyByGroup)
 
+	// Credentials
+	public.GET("/credentials", mp.GetCredentials)
+
 	// Server
 	s := &http2.Server{
 		MaxConcurrentStreams: 250,     // http2 default 250
