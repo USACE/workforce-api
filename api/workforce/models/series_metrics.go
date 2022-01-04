@@ -13,10 +13,7 @@ type SeriesMetric struct {
 	OccupationID        uuid.UUID `json:"occupation_id"`
 	OccupationCode      string `json:"occupation_code"`
 	OccupationName      string `json:"occupation_name"`
-	Employees int    `json:"employees"`
-	Allocated int    `json:"allocated"`
-	Target    int    `json:"target"`
-
+	AllocationMetrics
 }
 
 func employeesByOccupationPreticate(officeSymbol, groupSlug *string) string {
