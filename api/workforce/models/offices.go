@@ -9,9 +9,9 @@ import (
 )
 
 type AllocationMetrics struct {
-	Employees int `json:"employees"`
-	Allocated int `json:"allocated"`
-	Target    int `json:"target"`
+	Employees *int `json:"employees,omitempty"`
+	Allocated *int `json:"allocated,omitempty"`
+	Target    *int `json:"target,omitempty"`
 }
 
 type Office struct {
