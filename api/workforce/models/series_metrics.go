@@ -10,62 +10,55 @@ import (
 )
 
 type SeriesMetric struct {
-	OccupationID        uuid.UUID `json:"occupation_id"`
-	OccupationCode      string `json:"occupation_code"`
-	OccupationName      string `json:"occupation_name"`
+	OccupationID   uuid.UUID `json:"occupation_id"`
+	OccupationCode string    `json:"occupation_code"`
+	OccupationName string    `json:"occupation_name"`
 	AllocationMetrics
 }
 
 func employeesByOccupationPreticate(officeSymbol, groupSlug *string) string {
-	if (officeSymbol != nil && groupSlug != nil) {
+	if officeSymbol != nil && groupSlug != nil {
 		return "WHERE f.symbol ILIKE $1 AND g.slug ILIKE $2"
 	}
-	if (officeSymbol != nil) {
+	if officeSymbol != nil {
 		return "WHERE f.symbol ILIKE $1"
 	}
 	return ""
 }
 
 func allocationByOccupationPreticate(officeSymbol, groupSlug *string) string {
-	if (officeSymbol != nil && groupSlug != nil) {
+	if officeSymbol != nil && groupSlug != nil {
 		return "WHERE p.is_allocated is true AND f.symbol ILIKE $1 AND g.slug ILIKE $2"
 	}
-	if (officeSymbol != nil) {
+	if officeSymbol != nil {
 		return "WHERE p.is_allocated is true AND f.symbol ILIKE $1"
 	}
 	return "WHERE p.is_allocated is true"
 }
 
 func targetByOccupationPreticate(officeSymbol, groupSlug *string) string {
-	if (officeSymbol != nil && groupSlug != nil) {
+	if officeSymbol != nil && groupSlug != nil {
 		return "WHERE f.symbol ILIKE $1 AND g.slug ILIKE $2"
 	}
-	if (officeSymbol != nil) {
+	if officeSymbol != nil {
 		return "WHERE f.symbol ILIKE $1"
 	}
 	return ""
 }
 
-
 func SeriesMetrics(db *pgxpool.Pool, officeSymbol, groupSlug *string) ([]SeriesMetric, error) {
 	mm := make([]SeriesMetric, 0)
-	if officeSymbol != nil {
-		fmt.Println(*officeSymbol)
-	}
-	if groupSlug != nil {
-		fmt.Println(*groupSlug)
-	}
 
-	args := func (officeSymbol, groupSlug *string) []interface{} {
-		if (officeSymbol != nil && groupSlug != nil) {
+	args := func(officeSymbol, groupSlug *string) []interface{} {
+		if officeSymbol != nil && groupSlug != nil {
 			return []interface{}{*officeSymbol, *groupSlug}
 		}
-		if (officeSymbol != nil) {
+		if officeSymbol != nil {
 			return []interface{}{*officeSymbol}
 		}
 		return make([]interface{}, 0)
 	}
-	
+
 	sql := fmt.Sprintf(
 		`WITH employees_by_occupation as (
 		SELECT oc.id, COUNT(oc.id)
@@ -105,10 +98,10 @@ func SeriesMetrics(db *pgxpool.Pool, officeSymbol, groupSlug *string) ([]SeriesM
 	left join target_by_occupation     c on c.id = oc.id
 	where b.count > 0
 	order by allocated DESC`,
-	employeesByOccupationPreticate(officeSymbol, groupSlug),
-	allocationByOccupationPreticate(officeSymbol, groupSlug),
-	targetByOccupationPreticate(officeSymbol, groupSlug),
-)
+		employeesByOccupationPreticate(officeSymbol, groupSlug),
+		allocationByOccupationPreticate(officeSymbol, groupSlug),
+		targetByOccupationPreticate(officeSymbol, groupSlug),
+	)
 
 	if err := pgxscan.Select(context.Background(), db, &mm, sql, args(officeSymbol, groupSlug)...); err != nil {
 		return make([]SeriesMetric, 0), err
