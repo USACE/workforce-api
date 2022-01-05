@@ -36,7 +36,6 @@ func baseOccupancySql() string {
 				SELECT id, row_to_json(r) AS rtj
 				FROM (SELECT cr.id, cr."abbrev", cr."name", ct."name" AS type
 				FROM credential AS cr
-				JOIN occupant_credentials AS oc ON oc.credential_id = cr.id
 				JOIN credential_type AS ct ON ct.id = cr.credential_type_id
 				) AS r
 			) AS c ON c.id = oc.credential_id
@@ -69,17 +68,44 @@ func GetOccupancyByID(db *pgxpool.Pool, id uuid.UUID) (Occupancy, error) {
 	return o, nil
 }
 
-// CreateOccupancy
 func CreateOccupancy(db *pgxpool.Pool, o Occupancy) (Occupancy, error) {
 	var id uuid.UUID
-	if err := pgxscan.Get(context.Background(), db, &id,
-		`INSERT INTO occupancy
-			(position_id, title, start_date, end_date, service_start_date, service_end_date, dob)
-		VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id`,
-		o.PositionID, o.Title, o.StartDate, o.EndDate, o.ServiceStartDate, o.ServiceEndDate, o.Dob,
-	); err != nil {
+	ctx := context.Background()
+
+	// Get a Tx for making transaction requests.
+	tx, err := db.Begin(ctx)
+	if err != nil {
 		return Occupancy{}, err
 	}
+
+	// Defer a rollback in case anything fails.
+	defer tx.Rollback(ctx)
+
+	// Create a new row in the occupancy table.
+	if err := tx.QueryRow(ctx,
+		`INSERT INTO occupancy
+			(position_id, title, start_date, end_date, service_start_date, service_end_date, dob)
+			VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id`,
+		o.PositionID, o.Title, o.StartDate, o.EndDate, o.ServiceStartDate, o.ServiceEndDate, o.Dob,
+	).Scan(&id); err != nil {
+		return Occupancy{}, err
+	}
+	// Create a new row in occupancy_credentials for each credential in the payload.
+	for _, c := range o.Credentials {
+		if _, err = tx.Exec(ctx,
+			`INSERT INTO occupant_credentials (occupancy_id, credential_id)
+				VALUES ($1, (SELECT id FROM credential AS c WHERE c."abbrev" ILIKE $2))`,
+			id, c.Abbreviation,
+		); err != nil {
+			return Occupancy{}, err
+		}
+	}
+
+	// Commit the transaction.
+	if err = tx.Commit(ctx); err != nil {
+		return Occupancy{}, err
+	}
+
 	return GetOccupancyByID(db, id)
 }
 
@@ -105,6 +131,41 @@ func UpdateOccupancy(db *pgxpool.Pool, o Occupancy) (Occupancy, error) {
 	}
 	return GetOccupancyByID(db, id)
 }
+
+// UpdateOccupancy updates the occupancy table based on ID and position ID
+// func UpdateOccupancy(db *pgxpool.Pool, o Occupancy) (Occupancy, error) {
+// 	var id uuid.UUID
+// 	ctx := context.Background()
+
+// 	// Get a Tx for making transaction requests.
+// 	tx, err := db.Begin(ctx)
+// 	if err != nil {
+// 		return Occupancy{}, nil
+// 	}
+
+// 	// Defer a rollback in case anything fails.
+// 	defer tx.Rollback(ctx)
+
+// 	// Update row in the occupancy table.
+// 	if err := db.QueryRow(context.Background(),
+// 		`UPDATE occupancy SET title = $1, start_date = $2, end_date = $3,
+// 		service_start_date = $4, service_end_date = $5, dob = $6
+// 		WHERE id = $7 AND position_id = $8 RETURNING id`,
+// 		o.Title, o.StartDate, o.EndDate,
+// 		o.ServiceStartDate, o.ServiceEndDate, o.Dob,
+// 		o.ID, o.PositionID,
+// 	).Scan(&id); err != nil {
+// 		return Occupancy{}, err
+// 	}
+
+// 	// Commit the transaction.
+// 	if err = tx.Commit(ctx); err != nil {
+// 		return Occupancy{}, nil
+// 	}
+
+// 	return GetOccupancyByID(db, id)
+
+// }
 
 // DeleteOccupancy
 // func DeleteOccupancy(db *pgxpool.Pool, id uuid.UUID, positionID uuid.UUID) (int64, error) {
