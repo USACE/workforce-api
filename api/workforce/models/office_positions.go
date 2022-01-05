@@ -9,7 +9,7 @@ import (
 )
 
 type Position struct {
-	ID               string    `json:"id" db:"position_id" param:"position_id"`
+	ID               string    `json:"id" param:"position_id"`
 	OfficeSymbol     string    `json:"office_symbol" param:"office_symbol"`
 	GroupSlug        string    `json:"group_slug" param:"group_slug"`
 	Title            string    `json:"title"`
