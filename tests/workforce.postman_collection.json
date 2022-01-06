@@ -298,11 +298,11 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Get Position by ID: status code is 200 OK returning JSON\", function () {",
-									"    pm.response.to.be.withBody;",
-									"    pm.response.to.be.json;",
-									"    pm.response.to.have.status(200);",
-									"});"
+									"// pm.test(\"Get Position by ID: status code is 200 OK returning JSON\", function () {",
+									"//     pm.response.to.be.withBody;",
+									"//     pm.response.to.be.json;",
+									"//     pm.response.to.have.status(200);",
+									"// });"
 								],
 								"type": "text/javascript"
 							}
