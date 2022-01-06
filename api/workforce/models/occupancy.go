@@ -10,15 +10,15 @@ import (
 )
 
 type Occupancy struct {
-	ID               uuid.UUID     `json:"id" db:"occupancy_id" param:"occupancy_id"`
-	PositionID       uuid.UUID     `json:"position_id"`
-	Title            string        `json:"title" db:"occupancy_title"`
-	StartDate        *time.Time    `json:"start_date"`
-	EndDate          *time.Time    `json:"end_date"`
-	ServiceStartDate *time.Time    `json:"service_start_date"`
-	ServiceEndDate   *time.Time    `json:"service_end_date"`
-	Dob              *time.Time    `json:"dob"`
-	Credentials      []Credentials `json:"credentials"`
+	ID               uuid.UUID      `json:"id" db:"occupancy_id" param:"occupancy_id"`
+	PositionID       uuid.UUID      `json:"position_id"`
+	Title            string         `json:"title" db:"occupancy_title"`
+	StartDate        *time.Time     `json:"start_date"`
+	EndDate          *time.Time     `json:"end_date"`
+	ServiceStartDate *time.Time     `json:"service_start_date"`
+	ServiceEndDate   *time.Time     `json:"service_end_date"`
+	Dob              *time.Time     `json:"dob"`
+	Credentials      []*Credentials `json:"credentials"`
 }
 
 // baseOccupancySql
