@@ -10,15 +10,15 @@ import (
 )
 
 type Occupancy struct {
-	ID               uuid.UUID     `json:"id" db:"occupancy_id" param:"occupancy_id"`
-	PositionID       uuid.UUID     `json:"position_id"`
-	Title            string        `json:"title" db:"occupancy_title"`
-	StartDate        *time.Time    `json:"start_date"`
-	EndDate          *time.Time    `json:"end_date"`
-	ServiceStartDate *time.Time    `json:"service_start_date"`
-	ServiceEndDate   *time.Time    `json:"service_end_date"`
-	Dob              *time.Time    `json:"dob"`
-	Credentials      []Credentials `json:"credentials"`
+	ID               uuid.UUID      `json:"id" db:"occupancy_id" param:"occupancy_id"`
+	PositionID       uuid.UUID      `json:"position_id"`
+	Title            string         `json:"title" db:"occupancy_title"`
+	StartDate        *time.Time     `json:"start_date"`
+	EndDate          *time.Time     `json:"end_date"`
+	ServiceStartDate *time.Time     `json:"service_start_date"`
+	ServiceEndDate   *time.Time     `json:"service_end_date"`
+	Dob              *time.Time     `json:"dob"`
+	Credentials      []*Credentials `json:"credentials"`
 }
 
 // baseOccupancySql
@@ -55,6 +55,22 @@ func baseOccupancySql() string {
 		SELECT occupancy_id, position_id, occupancy_title, start_date::timestamptz,
 		end_date::timestamptz, service_start_date::timestamptz, service_end_date::timestamptz, dob, credentials
 		FROM position_credentials`
+}
+
+// diff finds the difference between a and b.
+// Return a slice of what's in a but not in b
+func difference(a, b []string) []string {
+	mb := make(map[string]struct{}, len(b))
+	for _, x := range b {
+		mb[x] = struct{}{}
+	}
+	var diff []string
+	for _, x := range a {
+		if _, found := mb[x]; !found {
+			diff = append(diff, x)
+		}
+	}
+	return diff
 }
 
 // GetOccupancyByID with Occupancy as the receiver
@@ -111,25 +127,76 @@ func CreateOccupancy(db *pgxpool.Pool, o Occupancy) (Occupancy, error) {
 
 // UpdateOccupancy
 func UpdateOccupancy(db *pgxpool.Pool, o Occupancy) (Occupancy, error) {
-	var id uuid.UUID
-	if err := db.QueryRow(context.Background(),
-		`UPDATE occupancy SET
-		title = $1,
-		start_date = $2,
-		end_date = $3,
-		service_start_date = $4,
-		service_end_date = $5,
-		dob = $6
-		WHERE id = $7 AND
-		position_id = $8
-		RETURNING id`,
+	// Get a Tx for making transaction requests.
+	ctx := context.Background()
+	tx, err := db.Begin(ctx)
+	if err != nil {
+		return Occupancy{}, err
+	}
+
+	// Defer a rollback in case anything fails.
+	defer tx.Rollback(ctx)
+
+	// Update the occupancy table
+	if _, err = tx.Exec(ctx,
+		`UPDATE occupancy SET title = $1, start_date = $2, end_date = $3,
+		service_start_date = $4, service_end_date = $5, dob = $6
+		WHERE id = $7 AND position_id = $8`,
 		o.Title, o.StartDate, o.EndDate,
 		o.ServiceStartDate, o.ServiceEndDate, o.Dob,
 		o.ID, o.PositionID,
-	).Scan(&id); err != nil {
+	); err != nil {
 		return Occupancy{}, err
 	}
-	return GetOccupancyByID(db, id)
+
+	// create a slice of abbreviations from input Occupancy credentials
+	var a []string
+	for _, i := range o.Credentials {
+		a = append(a, i.Abbreviation)
+	}
+	// select the occupancy credentials returning and array of credential abbreviations
+	var b []string
+	if err = tx.QueryRow(ctx,
+		`SELECT ARRAY_agg(c."abbrev")
+		FROM occupant_credentials AS oc JOIN credential AS c ON c.id = oc.credential_id
+		WHERE occupancy_id = $1`,
+		o.ID,
+	).Scan(&b); err != nil {
+		return Occupancy{}, err
+	}
+	// take the difference getting what needs to be deleted and what needs inserted
+	toDelete := difference(b, a)
+	toInsert := difference(a, b)
+
+	// What needs to be deleted
+	for _, ba := range toDelete {
+		if _, err = tx.Exec(ctx,
+			`DELETE FROM occupant_credentials AS oc
+		WHERE oc.occupancy_id = $1 AND
+		oc.credential_id = (SELECT id FROM credential AS c WHERE c."abbrev" ILIKE $2)`,
+			o.ID, ba,
+		); err != nil {
+			return Occupancy{}, err
+		}
+	}
+
+	// What needs to be inserted
+	for _, ab := range toInsert {
+		if _, err = tx.Exec(ctx,
+			`INSERT INTO occupant_credentials (occupancy_id, credential_id)
+				VALUES ($1, (SELECT id FROM credential AS c WHERE c."abbrev" ILIKE $2))`,
+			o.ID, ab,
+		); err != nil {
+			return Occupancy{}, err
+		}
+	}
+
+	// Commit the transaction.
+	if err = tx.Commit(ctx); err != nil {
+		return Occupancy{}, err
+	}
+
+	return GetOccupancyByID(db, o.ID)
 }
 
 // UpdateOccupancy updates the occupancy table based on ID and position ID
