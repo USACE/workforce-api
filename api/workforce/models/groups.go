@@ -18,6 +18,7 @@ type Group struct {
 	Name         string     `json:"name"`
 	Slug         string     `json:"slug" param:"group_slug"`
 	LastVerified *time.Time `json:"last_verified" db:"last_verified"`
+	AllocationMetrics
 }
 
 // GetGroupByID
@@ -62,16 +63,46 @@ func ListGroups(db *pgxpool.Pool) ([]Group, error) {
 	return gg, nil
 }
 
-// ListGroupsByOffice
-func ListGroupsByOffice(db *pgxpool.Pool, sym string) ([]Group, error) {
+// ListOfficeGroups lists all groups for a single office
+func ListOfficeGroups(db *pgxpool.Pool, officeSymbol string) ([]Group, error) {
 	gg := make([]Group, 0)
-	rows, err := db.Query(context.Background(),
-		`SELECT concat(lower(f.symbol), '-', g.slug) AS uid,
-			f.symbol AS office_symbol, g.name, g.slug, g.last_verified
+	rows, err := db.Query(
+		context.Background(),
+		`WITH employees_by_group as (
+			SELECT g.id, COUNT(g.id)
+			FROM position p
+			JOIN office_group g ON g.id = p.office_group_id
+			JOIN occupancy    c ON c.position_id = p.id and c.end_date is null
+			WHERE p.is_active AND g.office_id IN (SELECT id FROM office WHERE symbol ILIKE $1)
+			GROUP BY g.id
+		), allocation_by_group as (
+			SELECT g.id, COUNT(g.id)
+			FROM position p
+			JOIN office_group g ON g.id = p.office_group_id
+			WHERE p.is_active AND g.office_id IN (SELECT id FROM office WHERE symbol ILIKE $1)
+			GROUP BY g.id
+		), target_by_group as (
+			SELECT g.id, COUNT(g.id)
+			FROM position p
+			JOIN office_group g  on g.id = p.office_group_id
+			WHERE p.is_active AND g.office_id IN (SELEcT id FROM office WHERE symbol ILIKE $1)
+			GROUP BY g.id
+		)
+		SELECT concat(lower(f.symbol), '-', g.slug) AS uid,
+		       f.symbol                             AS office_symbol,
+			   g.name, 
+			   g.slug,
+			   g.last_verified,
+			   coalesce(a.count, 0)                 AS employees,
+			   coalesce(b.count, 0)                 AS allocated,
+			   coalesce(c.count, 0)                 AS target
 		FROM office_group g
-		JOIN office f ON f.id = g.office_id
+		JOIN office                   f ON f.id = g.office_id
+		LEFT JOIN employees_by_group  a ON a.id = g.id
+		LEFT JOIN allocation_by_group b ON b.id = g.id
+		LEFT JOIN target_by_group     c ON c.id = g.id
 		WHERE f.symbol ILIKE $1`,
-		sym,
+		officeSymbol,
 	)
 	if err != nil {
 		return nil, err

@@ -71,7 +71,7 @@ func main() {
 
 	// Groups
 	public.GET("/groups", mp.ListGroups) // Used in Python script
-	public.GET("/offices/:office_symbol/groups", mp.ListGroupsByOffice)
+	public.GET("/offices/:office_symbol/groups", mp.ListOfficeGroups)
 
 	private.POST("/offices/:office_symbol/groups", mp.CreateOfficeGroup)
 	private.PUT("/offices/:office_symbol/groups/:group_slug", mp.UpdateOfficeGroup)
