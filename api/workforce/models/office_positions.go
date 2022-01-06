@@ -9,18 +9,18 @@ import (
 )
 
 type Position struct {
-	ID               string    `json:"id" param:"position_id"`
-	OfficeSymbol     string    `json:"office_symbol" param:"office_symbol"`
-	GroupSlug        string    `json:"group_slug" param:"group_slug"`
-	Title            string    `json:"title"`
-	PayPlan          string    `json:"pay_plan"`
-	Grade            int       `json:"grade"`
-	IsActive         bool      `json:"is_active"`
-	IsSupervisor     bool      `json:"is_supervisor"`
-	IsAllocated      bool      `json:"is_allocated"`
-	OccupationCode   string    `json:"occupation_code"`
-	OccupationName   string    `json:"occupation_name"`
-	CurrentOccupancy Occupancy `json:"current_occupancy"`
+	ID               string     `json:"id" param:"position_id"`
+	OfficeSymbol     string     `json:"office_symbol" param:"office_symbol"`
+	GroupSlug        string     `json:"group_slug" param:"group_slug"`
+	Title            string     `json:"title"`
+	PayPlan          string     `json:"pay_plan"`
+	Grade            int        `json:"grade"`
+	IsActive         bool       `json:"is_active"`
+	IsSupervisor     bool       `json:"is_supervisor"`
+	IsAllocated      bool       `json:"is_allocated"`
+	OccupationCode   string     `json:"occupation_code"`
+	OccupationName   string     `json:"occupation_name"`
+	CurrentOccupancy *Occupancy `json:"current_occupancy"`
 }
 
 func basePositionSql() string {
