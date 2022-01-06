@@ -323,7 +323,7 @@
 							"variable": [
 								{
 									"key": "position_id",
-									"value": "93329f20-b6ca-4c0d-afac-a43a9316fcb6",
+									"value": "6ce9f21b-3722-4fdf-b72c-a028d7201ec6",
 									"description": "UUID for the position"
 								}
 							]
@@ -759,7 +759,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"position_id\": \"93329f20-b6ca-4c0d-afac-a43a9316fcb6\",\n    \"title\": \"New Position Title\",\n    \"start_date\": \"2005-10-20T00:00:00Z\",\n    \"end_date\": null,\n    \"service_start_date\": \"2001-10-20T00:00:00Z\",\n    \"service_end_date\": null,\n    \"dob\": \"1990-03-01T00:00:00Z\"\n}",
+							"raw": "{\n    \"position_id\": \"964d3ba8-14a1-42d2-a6b7-25be6a853101\",\n    \"title\": \"New Position Title\",\n    \"start_date\": \"2005-10-20T00:00:00Z\",\n    \"end_date\": null,\n    \"service_start_date\": \"2001-10-20T00:00:00Z\",\n    \"service_end_date\": null,\n    \"dob\": \"1990-03-01T00:00:00Z\",\n    \"credentials\": [\n        \"PE\"\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -815,7 +815,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"position_id\": \"964d3ba8-14a1-42d2-a6b7-25be6a853101\",\n    \"title\": \"NICE NEW TITLE\",\n    \"start_date\": \"2005-10-20T00:00:00Z\",\n    \"end_date\": null,\n    \"service_start_date\": \"2001-10-20T00:00:00Z\",\n    \"service_end_date\": null,\n    \"dob\": \"1990-03-01T00:00:00Z\"\n}",
+							"raw": "{\n    \"position_id\": \"964d3ba8-14a1-42d2-a6b7-25be6a853101\",\n    \"title\": \"MY NEW TITLE\",\n    \"start_date\": \"2005-10-20T00:00:00Z\",\n    \"end_date\": null,\n    \"service_start_date\": \"2001-10-20T00:00:00Z\",\n    \"service_end_date\": null,\n    \"dob\": \"1990-03-01T00:00:00Z\",\n    \"credentials\": [\n        \"PE\", \"MS\", \"PH\"\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -839,6 +839,44 @@
 									"value": "",
 									"disabled": true
 								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Credentials",
+			"item": [
+				{
+					"name": "Get Credentials",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"List Credentials: status code is 200 OK returning JSON\", function () {",
+									"    pm.response.to.be.ok;",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/credentials",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"credentials"
 							]
 						}
 					},

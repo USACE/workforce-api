@@ -10,51 +10,38 @@ import (
 )
 
 type Occupancy struct {
-	ID               uuid.UUID      `json:"id" db:"occupancy_id" param:"occupancy_id"`
-	PositionID       uuid.UUID      `json:"position_id"`
-	Title            string         `json:"title" db:"occupancy_title"`
-	StartDate        *time.Time     `json:"start_date"`
-	EndDate          *time.Time     `json:"end_date"`
-	ServiceStartDate *time.Time     `json:"service_start_date"`
-	ServiceEndDate   *time.Time     `json:"service_end_date"`
-	Dob              *time.Time     `json:"dob"`
-	Credentials      []*Credentials `json:"credentials"`
+	ID               uuid.UUID  `json:"id" db:"occupancy_id" param:"occupancy_id"`
+	PositionID       uuid.UUID  `json:"position_id"`
+	Title            string     `json:"title" db:"occupancy_title"`
+	StartDate        *time.Time `json:"start_date"`
+	EndDate          *time.Time `json:"end_date"`
+	ServiceStartDate *time.Time `json:"service_start_date"`
+	ServiceEndDate   *time.Time `json:"service_end_date"`
+	Dob              *time.Time `json:"dob"`
+	Credentials      []string   `json:"credentials"`
 }
 
 // baseOccupancySql
 func baseOccupancySql() string {
-	return `WITH office_with_parent as(
-			SELECT o.id, o."name", o.symbol AS office_symbol,
-			p."name" AS parent_name, p.symbol AS parent_symbol
-			FROM office AS o LEFT JOIN office AS p ON o.parent_id = p.id
-		),
-		occupancy_credentials AS (
-			SELECT o.id, json_agg(c.rtj) AS credentials
-			FROM occupancy AS o
-			LEFT JOIN occupant_credentials AS oc ON o.id = oc.occupancy_id
-			LEFT JOIN (
-				SELECT id, row_to_json(r) AS rtj
-				FROM (SELECT cr.id, cr."abbrev", cr."name", ct."name" AS type
-				FROM credential AS cr
-				JOIN credential_type AS ct ON ct.id = cr.credential_type_id
-				) AS r
-			) AS c ON c.id = oc.credential_id
-			GROUP BY o.id
-		),
-		position_credentials AS (
-			SELECT *, o.id AS occupancy_id, o.title AS occupancy_title
-			FROM "position" p
-			JOIN occupancy o ON p.id = o.position_id
-			JOIN occupation_code oc ON p.occupation_code_id = oc.id
-			JOIN pay_plan pp ON p.pay_plan_id = pp.id
-			JOIN office_group og ON p.office_group_id = og.id
-			JOIN office_with_parent AS owp ON owp.id = og.office_id
-			JOIN occupancy_credentials AS occ ON occ.id = o.id
-			ORDER BY owp.office_symbol, oc.code
-			)
-		SELECT occupancy_id, position_id, occupancy_title, start_date::timestamptz,
-		end_date::timestamptz, service_start_date::timestamptz, service_end_date::timestamptz, dob, credentials
-		FROM position_credentials`
+	return `WITH occupancy_credentials AS (
+		SELECT o.id AS occupancy_id, p.id AS position_id, o.title AS occupancy_title,
+			o.start_date, o.end_date, o.service_start_date, o.service_end_date, o.dob, json_agg(r."abbrev") AS credentials,
+			og.slug, f.symbol
+		FROM "position" p
+		JOIN occupancy o ON o.position_id = p.id
+		JOIN occupation_code oc ON oc.id = p.occupation_code_id
+		JOIN office_group AS og ON og.id = p.office_group_id
+		JOIN office AS f ON f.id = og.office_id
+		LEFT JOIN (SELECT oc.occupancy_id, c."abbrev"
+				FROM occupant_credentials AS oc
+				JOIN credential AS c ON c.id = oc.credential_id
+				) AS r ON r.occupancy_id = o.id
+		GROUP BY o.id, p.id, og.slug, f.symbol
+	)
+	SELECT oc.occupancy_id, oc.position_id, oc.occupancy_title,
+		oc.start_date, oc.end_date, oc.service_start_date, oc.service_end_date,
+		oc.dob, oc.credentials
+	FROM occupancy_credentials AS oc`
 }
 
 // diff finds the difference between a and b.
@@ -77,13 +64,14 @@ func difference(a, b []string) []string {
 func GetOccupancyByID(db *pgxpool.Pool, id uuid.UUID) (Occupancy, error) {
 	var o Occupancy
 	if err := pgxscan.Get(context.Background(), db, &o,
-		baseOccupancySql()+" WHERE occupancy_id = $1", id,
+		baseOccupancySql()+" WHERE oc.occupancy_id = $1", id,
 	); err != nil {
 		return Occupancy{}, err
 	}
 	return o, nil
 }
 
+// CreateOccupancy
 func CreateOccupancy(db *pgxpool.Pool, o Occupancy) (Occupancy, error) {
 	var id uuid.UUID
 	ctx := context.Background()
@@ -111,7 +99,7 @@ func CreateOccupancy(db *pgxpool.Pool, o Occupancy) (Occupancy, error) {
 		if _, err = tx.Exec(ctx,
 			`INSERT INTO occupant_credentials (occupancy_id, credential_id)
 				VALUES ($1, (SELECT id FROM credential AS c WHERE c."abbrev" ILIKE $2))`,
-			id, c.Abbreviation,
+			id, c,
 		); err != nil {
 			return Occupancy{}, err
 		}
@@ -149,15 +137,13 @@ func UpdateOccupancy(db *pgxpool.Pool, o Occupancy) (Occupancy, error) {
 		return Occupancy{}, err
 	}
 
-	// create a slice of abbreviations from input Occupancy credentials
-	var a []string
-	for _, i := range o.Credentials {
-		a = append(a, i.Abbreviation)
-	}
+	// a is the list of credentials as []string
+	a := o.Credentials
+
 	// select the occupancy credentials returning and array of credential abbreviations
 	var b []string
 	if err = tx.QueryRow(ctx,
-		`SELECT ARRAY_agg(c."abbrev")
+		`SELECT json_agg(c."abbrev")
 		FROM occupant_credentials AS oc JOIN credential AS c ON c.id = oc.credential_id
 		WHERE occupancy_id = $1`,
 		o.ID,
@@ -199,60 +185,11 @@ func UpdateOccupancy(db *pgxpool.Pool, o Occupancy) (Occupancy, error) {
 	return GetOccupancyByID(db, o.ID)
 }
 
-// UpdateOccupancy updates the occupancy table based on ID and position ID
-// func UpdateOccupancy(db *pgxpool.Pool, o Occupancy) (Occupancy, error) {
-// 	var id uuid.UUID
-// 	ctx := context.Background()
-
-// 	// Get a Tx for making transaction requests.
-// 	tx, err := db.Begin(ctx)
-// 	if err != nil {
-// 		return Occupancy{}, nil
-// 	}
-
-// 	// Defer a rollback in case anything fails.
-// 	defer tx.Rollback(ctx)
-
-// 	// Update row in the occupancy table.
-// 	if err := db.QueryRow(context.Background(),
-// 		`UPDATE occupancy SET title = $1, start_date = $2, end_date = $3,
-// 		service_start_date = $4, service_end_date = $5, dob = $6
-// 		WHERE id = $7 AND position_id = $8 RETURNING id`,
-// 		o.Title, o.StartDate, o.EndDate,
-// 		o.ServiceStartDate, o.ServiceEndDate, o.Dob,
-// 		o.ID, o.PositionID,
-// 	).Scan(&id); err != nil {
-// 		return Occupancy{}, err
-// 	}
-
-// 	// Commit the transaction.
-// 	if err = tx.Commit(ctx); err != nil {
-// 		return Occupancy{}, nil
-// 	}
-
-// 	return GetOccupancyByID(db, id)
-
-// }
-
-// DeleteOccupancy
-// func DeleteOccupancy(db *pgxpool.Pool, id uuid.UUID, positionID uuid.UUID) (int64, error) {
-// 	var cnt int64
-// 	res, err := db.Exec(context.Background(),
-// 		`DELETE FROM occupancy WHERE id = $1 AND position_id = $2`,
-// 		id, positionID,
-// 	)
-// 	if err != nil {
-// 		return cnt, err
-// 	}
-// 	cnt = res.RowsAffected()
-// 	return cnt, nil
-// }
-
 // ListOccupancy
 func ListOccupancyByOffice(db *pgxpool.Pool, officeSymbol string) ([]Occupancy, error) {
 	oo := make([]Occupancy, 0)
 	if err := pgxscan.Select(context.Background(), db, &oo,
-		baseOccupancySql()+" WHERE office_symbol ILIKE $1",
+		baseOccupancySql()+" WHERE oc.symbol ILIKE $1",
 		officeSymbol,
 	); err != nil {
 		return oo, err
@@ -264,7 +201,7 @@ func ListOccupancyByOffice(db *pgxpool.Pool, officeSymbol string) ([]Occupancy, 
 func ListOccupancyByGroup(db *pgxpool.Pool, officeSymbol string, groupSlug string) ([]Occupancy, error) {
 	oo := make([]Occupancy, 0)
 	if err := pgxscan.Select(context.Background(), db, &oo,
-		baseOccupancySql()+" WHERE office_symbol ILIKE $1 AND slug = $2",
+		baseOccupancySql()+" WHERE oc.symbol ILIKE $1 AND oc.slug = $2",
 		officeSymbol, groupSlug,
 	); err != nil {
 		return oo, err

@@ -88,7 +88,6 @@ func main() {
 	// Occupancy
 	private.POST("/offices/:office_symbol/occupancy", mp.CreateOccupancy)
 	private.PUT("/offices/:office_symbol/occupancy/:occupancy_id", mp.UpdateOccupancy)
-	// private.DELETE("/offices/:office_symbol/occupancy/:occupancy_id", mp.DeleteOccupancy)
 	public.GET("/occupancy/:occupancy_id", mp.GetOccupancyByID)
 	public.GET("/offices/:office_symbol/occupancy", mp.ListOccupancyByOffice)
 	public.GET("/offices/:office_symbol/:group_slug/occupancy", mp.ListOccupancyByGroup)
