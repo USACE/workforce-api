@@ -9,10 +9,10 @@ import (
 )
 
 type Credentials struct {
-	ID           uuid.UUID `json:"id"`
-	Abbreviation string    `json:"abbrev" db:"abbrev"`
-	Name         string    `json:"name"`
-	Type         string    `json:"type"`
+	ID           *uuid.UUID `json:"id,omitempty"`
+	Abbreviation string     `json:"abbrev,omitempty" db:"abbrev"`
+	Name         string     `json:"name,omitempty"`
+	Type         string     `json:"type,omitempty"`
 }
 
 // GetCredentials
