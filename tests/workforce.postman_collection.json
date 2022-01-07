@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "966e72d6-c61d-480f-9e0d-52e17d79f02f",
+		"_postman_id": "79de578f-c837-4a31-bd17-b20d7121f596",
 		"name": "workforce",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -759,7 +759,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"position_id\": \"964d3ba8-14a1-42d2-a6b7-25be6a853101\",\n    \"title\": \"New Position Title\",\n    \"start_date\": \"2005-10-20T00:00:00Z\",\n    \"end_date\": null,\n    \"service_start_date\": \"2001-10-20T00:00:00Z\",\n    \"service_end_date\": null,\n    \"dob\": \"1990-03-01T00:00:00Z\",\n    \"credentials\": [\n        \"PE\"\n    ]\n}",
+							"raw": "{\n    \"position_id\": \"964d3ba8-14a1-42d2-a6b7-25be6a853101\",\n    \"title\": \"New Position Title\",\n    \"start_date\": \"2005-10-20T00:00:00Z\",\n    \"end_date\": null,\n    \"service_start_date\": \"2001-10-20T00:00:00Z\",\n    \"service_end_date\": null,\n    \"dob\": \"1990-03-01T00:00:00Z\",\n    \"credentials\": [\n        {\n            \"abbrev\": \"PE\"\n        },\n        {\n            \"abbrev\": \"PH\"\n        },\n        {\n            \"abbrev\": \"MS\"\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -815,7 +815,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"position_id\": \"964d3ba8-14a1-42d2-a6b7-25be6a853101\",\n    \"title\": \"MY NEW TITLE\",\n    \"start_date\": \"2005-10-20T00:00:00Z\",\n    \"end_date\": null,\n    \"service_start_date\": \"2001-10-20T00:00:00Z\",\n    \"service_end_date\": null,\n    \"dob\": \"1990-03-01T00:00:00Z\",\n    \"credentials\": [\n        \"PE\", \"MS\", \"PH\"\n    ]\n}",
+							"raw": "{\n    \"position_id\": \"964d3ba8-14a1-42d2-a6b7-25be6a853101\",\n    \"title\": \"MY NEW TITLE\",\n    \"start_date\": \"2005-10-20T00:00:00Z\",\n    \"end_date\": null,\n    \"service_start_date\": \"2001-10-20T00:00:00Z\",\n    \"service_end_date\": null,\n    \"dob\": \"1990-03-01T00:00:00Z\",\n    \"credentials\": [\n        {\n            \"abbrev\": \"PE\"\n        },\n        {\n            \"abbrev\": \"MS\"\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
