@@ -84,9 +84,9 @@ func GetOccupancyByID(db *pgxpool.Pool, id uuid.UUID) (*Occupancy, error) {
 				o.service_start_date,
 				o.service_end_date,
 				o.dob,
-				r.credentials,
-				og.slug,
-				f.symbol
+				r.credentials
+				--og.slug,
+				--f.symbol
 		 FROM occupancy o
 		 JOIN position p         ON p.id = o.position_id
 		 JOIN occupation_code oc ON oc.id = p.occupation_code_id
@@ -105,6 +105,7 @@ func GetOccupancyByID(db *pgxpool.Pool, id uuid.UUID) (*Occupancy, error) {
 			 JOIN credential c       ON c.id = oc.credential_id
 			 JOIN credential_type ct ON ct.id = c.credential_type_id
 			 WHERE oc.occupancy_id = $1
+			 GROUP BY oc.occupancy_id
 		 ) AS r ON r.occupancy_id = o.id
 		 WHERE o.id = $1`, id,
 	); err != nil {
@@ -198,25 +199,25 @@ func UpdateOccupancy(db *pgxpool.Pool, o Occupancy) (*Occupancy, error) {
 	// What needs to be inserted
 	if _, err = tx.Exec(ctx,
 		`WITH creds AS (
-			SELECT c.id AS credential_id,
-			       o.id AS occupancy_id
+			SELECT o.id AS occupancy_id,
+				c.id AS credential_id
 			FROM credential c
-			WHERE oc.credential_id IS NULL AND c.abbrev = ANY($1)
 			LEFT JOIN (
 				SELECT credential_id,
-				       occupancy_id
+					   occupancy_id
 				FROM occupant_credentials
-				WHERE occupancy_id = $2
+				WHERE occupancy_id = $1
 			) oc ON oc.credential_id = c.id
 			CROSS JOIN (
 				SELECT id
 				FROM occupancy
-				WHERE id = $2
+				WHERE id = $1
 			) o
+			WHERE oc.credential_id IS NULL AND c.abbrev = ALL ($2)
 		)
 		INSERT INTO occupant_credentials
 		SELECT * FROM creds`,
-		credAbbrevs, o.ID,
+		o.ID, credAbbrevs,
 	); err != nil {
 		return nil, err
 	}
