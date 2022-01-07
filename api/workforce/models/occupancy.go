@@ -188,8 +188,8 @@ func UpdateOccupancy(db *pgxpool.Pool, o Occupancy) (*Occupancy, error) {
 	// What needs to be deleted
 	if _, err = tx.Exec(ctx,
 		`DELETE FROM occupant_credentials
-	     WHERE occupancy_id = $1 AND credential_id IN (
-		 	SELECT id FROM credential WHERE abbrev != ALL($2)
+	     WHERE occupancy_id = $1 AND credential_id NOT IN (
+		 	SELECT id FROM credential WHERE abbrev = ANY($2)
 		 )`, o.ID, credAbbrevs,
 	); err != nil {
 		return nil, err
