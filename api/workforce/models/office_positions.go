@@ -23,20 +23,35 @@ type Position struct {
 	CurrentOccupancy *Occupancy `json:"current_occupancy"`
 }
 
-func basePositionSql() string {
-	return `WITH current_occupancy_by_position as (
+// Helpful Reference: https://stackoverflow.com/questions/51977953/postgresql-json-agg-and-trying-to-group-by-and-order-by-column-must-appear-in
+const basePositionSql = `WITH current_occupancy_by_position as (
 			SELECT t.position_id, row_to_json(t) as current_occupancy
 			FROM (
-				SELECT id,
-					position_id,
-					title,
-					start_date::timestamptz,
-					end_date::timestamptz,
-					service_start_date::timestamptz,
-					service_end_date::timestamptz,
-					dob::timestamptz
-				FROM occupancy
-				WHERE end_date is null
+				SELECT o.id,
+					o.position_id,
+					o.title,
+					o.start_date::timestamptz,
+					o.end_date::timestamptz,
+					o.service_start_date::timestamptz,
+					o.service_end_date::timestamptz,
+					o.dob::timestamptz,
+					c.credentials AS credentials
+				FROM occupancy o
+				LEFT JOIN (
+					SELECT oc.occupancy_id AS occupancy_id,
+							json_agg(
+								json_build_object(
+									'abbrev', c.abbrev,
+									'name',   c.name,
+									'type',   ct.name
+								)
+							) AS credentials
+					FROM occupant_credentials oc
+					JOIN credential c ON c.id = oc.credential_id
+					JOIN credential_type ct ON ct.id = c.credential_type_id
+					GROUP BY oc.occupancy_id
+				) AS c ON c.occupancy_id = o.id
+				WHERE o.end_date is null
 			) t
 		), office_id AS (SELECT id FROM office WHERE symbol ILIKE $1)
 		SELECT p.id,
@@ -57,13 +72,12 @@ func basePositionSql() string {
 		JOIN occupation_code c1 on c1.id = p.occupation_code_id
 		JOIN pay_plan a on a.id = p.pay_plan_id
 		LEFT JOIN current_occupancy_by_position c2 on c2.position_id = p.id`
-}
 
 // GetPositionByID
 func GetPositionByID(db *pgxpool.Pool, id uuid.UUID) (Position, error) {
 	var p Position
 	if err := pgxscan.Get(context.Background(), db, &p,
-		basePositionSql()+" WHERE p.id = $1::uuid",
+		basePositionSql+" WHERE p.id = $1::uuid",
 		id); err != nil {
 		return Position{}, err
 	}
@@ -75,7 +89,7 @@ func GetPositionByID(db *pgxpool.Pool, id uuid.UUID) (Position, error) {
 func ListPositions(db *pgxpool.Pool, officeSymbol string) ([]Position, error) {
 	pp := make([]Position, 0)
 	if err := pgxscan.Select(context.Background(), db, &pp,
-		basePositionSql()+" WHERE f.symbol ILIKE $1",
+		basePositionSql+" WHERE f.symbol ILIKE $1",
 		officeSymbol,
 	); err != nil {
 		return make([]Position, 0), err
@@ -87,7 +101,7 @@ func ListPositions(db *pgxpool.Pool, officeSymbol string) ([]Position, error) {
 func ListPositionsByGroup(db *pgxpool.Pool, officeSymbol string, groupSlug string) ([]Position, error) {
 	pp := make([]Position, 0)
 	if err := pgxscan.Select(context.Background(), db, &pp,
-		basePositionSql()+" WHERE f.symbol ILIKE $1 AND g.slug = $2",
+		basePositionSql+" WHERE f.symbol ILIKE $1 AND g.slug = $2",
 		officeSymbol, groupSlug,
 	); err != nil {
 		return pp, err
