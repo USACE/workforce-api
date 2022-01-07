@@ -41,7 +41,6 @@ const basePositionSql = `WITH current_occupancy_by_position as (
 					SELECT oc.occupancy_id AS occupancy_id,
 							json_agg(
 								json_build_object(
-									'id',     oc.credential_id,
 									'abbrev', c.abbrev,
 									'name',   c.name,
 									'type',   ct.name

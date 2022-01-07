@@ -24,18 +24,31 @@ type Occupancy struct {
 
 // baseOccupancySql
 const baseOccupancySql = `WITH occupancy_credentials AS (
-		SELECT o.id AS occupancy_id, p.id AS position_id, o.title AS occupancy_title,
-			o.start_date, o.end_date, o.service_start_date, o.service_end_date, o.dob, json_agg(r."abbrev") AS credentials,
-			og.slug, f.symbol
+		SELECT o.id AS occupancy_id,
+		       p.id AS position_id,
+			   o.title AS occupancy_title,
+			   o.start_date,
+			   o.end_date,
+			   o.service_start_date,
+			   o.service_end_date,
+			   o.dob,
+			   json_agg(r) AS credentials,
+			   og.slug,
+			   f.symbol
 		FROM "position" p
 		JOIN occupancy o ON o.position_id = p.id
 		JOIN occupation_code oc ON oc.id = p.occupation_code_id
 		JOIN office_group AS og ON og.id = p.office_group_id
 		JOIN office AS f ON f.id = og.office_id
-		LEFT JOIN (SELECT oc.occupancy_id, c."abbrev"
-				FROM occupant_credentials AS oc
-				JOIN credential AS c ON c.id = oc.credential_id
-				) AS r ON r.occupancy_id = o.id
+		LEFT JOIN (
+			SELECT oc.occupancy_id,
+			       c.abbrev,
+				   c.name,
+				   ct.name AS type
+			FROM occupant_credentials AS oc
+			JOIN credential AS c ON c.id = oc.credential_id
+			JOIN credential_type AS ct ON ct.id = c.credential_type_id
+		) AS r ON r.occupancy_id = o.id
 		GROUP BY o.id, p.id, og.slug, f.symbol
 	)
 	SELECT oc.occupancy_id, oc.position_id, oc.occupancy_title,
@@ -82,7 +95,7 @@ func CreateOccupancy(db *pgxpool.Pool, o Occupancy) (Occupancy, error) {
 		if _, err = tx.Exec(ctx,
 			`INSERT INTO occupant_credentials (occupancy_id, credential_id)
 				VALUES ($1, (SELECT id FROM credential AS c WHERE c."abbrev" ILIKE $2))`,
-			id, c,
+			id, c.Abbreviation,
 		); err != nil {
 			return Occupancy{}, err
 		}
@@ -130,7 +143,7 @@ func UpdateOccupancy(db *pgxpool.Pool, o Occupancy) (Occupancy, error) {
 	if _, err = tx.Exec(ctx,
 		`DELETE FROM occupant_credentials
 	     WHERE occupancy_id = $1 AND credential_id IN (
-		 	SELECT id FROM credential WHERE abbrev NOT ANY ($2)
+		 	SELECT id FROM credential WHERE abbrev != ALL($2)
 		 )`, o.ID, credAbbrevs,
 	); err != nil {
 		return Occupancy{}, err
@@ -142,7 +155,7 @@ func UpdateOccupancy(db *pgxpool.Pool, o Occupancy) (Occupancy, error) {
 			SELECT c.id AS credential_id,
 			       o.id AS occupancy_id
 			FROM credential c
-			WHERE oc.credential_id IS NULL AND c.abbrev ANY ($1)
+			WHERE oc.credential_id IS NULL AND c.abbrev = ANY($1)
 			LEFT JOIN (
 				SELECT credential_id,
 				       occupancy_id
