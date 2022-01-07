@@ -41,13 +41,18 @@ const baseOccupancySql = `WITH occupancy_credentials AS (
 		JOIN office_group AS og ON og.id = p.office_group_id
 		JOIN office AS f ON f.id = og.office_id
 		LEFT JOIN (
-			SELECT oc.occupancy_id,
-			       c.abbrev,
-				   c.name,
-				   ct.name AS type
+			SELECT oc.occupancy_id AS occupancy_id,
+			       json_agg(
+					   json_build_object(
+						   'abbrev', c.abbrev,
+						   'name',   c.name,
+						   'type',   ct.name
+						)
+					) AS credentials
 			FROM occupant_credentials AS oc
 			JOIN credential AS c ON c.id = oc.credential_id
 			JOIN credential_type AS ct ON ct.id = c.credential_type_id
+			GROUP BY oc.occupancy_id
 		) AS r ON r.occupancy_id = o.id
 		GROUP BY o.id, p.id, og.slug, f.symbol
 	)
@@ -57,25 +62,66 @@ const baseOccupancySql = `WITH occupancy_credentials AS (
 	FROM occupancy_credentials AS oc`
 
 // GetOccupancyByID with Occupancy as the receiver
-func GetOccupancyByID(db *pgxpool.Pool, id uuid.UUID) (Occupancy, error) {
+// func GetOccupancyByID(db *pgxpool.Pool, id uuid.UUID) (Occupancy, error) {
+// 	var o Occupancy
+// 	if err := pgxscan.Get(context.Background(), db, &o,
+// 		baseOccupancySql+" WHERE oc.occupancy_id = $1", id,
+// 	); err != nil {
+// 		return Occupancy{}, err
+// 	}
+// 	return o, nil
+// }
+
+// GetOccupancy with Occupancy as the receiver
+func GetOccupancyByID(db *pgxpool.Pool, id uuid.UUID) (*Occupancy, error) {
 	var o Occupancy
 	if err := pgxscan.Get(context.Background(), db, &o,
-		baseOccupancySql+" WHERE oc.occupancy_id = $1", id,
+		`SELECT o.id          AS occupancy_id,
+		        p.id          AS position_id,
+				o.title       AS occupancy_title,
+				o.start_date,
+				o.end_date,
+				o.service_start_date,
+				o.service_end_date,
+				o.dob,
+				r.credentials,
+				og.slug,
+				f.symbol
+		 FROM occupancy o
+		 JOIN position p         ON p.id = o.position_id
+		 JOIN occupation_code oc ON oc.id = p.occupation_code_id
+		 JOIN office_group og    ON og.id = p.office_group_id
+		 JOIN office f           ON f.id = og.office_id
+		 LEFT JOIN (
+			 SELECT oc.occupancy_id AS occupancy_id,
+			        json_agg(
+						json_build_object(
+							'abbrev', c.abbrev,
+							'name',   c.name,
+							'type',   ct.name
+						)
+					) AS credentials
+			 FROM occupant_credentials oc
+			 JOIN credential c       ON c.id = oc.credential_id
+			 JOIN credential_type ct ON ct.id = c.credential_type_id
+			 WHERE oc.occupancy_id = $1
+		 ) AS r ON r.occupancy_id = o.id
+		 WHERE o.id = $1`, id,
 	); err != nil {
-		return Occupancy{}, err
+		return nil, err
 	}
-	return o, nil
+	return &o, nil
 }
 
 // CreateOccupancy
-func CreateOccupancy(db *pgxpool.Pool, o Occupancy) (Occupancy, error) {
+func CreateOccupancy(db *pgxpool.Pool, o Occupancy) (*Occupancy, error) {
 	var id uuid.UUID
 	ctx := context.Background()
 
 	// Get a Tx for making transaction requests.
 	tx, err := db.Begin(ctx)
 	if err != nil {
-		return Occupancy{}, err
+		return nil, err
 	}
 
 	// Defer a rollback in case anything fails.
@@ -88,7 +134,7 @@ func CreateOccupancy(db *pgxpool.Pool, o Occupancy) (Occupancy, error) {
 			VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id`,
 		o.PositionID, o.Title, o.StartDate, o.EndDate, o.ServiceStartDate, o.ServiceEndDate, o.Dob,
 	).Scan(&id); err != nil {
-		return Occupancy{}, err
+		return nil, err
 	}
 	// Create a new row in occupancy_credentials for each credential in the payload.
 	for _, c := range o.Credentials {
@@ -97,25 +143,25 @@ func CreateOccupancy(db *pgxpool.Pool, o Occupancy) (Occupancy, error) {
 				VALUES ($1, (SELECT id FROM credential AS c WHERE c."abbrev" ILIKE $2))`,
 			id, c.Abbreviation,
 		); err != nil {
-			return Occupancy{}, err
+			return nil, err
 		}
 	}
 
 	// Commit the transaction.
 	if err = tx.Commit(ctx); err != nil {
-		return Occupancy{}, err
+		return nil, err
 	}
 
 	return GetOccupancyByID(db, id)
 }
 
 // UpdateOccupancy
-func UpdateOccupancy(db *pgxpool.Pool, o Occupancy) (Occupancy, error) {
+func UpdateOccupancy(db *pgxpool.Pool, o Occupancy) (*Occupancy, error) {
 	// Get a Tx for making transaction requests.
 	ctx := context.Background()
 	tx, err := db.Begin(ctx)
 	if err != nil {
-		return Occupancy{}, err
+		return nil, err
 	}
 
 	// Uppercase Credential Abbreviations from Payload
@@ -136,7 +182,7 @@ func UpdateOccupancy(db *pgxpool.Pool, o Occupancy) (Occupancy, error) {
 		o.ServiceStartDate, o.ServiceEndDate, o.Dob,
 		o.ID, o.PositionID,
 	); err != nil {
-		return Occupancy{}, err
+		return nil, err
 	}
 
 	// What needs to be deleted
@@ -146,7 +192,7 @@ func UpdateOccupancy(db *pgxpool.Pool, o Occupancy) (Occupancy, error) {
 		 	SELECT id FROM credential WHERE abbrev != ALL($2)
 		 )`, o.ID, credAbbrevs,
 	); err != nil {
-		return Occupancy{}, err
+		return nil, err
 	}
 
 	// What needs to be inserted
@@ -172,12 +218,12 @@ func UpdateOccupancy(db *pgxpool.Pool, o Occupancy) (Occupancy, error) {
 		SELECT * FROM creds`,
 		credAbbrevs, o.ID,
 	); err != nil {
-		return Occupancy{}, err
+		return nil, err
 	}
 
 	// Commit the transaction.
 	if err = tx.Commit(ctx); err != nil {
-		return Occupancy{}, err
+		return nil, err
 	}
 
 	return GetOccupancyByID(db, o.ID)
