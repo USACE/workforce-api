@@ -8,7 +8,7 @@ import (
 	"github.com/jackc/pgx/v4/pgxpool"
 )
 
-type Credentials struct {
+type Credential struct {
 	ID           *uuid.UUID `json:"id,omitempty"`
 	Abbreviation string     `json:"abbrev,omitempty" db:"abbrev"`
 	Name         string     `json:"name,omitempty"`
@@ -16,8 +16,8 @@ type Credentials struct {
 }
 
 // GetCredentials
-func GetCredentials(db *pgxpool.Pool) ([]Credentials, error) {
-	cc := make([]Credentials, 0)
+func GetCredentials(db *pgxpool.Pool) ([]Credential, error) {
+	cc := make([]Credential, 0)
 	if err := pgxscan.Select(context.Background(), db, &cc,
 		`SELECT c.id, c."abbrev", c."name", ct."name" AS type
 		FROM credential AS c, credential_type AS ct
