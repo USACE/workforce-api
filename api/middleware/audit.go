@@ -1,8 +1,11 @@
 package middleware
 
 import (
+	"fmt"
 	"net/http"
+	"strings"
 
+	"github.com/USACE/workforce-api/api/messages"
 	"github.com/golang-jwt/jwt"
 	"github.com/labstack/echo/v4"
 )
@@ -44,15 +47,25 @@ func AttachUserInfo(next echo.HandlerFunc) echo.HandlerFunc {
 	}
 }
 
-// func IsAdmin(next echo.HandlerFunc) echo.HandlerFunc {
-// 	return func(c echo.Context) error {
-// 		userInfo, ok := c.Get("userInfo").(UserInfo)
-// 		if !ok {
-// 			return c.JSON(http.StatusForbidden, map[string]string{})
-// 		}
-// 		if userInfo.IsAdmin {
-// 			return next(c)
-// 		}
-// 		return c.JSON(http.StatusForbidden, map[string]string{})
-// 	}
-// }
+func IsOfficeAdmin(next echo.HandlerFunc) echo.HandlerFunc {
+	return func(c echo.Context) error {
+		userInfo, ok := c.Get("userInfo").(UserInfo)
+		if !ok {
+			return c.JSON(http.StatusForbidden, map[string]string{})
+		}
+		// Allow Role "application.admin"
+		if userInfo.IsAdmin {
+			return next(c)
+		}
+		// Allow Role "{:office_symbol}.admin"
+		// (e.g. lrn.admin allowed to use /offices/lrn/... routes)
+		officeSymbol := c.Param("office_symbol")
+		for _, role := range userInfo.Roles {
+			if strings.ToLower(role) == fmt.Sprintf("%s.admin", strings.ToLower(officeSymbol)) {
+				return next(c)
+			}
+		}
+		// Deny all
+		return c.JSON(http.StatusForbidden, messages.DefaultMessageUnauthorized)
+	}
+}

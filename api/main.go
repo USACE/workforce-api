@@ -73,21 +73,21 @@ func main() {
 	public.GET("/groups", mp.ListGroups) // Used in Python script
 	public.GET("/offices/:office_symbol/groups", mp.ListOfficeGroups)
 
-	private.POST("/offices/:office_symbol/groups", mp.CreateOfficeGroup)
-	private.PUT("/offices/:office_symbol/groups/:group_slug", mp.UpdateOfficeGroup)
-	private.DELETE("/offices/:office_symbol/groups/:group_slug", mp.DeleteOfficeGroup)
+	private.POST("/offices/:office_symbol/groups", mp.CreateOfficeGroup, middleware.IsOfficeAdmin)
+	private.PUT("/offices/:office_symbol/groups/:group_slug", mp.UpdateOfficeGroup, middleware.IsOfficeAdmin)
+	private.DELETE("/offices/:office_symbol/groups/:group_slug", mp.DeleteOfficeGroup, middleware.IsOfficeAdmin)
 
 	// Office Positions/Employees
 	public.GET("/offices/:office_symbol/positions", mp.ListPositions)
 	public.GET("/offices/:office_symbol/:group_slug/positions", mp.ListPositionsByGroup)
 
-	private.POST("/offices/:office_symbol/positions", mp.CreateOfficePosition)
-	private.PUT("/offices/:office_symbol/positions/:position_id", mp.UpdateOfficePosition)
-	private.DELETE("/offices/:office_symbol/positions/:position_id", mp.DeleteOfficePosition)
+	private.POST("/offices/:office_symbol/positions", mp.CreateOfficePosition, middleware.IsOfficeAdmin)
+	private.PUT("/offices/:office_symbol/positions/:position_id", mp.UpdateOfficePosition, middleware.IsOfficeAdmin)
+	private.DELETE("/offices/:office_symbol/positions/:position_id", mp.DeleteOfficePosition, middleware.IsOfficeAdmin)
 
 	// Occupancy
-	private.POST("/offices/:office_symbol/occupancy", mp.CreateOccupancy)
-	private.PUT("/offices/:office_symbol/occupancy/:occupancy_id", mp.UpdateOccupancy)
+	private.POST("/offices/:office_symbol/occupancy", mp.CreateOccupancy, middleware.IsOfficeAdmin)
+	private.PUT("/offices/:office_symbol/occupancy/:occupancy_id", mp.UpdateOccupancy, middleware.IsOfficeAdmin)
 	public.GET("/occupancy/:occupancy_id", mp.GetOccupancyByID)
 	public.GET("/offices/:office_symbol/occupancy", mp.ListOccupancyByOffice)
 	public.GET("/offices/:office_symbol/:group_slug/occupancy", mp.ListOccupancyByGroup)
