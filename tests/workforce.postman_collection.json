@@ -890,7 +890,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "{{jwt_existing_admin}}",
+				"value": "{{jwt_application_admin}}",
 				"type": "string"
 			}
 		]
