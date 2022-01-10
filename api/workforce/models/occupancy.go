@@ -213,7 +213,7 @@ func UpdateOccupancy(db *pgxpool.Pool, o Occupancy) (*Occupancy, error) {
 				FROM occupancy
 				WHERE id = $1
 			) o
-			WHERE oc.credential_id IS NULL AND c.abbrev = ALL ($2)
+			WHERE oc.credential_id IS NULL AND c.abbrev = ANY($2)
 		)
 		INSERT INTO occupant_credentials
 		SELECT * FROM creds`,
