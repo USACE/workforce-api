@@ -56,6 +56,14 @@ func main() {
 	// Manpower Store
 	mp := workforce.Store{Connection: st.Connection}
 
+	// Role Requests (All Authenticated Users)
+	private.GET("/my_role_requests", mp.ListMyRoleRequests)
+	private.POST("/role_requests/:office_symbol", mp.CreateRoleRequest)
+	// Role Requests (Application Admin Use Only)
+	private.GET("/role_requests", mp.ListRoleRequests, middleware.IsApplicationAdmin)
+	private.POST("/role_requests/:role_request_id/approve", mp.UpdateRoleRequestStatus("APPROVED"), middleware.IsApplicationAdmin)
+	private.POST("/role_requests/:role_request_id/deny", mp.UpdateRoleRequestStatus("DENIED"), middleware.IsApplicationAdmin)
+
 	// Metrics
 	public.GET("/metrics/series", mp.SeriesMetrics)
 

@@ -68,6 +68,8 @@ GRANT SELECT ON
     office_group,
     pay_plan,
     position,
+    role_request,
+    role_request_status,
     v_office_positions,
     v_office_occupancy,
     data_call,
@@ -86,6 +88,8 @@ GRANT INSERT,UPDATE,DELETE ON
     office_group,
     pay_plan,
     position,
+    role_request,
+    role_request_status,
     data_call,
     data_call_completed
 TO workforce_writer;
