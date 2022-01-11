@@ -38,7 +38,8 @@ func (s Store) CreateRoleRequest(c echo.Context) error {
 	if !ok {
 		return c.JSON(http.StatusForbidden, map[string]string{})
 	}
-	r, err := models.CreateRoleRequest(s.Connection, userInfo.Sub, "lrn")
+	officeSymbol := c.Param("office_symbol")
+	r, err := models.CreateRoleRequest(s.Connection, userInfo.Sub, officeSymbol)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, messages.NewMessage(err.Error()))
 	}
