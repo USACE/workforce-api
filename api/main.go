@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"strings"
 	"time"
 
 	"golang.org/x/net/http2"
@@ -42,7 +43,11 @@ func main() {
 	if cfg.AuthMocked {
 		private.Use(middleware.JWTMock, middleware.AttachUserInfo)
 	} else {
-		private.Use(middleware.JWT, middleware.AttachUserInfo)
+		if strings.ToUpper(cfg.AuthEnvironment) == "DEVELOP" {
+			private.Use(middleware.JWTDevelop, middleware.AttachUserInfo)
+		} else {
+			private.Use(middleware.JWTStable, middleware.AttachUserInfo)
+		}
 	}
 
 	// Health Check

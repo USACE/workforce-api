@@ -14,6 +14,7 @@ services:
     restart: always
     environment:
       - AUTH_MOCKED=true
+      - AUTH_ENVIRONMENT=DEVELOP
       - WORKFORCE_DB_USER=workforce_user
       - WORKFORCE_DB_PASS=workforce_pass
       - WORKFORCE_DB_NAME=postgres

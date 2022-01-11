@@ -9,6 +9,7 @@ import (
 
 type Config struct {
 	AuthMocked            bool          `envconfig:"AUTH_MOCKED" default:"false"`
+	AuthEnvironment       string        `envconfig:"AUTH_ENVIRONMENT" default:"STABLE"`
 	DBUser                string        `envconfig:"DB_USER"`
 	DBPass                string        `envconfig:"DB_PASS"`
 	DBName                string        `envconfig:"DB_NAME"`
