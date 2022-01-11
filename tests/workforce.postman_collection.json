@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "577b4cf7-7af1-4434-b619-11675b8bab68",
+		"_postman_id": "9073742a-63c3-4df1-bceb-f3dff669a2dd",
 		"name": "workforce",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -22,8 +22,7 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript",
-								"id": "e65ce60e-be0b-407c-abbe-44993e87747f"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -42,8 +41,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Groups",
@@ -61,8 +59,7 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript",
-								"id": "e19feb3f-a32d-40ff-b185-e60ae5a1505a"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -96,8 +93,7 @@
 									"});",
 									""
 								],
-								"type": "text/javascript",
-								"id": "d5d2fb3d-90fa-4dc4-84d7-6fc5e5158826"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -133,8 +129,7 @@
 								"exec": [
 									""
 								],
-								"type": "text/javascript",
-								"id": "544ea7f1-df91-42c3-8713-ec3bc99b9ccf"
+								"type": "text/javascript"
 							}
 						},
 						{
@@ -151,8 +146,7 @@
 									"    pm.collectionVariables.set(\"group_slug\", jsonData.slug);",
 									"});"
 								],
-								"type": "text/javascript",
-								"id": "4fc73823-2e55-4d4d-b546-8d5b0411bed5"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -197,8 +191,7 @@
 								"exec": [
 									""
 								],
-								"type": "text/javascript",
-								"id": "12fde55b-7863-4ea3-bb36-419d61944712"
+								"type": "text/javascript"
 							}
 						},
 						{
@@ -211,8 +204,7 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript",
-								"id": "9410ea17-2ef3-49f0-8ab5-1b5a75f7d0b6"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -252,8 +244,7 @@
 								"exec": [
 									""
 								],
-								"type": "text/javascript",
-								"id": "1a2e9447-6fd9-4f51-9764-299bc4dfc9ed"
+								"type": "text/javascript"
 							}
 						},
 						{
@@ -264,8 +255,7 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript",
-								"id": "4bf39b59-a6da-4f58-89fb-5dd1faa423a6"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -296,8 +286,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Positions",
@@ -315,8 +304,7 @@
 									"//     pm.response.to.have.status(200);",
 									"// });"
 								],
-								"type": "text/javascript",
-								"id": "9bcb3274-bcc9-4f7c-b841-fe00638d0cfa"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -356,8 +344,7 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript",
-								"id": "45d937c0-5bb7-4a96-a54f-29a62278eb55"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -398,8 +385,7 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript",
-								"id": "cd2e5365-1de2-43a3-95f4-d56c75986f39"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -457,8 +443,7 @@
 									"    pm.collectionVariables.set(\"position_id\", jsonData.id);",
 									"});"
 								],
-								"type": "text/javascript",
-								"id": "ca82dd82-2123-460c-aef2-7c4df233fb7c"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -514,8 +499,7 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript",
-								"id": "703b9683-98c7-4f36-aaf1-e8c4982cc7b5"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -564,8 +548,7 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript",
-								"id": "fc810530-d61f-4132-9c2a-59e43f342a86"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -603,8 +586,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Occupancy",
@@ -623,8 +605,7 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript",
-								"id": "5eb8936f-da2f-40c1-a8f1-cc551bd05ef4"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -664,8 +645,7 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript",
-								"id": "f375982c-c1d2-4721-a401-ad19fb275844"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -714,8 +694,7 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript",
-								"id": "bef4bc88-a4e7-43b8-82f2-9fd77ab6bc06"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -771,8 +750,7 @@
 									"    pm.collectionVariables.set(\"occupancy_id\", jsonData.id);",
 									"});"
 								],
-								"type": "text/javascript",
-								"id": "292413b0-fe67-4aaa-a836-53d5c9aa8459"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -828,8 +806,7 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript",
-								"id": "fedc7172-e39c-4534-aea5-0f55a5934f54"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -867,8 +844,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Credentials",
@@ -887,8 +863,7 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript",
-								"id": "395a4148-fdf1-4e0d-96a2-41082c80ae3a"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -907,14 +882,29 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Role Requests",
 			"item": [
 				{
 					"name": "List RoleRequests",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"List Role Requests: status code is 200 OK returning JSON\", function () {",
+									"    pm.response.to.be.ok;",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -942,6 +932,22 @@
 				},
 				{
 					"name": "List My RoleRequests",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"List My Role Requests: status code is 200 OK returning JSON\", function () {",
+									"    pm.response.to.be.ok;",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -969,6 +975,24 @@
 				},
 				{
 					"name": "Create RoleRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Create Role Request, Approve: successful POST request\", function () {",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);",
+									"",
+									"    var jsonData = pm.response.json();",
+									"    pm.collectionVariables.set(\"request_id\", jsonData.id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -1003,6 +1027,21 @@
 				},
 				{
 					"name": "Approve RoleRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Update Role Request, approve: status code is 200 OK returning JSON\", function () {",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -1017,13 +1056,13 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/role_requests/aba22db4-b1e7-4c37-aa45-66d8c38dc6a4/approve",
+							"raw": "{{base_url}}/role_requests/{{request_id}}/approve",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"role_requests",
-								"aba22db4-b1e7-4c37-aa45-66d8c38dc6a4",
+								"{{request_id}}",
 								"approve"
 							]
 						}
@@ -1032,6 +1071,21 @@
 				},
 				{
 					"name": "Deny RoleRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Update Role Request, deny: status code is 200 OK returning JSON\", function () {",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -1046,21 +1100,20 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/role_requests/aba22db4-b1e7-4c37-aa45-66d8c38dc6a4/deny",
+							"raw": "{{base_url}}/role_requests/{{request_id}}/deny",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"role_requests",
-								"aba22db4-b1e7-4c37-aa45-66d8c38dc6a4",
+								"{{request_id}}",
 								"deny"
 							]
 						}
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		}
 	],
 	"auth": {
@@ -1077,7 +1130,6 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "290bd31f-8e7b-4bbd-a3de-c4b3398a3037",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -1087,7 +1139,6 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "8f926d0f-63d9-4165-902d-6de4f877fc8b",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -1097,25 +1148,24 @@
 	],
 	"variable": [
 		{
-			"id": "ba163673-985b-4cd7-aa5a-f3b1d148289c",
 			"key": "position_id",
 			"value": ""
 		},
 		{
-			"id": "567170ef-595a-4af5-95bb-baa6044ff869",
 			"key": "office_symbol",
 			"value": ""
 		},
 		{
-			"id": "e898274a-f345-48f9-8b40-a2dc761747ad",
 			"key": "group_slug",
 			"value": ""
 		},
 		{
-			"id": "a98f8f0d-04bf-42b1-92f7-6cfeaf2cdff7",
 			"key": "occupancy_id",
 			"value": ""
+		},
+		{
+			"key": "request_id",
+			"value": ""
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }
