@@ -6,7 +6,9 @@ import (
 	"strings"
 
 	"github.com/USACE/workforce-api/api/messages"
+	"github.com/USACE/workforce-api/api/workforce/models"
 	"github.com/golang-jwt/jwt"
+	"github.com/google/uuid"
 	"github.com/labstack/echo/v4"
 )
 
@@ -14,21 +16,23 @@ var (
 	applicationAdminRole = "application.admin"
 )
 
-type UserInfo struct {
-	IsAdmin bool     `json:"is_admin"`
-	Roles   []string `json:"roles"`
-}
-
 func AttachUserInfo(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		user := c.Get("user").(*jwt.Token)
 		claims := user.Claims.(jwt.MapClaims)
+		// Sub
+		sub := claims["sub"].(string)
+		uSub, err := uuid.Parse(sub)
+		if err != nil {
+			return c.JSON(http.StatusInternalServerError, map[string]string{})
+		}
 		resourceAccess := claims["resource_access"].(map[string]interface{})
 		// workforce Specific
 		workforceResourceAccess := resourceAccess["workforce"].(map[string]interface{})
 		workforceRoles := workforceResourceAccess["roles"].([]interface{})
 		// Attach Role Info
-		userInfo := UserInfo{
+		userInfo := models.UserInfo{
+			Sub:     uSub,
 			Roles:   make([]string, 0),
 			IsAdmin: false,
 		}
@@ -49,7 +53,7 @@ func AttachUserInfo(next echo.HandlerFunc) echo.HandlerFunc {
 
 func IsOfficeAdmin(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
-		userInfo, ok := c.Get("userInfo").(UserInfo)
+		userInfo, ok := c.Get("userInfo").(models.UserInfo)
 		if !ok {
 			return c.JSON(http.StatusForbidden, map[string]string{})
 		}
@@ -66,6 +70,19 @@ func IsOfficeAdmin(next echo.HandlerFunc) echo.HandlerFunc {
 			}
 		}
 		// Deny all
+		return c.JSON(http.StatusForbidden, messages.DefaultMessageUnauthorized)
+	}
+}
+
+func IsApplicationAdmin(next echo.HandlerFunc) echo.HandlerFunc {
+	return func(c echo.Context) error {
+		userInfo, ok := c.Get("userInfo").(models.UserInfo)
+		if !ok {
+			return c.JSON(http.StatusForbidden, messages.DefaultMessageUnauthorized)
+		}
+		if userInfo.IsAdmin {
+			return next(c)
+		}
 		return c.JSON(http.StatusForbidden, messages.DefaultMessageUnauthorized)
 	}
 }
