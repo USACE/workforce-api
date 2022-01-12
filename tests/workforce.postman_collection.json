@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "9073742a-63c3-4df1-bceb-f3dff669a2dd",
+		"_postman_id": "03bfcca9-6a64-4629-a110-054447bc4f78",
 		"name": "workforce",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -15,12 +15,27 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"List Offices: status code is 200 OK returning JSON\", function () {",
-									"    pm.response.to.be.ok;",
-									"    pm.response.to.be.withBody;",
-									"    pm.response.to.be.json;",
+									"pm.test(\"response is ok\", function () {",
 									"    pm.response.to.have.status(200);",
-									"});"
+									"});",
+									"",
+									"pm.test(\"response json data\", function () {",
+									"    pm.response.to.have.jsonBody();",
+									"});",
+									"",
+									"pm.test(\"response to be json should be an array\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('array');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -53,11 +68,18 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"List Groups: status code is 200 OK returning JSON\", function () {",
-									"    pm.response.to.be.withBody;",
-									"    pm.response.to.be.json;",
+									"pm.test(\"response is ok\", function () {",
 									"    pm.response.to.have.status(200);",
-									"});"
+									"});",
+									"",
+									"pm.test(\"response json data\", function () {",
+									"    pm.response.to.have.jsonBody();",
+									"});",
+									"",
+									"pm.test(\"response to be json should be an array\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('array');",
+									"});",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -85,11 +107,30 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"List Groups by Office: Status code is 200 OK returning JSON\", function () {",
-									"    pm.response.to.be.ok;",
-									"    pm.response.to.be.withBody;",
-									"    pm.response.to.be.json;",
+									"pm.test(\"response is ok\", function () {",
 									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"response json data\", function () {",
+									"    pm.response.to.have.jsonBody();",
+									"});",
+									"",
+									"pm.test(\"response to be json should be an array\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('array');",
+									"});",
+									"",
+									"pm.collectionVariables.unset('office_symbol');"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// set url variable to collection variable",
+									"pm.request.url.variables.each(item => {",
+									"    pm.collectionVariables.set(item.key, item.value);",
 									"});",
 									""
 								],
@@ -127,6 +168,10 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
+									"// set url variable to collection variable",
+									"pm.request.url.variables.each(item => {",
+									"    pm.collectionVariables.set(item.key, item.value);",
+									"});",
 									""
 								],
 								"type": "text/javascript"
@@ -136,15 +181,28 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Create Office Group: successful POST request\", function () {",
-									"    pm.response.to.be.withBody;",
-									"    pm.response.to.be.json;",
-									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
+									"// set variables",
+									"var jsonData = pm.response.json();",
+									"pm.collectionVariables.set('group_slug', jsonData.slug);",
 									"",
-									"    var jsonData = pm.response.json();",
-									"    pm.collectionVariables.set(\"office_symbol\", jsonData.office_symbol);",
-									"    pm.collectionVariables.set(\"group_slug\", jsonData.slug);",
-									"});"
+									"pm.test(\"response is created\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
+									"});",
+									"",
+									"pm.test(\"response json data should not have errors\", function () {",
+									"    pm.response.to.have.jsonBody();",
+									"    pm.response.to.not.have.jsonBody('error');",
+									"});",
+									"",
+									"pm.test(\"response json should contain one object\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('object');",
+									"});",
+									"",
+									"pm.test(\"response json should return object details\", function () {",
+									"    pm.expect(pm.response.json()).to.include",
+									"        .keys(['id', 'office_id', 'uid', 'office_symbol', 'name', 'slug', 'last_verified']);",
+									"});",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -180,7 +238,45 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Group Already Exists",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Water Water Everywhere\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/offices/:office_symbol/groups",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"offices",
+										":office_symbol",
+										"groups"
+									],
+									"variable": [
+										{
+											"key": "office_symbol",
+											"value": "LRN"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"error\":{\n        \"name\": \"instanceFoundError\",\n        \"message\": \"ERROR: duplicate key value violates unique constraint \\\"unique_office_slug\\\" (SQLSTATE 23505)\",\n        \"details\": {\"id\": \"UUID\"}\n    }\n}"
+						}
+					]
 				},
 				{
 					"name": "Update Office Group",
@@ -198,10 +294,28 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Update Office Groups: status code is 200 OK returning JSON\", function () {",
-									"    pm.response.to.be.withBody;",
-									"    pm.response.to.be.json;",
+									"pm.test(\"response is ok\", function () {",
 									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"response json data should not have errors\", function () {",
+									"    pm.response.to.have.jsonBody();",
+									"    pm.response.to.not.have.jsonBody('error');",
+									"});",
+									"",
+									"pm.test(\"response json should contain one object\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('object');",
+									"});",
+									"",
+									"pm.test(\"response json should return object details\", function () {",
+									"    pm.expect(pm.response.json()).to.include",
+									"        .keys(['id', 'office_id', 'uid', 'office_symbol', 'name', 'slug', 'last_verified']);",
+									"});",
+									"",
+									"// skip this test with pm.test.skip",
+									"pm.test('\"office_symbol\" and \"group_slug\" variables should be present', function () {",
+									"    pm.expect(pm.variables.get('office_symbol')).to.be.a('string');",
+									"    pm.expect(pm.variables.get('group_slug')).to.be.a('string');",
 									"});"
 								],
 								"type": "text/javascript"
@@ -251,9 +365,28 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Delete Office Group: status code is 200\", function () {",
+									"pm.test(\"response is ok\", function () {",
 									"    pm.response.to.have.status(200);",
-									"});"
+									"});",
+									"",
+									"pm.test.skip(\"response json data should not have errors\", function () {",
+									"    pm.response.to.have.jsonBody();",
+									"    pm.response.to.not.have.jsonBody('error');",
+									"});",
+									"",
+									"// skipping",
+									"pm.test.skip(\"response json should contain one collection\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('object');",
+									"});",
+									"",
+									"// skipping",
+									"pm.test.skip(\"response json should return collection details\", function () {",
+									"    pm.expect(pm.response.json())",
+									"        to.include.keys(['id']);",
+									"});",
+									"",
+									"pm.collectionVariables.unset('office_symbol');",
+									"pm.collectionVariables.unset('group_slug');"
 								],
 								"type": "text/javascript"
 							}
@@ -284,7 +417,72 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Group Deleted",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/offices/{{office_symbol}}/groups/{{group_slug}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"offices",
+										"{{office_symbol}}",
+										"groups",
+										"{{group_slug}}"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"id\": \"UUID\"\n}"
+						},
+						{
+							"name": "Group Not Found",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/offices/{{office_symbol}}/groups/{{group_slug}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"offices",
+										"{{office_symbol}}",
+										"groups",
+										"{{group_slug}}"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"error\": {\n        \"name\": \"instanceNotFoundError\",\n        \"message\": \"\",\n        \"details\": {\n            \"id\": \"UUID\"\n        }\n    }\n}"
+						}
+					]
 				}
 			]
 		},
@@ -298,11 +496,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"// pm.test(\"Get Position by ID: status code is 200 OK returning JSON\", function () {",
-									"//     pm.response.to.be.withBody;",
-									"//     pm.response.to.be.json;",
-									"//     pm.response.to.have.status(200);",
-									"// });"
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -338,11 +532,32 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Get Office Positions: status code is 200 OK returning JSON\", function () {",
-									"    pm.response.to.be.withBody;",
-									"    pm.response.to.be.json;",
+									"pm.test(\"response is ok\", function () {",
 									"    pm.response.to.have.status(200);",
-									"});"
+									"});",
+									"",
+									"pm.test(\"response json data\", function () {",
+									"    pm.response.to.have.jsonBody();",
+									"});",
+									"",
+									"pm.test(\"response to be json should be an array\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('array');",
+									"});",
+									"",
+									"pm.collectionVariables.unset('office_symbol');"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// set url variable to collection variable",
+									"pm.request.url.variables.each(item => {",
+									"    pm.collectionVariables.set(item.key, item.value);",
+									"});",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -379,11 +594,48 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Get Positions by Office and Group: status code is 200 OK returning JSON\", function () {",
-									"    pm.response.to.be.withBody;",
-									"    pm.response.to.be.json;",
+									"pm.test(\"response is ok\", function () {",
 									"    pm.response.to.have.status(200);",
-									"});"
+									"});",
+									"",
+									"pm.test(\"response json data should not have errors\", function () {",
+									"    pm.response.to.have.jsonBody();",
+									"    pm.response.to.not.have.jsonBody('error');",
+									"});",
+									"",
+									"pm.test(\"response to be json should be an array\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('array');",
+									"});",
+									"",
+									"pm.test.skip(\"response json should return object details\", function () {",
+									"    _.each(pm.response.json(), (item) => {",
+									"        pm.expect(item).to.include",
+									"            .keys(['id', 'office_symbol', 'group_slug', 'title', 'pay_plan',",
+									"                'grade', 'is_active', 'is_supervisor', 'is_allocated',",
+									"                'occupation_code', 'occupation_name', 'current_occupancy']);",
+									"    });",
+									"});",
+									"",
+									"pm.test('\"office_symbol\" and \"group_slug\" variables should be present', function(){",
+									"    pm.expect(pm.variables.get('office_symbol')).to.be.a('string')",
+									"    pm.expect(pm.variables.get('group_slug')).to.be.a('string')",
+									"});",
+									"",
+									"pm.collectionVariables.unset('group_slug');",
+									"pm.collectionVariables.unset('office_symbol');"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// set url variable to collection variable",
+									"pm.request.url.variables.each(item => {",
+									"    pm.collectionVariables.set(item.key, item.value);",
+									"});",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -433,15 +685,42 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Create Office Position: successful POST request\", function () {",
-									"    pm.response.to.be.withBody;",
-									"    pm.response.to.be.json;",
-									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
+									"// set variables",
+									"var jsonData = pm.response.json();",
+									"pm.collectionVariables.set(\"position_id\", jsonData.id);",
 									"",
-									"    var jsonData = pm.response.json();",
-									"    pm.collectionVariables.set(\"office_symbol\", jsonData.office_symbol);",
-									"    pm.collectionVariables.set(\"position_id\", jsonData.id);",
+									"pm.test(\"response is created\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
+									"});",
+									"",
+									"pm.test(\"response json data should not have errors\", function () {",
+									"    pm.response.to.have.jsonBody();",
+									"    pm.response.to.not.have.jsonBody('error');",
+									"});",
+									"",
+									"pm.test(\"response json should contain one object\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('object');",
+									"});",
+									"",
+									"pm.test(\"response json should return object details\", function () {",
+									"    pm.expect(pm.response.json()).to.include",
+									"        .keys(['id', 'office_symbol', 'group_slug', 'title', 'pay_plan', 'grade',",
+									"        'is_active', 'is_supervisor', 'is_allocated',",
+									"        'occupation_code', 'occupation_name', 'current_occupancy']);",
 									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// set url variable to collection variable",
+									"pm.request.url.variables.each(item => {",
+									"    pm.collectionVariables.set(item.key, item.value);",
+									"});",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -493,11 +772,32 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Update Office Position: status code is 200 OK returning JSON\", function () {",
-									"    pm.response.to.be.withBody;",
-									"    pm.response.to.be.json;",
+									"pm.test(\"response is ok\", function () {",
 									"    pm.response.to.have.status(200);",
-									"});"
+									"});",
+									"",
+									"pm.test(\"response json data should not have errors\", function () {",
+									"    pm.response.to.have.jsonBody();",
+									"    pm.response.to.not.have.jsonBody('error');",
+									"});",
+									"",
+									"pm.test(\"response json should contain one object\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('object');",
+									"});",
+									"",
+									"pm.test(\"response json should return object details\", function () {",
+									"    pm.expect(pm.response.json()).to.include",
+									"        .keys(['id', 'office_symbol', 'group_slug', 'title', 'pay_plan', 'grade',",
+									"        'is_active', 'is_supervisor', 'is_allocated',",
+									"        'occupation_code', 'occupation_name', 'current_occupancy']);",
+									"});",
+									"",
+									"// skip this test with pm.test.skip",
+									"pm.test('\"office_symbol\" and \"group_slug\" variables should be present', function () {",
+									"    pm.expect(pm.variables.get('office_symbol')).to.be.a('string');",
+									"    pm.expect(pm.variables.get('position_id')).to.be.a('string');",
+									"});",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -544,9 +844,28 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Delete Office Position: status code is 200\", function () {",
+									"pm.test(\"response is ok\", function () {",
 									"    pm.response.to.have.status(200);",
-									"});"
+									"});",
+									"",
+									"pm.test.skip(\"response json data should not have errors\", function () {",
+									"    pm.response.to.have.jsonBody();",
+									"    pm.response.to.not.have.jsonBody('error');",
+									"});",
+									"",
+									"// skipping",
+									"pm.test.skip(\"response json should contain one collection\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('object');",
+									"});",
+									"",
+									"// skipping",
+									"pm.test.skip(\"response json should return collection details\", function () {",
+									"    pm.expect(pm.response.json())",
+									"        to.include.keys(['id']);",
+									"});",
+									"",
+									"pm.collectionVariables.unset('office_symbol');",
+									"pm.collectionVariables.unset('position_id');"
 								],
 								"type": "text/javascript"
 							}
@@ -584,7 +903,47 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Delete Office Position",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/offices/{{office_symbol}}/positions/{{position_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"offices",
+										"{{office_symbol}}",
+										"positions",
+										"{{position_id}}"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": "",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"position\":{\n        \"id\": \"UUID\"\n    }\n}"
+						}
+					]
 				}
 			]
 		},
@@ -598,12 +957,39 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Get Occupancy by ID: status code is 200 OK returning JSON\", function () {",
-									"    pm.response.to.be.ok;",
-									"    pm.response.to.be.withBody;",
-									"    pm.response.to.be.json;",
+									"pm.test(\"response is ok\", function () {",
 									"    pm.response.to.have.status(200);",
-									"});"
+									"});",
+									"",
+									"pm.test(\"response json data should not have errors\", function () {",
+									"    pm.response.to.have.jsonBody();",
+									"    pm.response.to.not.have.jsonBody('error');",
+									"});",
+									"",
+									"pm.test(\"response to be json should be an object\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('object');",
+									"});",
+									"",
+									"pm.test(\"response json should return object details\", function () {",
+									"    pm.expect(pm.response.json()).to.include",
+									"        .keys(['id', 'position_id', 'title', 'start_date', 'end_date',",
+									"            'service_start_date', 'service_end_date', 'dob', 'credentials']);",
+									"});",
+									"",
+									"pm.collectionVariables.unset('occupancy_id');"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// set url variable to collection variable",
+									"pm.request.url.variables.each(item => {",
+									"    pm.collectionVariables.set(item.key, item.value);",
+									"});",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -638,12 +1024,45 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"List Occupancy by Office: status code is 200 OK returning JSON\", function () {",
-									"    pm.response.to.be.ok;",
-									"    pm.response.to.be.withBody;",
-									"    pm.response.to.be.json;",
+									"pm.test(\"response is ok\", function () {",
 									"    pm.response.to.have.status(200);",
-									"});"
+									"});",
+									"",
+									"pm.test(\"response json data should not have errors\", function () {",
+									"    pm.response.to.have.jsonBody();",
+									"    pm.response.to.not.have.jsonBody('error');",
+									"});",
+									"",
+									"pm.test(\"response to be json should be an array\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('array');",
+									"});",
+									"",
+									"pm.test(\"response json should return object details\", function () {",
+									"    _.each(pm.response.json(), (item) => {",
+									"        pm.expect(item).to.include",
+									"            .keys(['id', 'position_id', 'title', 'start_date', 'end_date',",
+									"                'service_start_date', 'service_end_date', 'dob', 'credentials']);",
+									"    });",
+									"});",
+									"",
+									"pm.test('\"office_symbol\" variable should be present', function(){",
+									"    pm.expect(pm.variables.get('office_symbol')).to.be.a('string')",
+									"});",
+									"",
+									"pm.collectionVariables.unset('office_symbol');"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// set url variable to collection variable",
+									"pm.request.url.variables.each(item => {",
+									"    pm.collectionVariables.set(item.key, item.value);",
+									"});",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -687,12 +1106,47 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"List Occupancy by Office and Group: status code is 200 OK returning JSON\", function () {",
-									"    pm.response.to.be.ok;",
-									"    pm.response.to.be.withBody;",
-									"    pm.response.to.be.json;",
+									"pm.test(\"response is ok\", function () {",
 									"    pm.response.to.have.status(200);",
-									"});"
+									"});",
+									"",
+									"pm.test(\"response json data should not have errors\", function () {",
+									"    pm.response.to.have.jsonBody();",
+									"    pm.response.to.not.have.jsonBody('error');",
+									"});",
+									"",
+									"pm.test(\"response to be json should be an array\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('array');",
+									"});",
+									"",
+									"pm.test(\"response json should return object details\", function () {",
+									"    _.each(pm.response.json(), (item) => {",
+									"        pm.expect(item).to.include",
+									"            .keys(['id', 'position_id', 'title', 'start_date', 'end_date',",
+									"                'service_start_date', 'service_end_date', 'dob', 'credentials']);",
+									"    });",
+									"});",
+									"",
+									"pm.test('\"office_symbol\"  and \"group_slug\" variables should be present', function(){",
+									"    pm.expect(pm.variables.get('office_symbol')).to.be.a('string')",
+									"    pm.expect(pm.variables.get('group_slug')).to.be.a('string')",
+									"});",
+									"",
+									"pm.collectionVariables.unset('office_symbol');",
+									"pm.collectionVariables.unset('group_slug');"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// set url variable to collection variable",
+									"pm.request.url.variables.each(item => {",
+									"    pm.collectionVariables.set(item.key, item.value);",
+									"});",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -741,14 +1195,41 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Create Position Occupancy: successful POST request\", function () {",
-									"    pm.response.to.be.withBody;",
-									"    pm.response.to.be.json;",
-									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
+									"// set variables",
+									"var jsonData = pm.response.json();",
+									"pm.collectionVariables.set(\"occupancy_id\", jsonData.id);",
 									"",
-									"    var jsonData = pm.response.json();",
-									"    pm.collectionVariables.set(\"occupancy_id\", jsonData.id);",
+									"pm.test(\"response is created\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
+									"});",
+									"",
+									"pm.test(\"response json data should not have errors\", function () {",
+									"    pm.response.to.have.jsonBody();",
+									"    pm.response.to.not.have.jsonBody('error');",
+									"});",
+									"",
+									"pm.test(\"response json should contain one object\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('object');",
+									"});",
+									"",
+									"pm.test(\"response json should return object details\", function () {",
+									"    pm.expect(pm.response.json()).to.include",
+									"        .keys(['id', 'position_id', 'title', 'start_date', 'end_date',",
+									"                'service_start_date', 'service_end_date', 'dob', 'credentials']);",
 									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// set url variable to collection variable",
+									"pm.request.url.variables.each(item => {",
+									"    pm.collectionVariables.set(item.key, item.value);",
+									"});",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -800,11 +1281,33 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Update Position Occupancy: status code is 200 OK returning JSON\", function () {",
-									"    pm.response.to.be.withBody;",
-									"    pm.response.to.be.json;",
+									"pm.test(\"response is ok\", function () {",
 									"    pm.response.to.have.status(200);",
-									"});"
+									"});",
+									"",
+									"pm.test(\"response json data should not have errors\", function () {",
+									"    pm.response.to.have.jsonBody();",
+									"    pm.response.to.not.have.jsonBody('error');",
+									"});",
+									"",
+									"pm.test(\"response json should contain one object\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('object');",
+									"});",
+									"",
+									"pm.test(\"response json should return object details\", function () {",
+									"    pm.expect(pm.response.json()).to.include",
+									"        .keys(['id', 'position_id', 'title', 'start_date', 'end_date',",
+									"                'service_start_date', 'service_end_date', 'dob', 'credentials']);",
+									"});",
+									"",
+									"// skip this test with pm.test.skip",
+									"pm.test('\"office_symbol\" and \"group_slug\" variables should be present', function () {",
+									"    pm.expect(pm.variables.get('office_symbol')).to.be.a('string');",
+									"    pm.expect(pm.variables.get('occupancy_id')).to.be.a('string');",
+									"});",
+									"",
+									"pm.collectionVariables.unset('office_symbol');",
+									"pm.collectionVariables.unset('occupancy_id');"
 								],
 								"type": "text/javascript"
 							}
@@ -856,12 +1359,26 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"List Credentials: status code is 200 OK returning JSON\", function () {",
-									"    pm.response.to.be.ok;",
-									"    pm.response.to.be.withBody;",
-									"    pm.response.to.be.json;",
+									"pm.test(\"response is ok\", function () {",
 									"    pm.response.to.have.status(200);",
-									"});"
+									"});",
+									"",
+									"pm.test(\"response json data should not have errors\", function () {",
+									"    pm.response.to.have.jsonBody();",
+									"    pm.response.to.not.have.jsonBody('error');",
+									"});",
+									"",
+									"pm.test(\"response to be json should be an array\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('array');",
+									"});",
+									"",
+									"pm.test(\"response json should return object details\", function () {",
+									"    _.each(pm.response.json(), (item) => {",
+									"        pm.expect(item).to.include",
+									"            .keys(['abbrev', 'name', 'type']);",
+									"    });",
+									"});",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -894,12 +1411,26 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"List Role Requests: status code is 200 OK returning JSON\", function () {",
-									"    pm.response.to.be.ok;",
-									"    pm.response.to.be.withBody;",
-									"    pm.response.to.be.json;",
+									"pm.test(\"response is ok\", function () {",
 									"    pm.response.to.have.status(200);",
-									"});"
+									"});",
+									"",
+									"pm.test(\"response json data should not have errors\", function () {",
+									"    pm.response.to.have.jsonBody();",
+									"    pm.response.to.not.have.jsonBody('error');",
+									"});",
+									"",
+									"pm.test(\"response to be json should be an array\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('array');",
+									"});",
+									"",
+									"pm.test(\"response json should return object details\", function () {",
+									"    _.each(pm.response.json(), (item) => {",
+									"        pm.expect(item).to.include",
+									"            .keys(['id', 'sub', 'office_symbol', 'status', 'request_date', 'response_date', 'responder']);",
+									"    });",
+									"});",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -937,12 +1468,26 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"List My Role Requests: status code is 200 OK returning JSON\", function () {",
-									"    pm.response.to.be.ok;",
-									"    pm.response.to.be.withBody;",
-									"    pm.response.to.be.json;",
+									"pm.test(\"response is ok\", function () {",
 									"    pm.response.to.have.status(200);",
-									"});"
+									"});",
+									"",
+									"pm.test(\"response json data should not have errors\", function () {",
+									"    pm.response.to.have.jsonBody();",
+									"    pm.response.to.not.have.jsonBody('error');",
+									"});",
+									"",
+									"pm.test(\"response to be json should be an array\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('array');",
+									"});",
+									"",
+									"pm.test(\"response json should return object details\", function () {",
+									"    _.each(pm.response.json(), (item) => {",
+									"        pm.expect(item).to.include",
+									"            .keys(['id', 'sub', 'office_symbol', 'status', 'request_date', 'response_date', 'responder']);",
+									"    });",
+									"});",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -980,14 +1525,40 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Create Role Request, Approve: successful POST request\", function () {",
-									"    pm.response.to.be.withBody;",
-									"    pm.response.to.be.json;",
-									"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);",
+									"// set variables",
+									"var jsonData = pm.response.json();",
+									"pm.collectionVariables.set(\"request_id\", jsonData.id);",
 									"",
-									"    var jsonData = pm.response.json();",
-									"    pm.collectionVariables.set(\"request_id\", jsonData.id);",
+									"pm.test(\"response is created\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);",
+									"});",
+									"",
+									"pm.test(\"response json data should not have errors\", function () {",
+									"    pm.response.to.have.jsonBody();",
+									"    pm.response.to.not.have.jsonBody('error');",
+									"});",
+									"",
+									"pm.test(\"response json should contain one object\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('object');",
+									"});",
+									"",
+									"pm.test(\"response json should return object details\", function () {",
+									"    pm.expect(pm.response.json()).to.include",
+									"        .keys(['id', 'sub', 'office_symbol', 'status', 'request_date', 'response_date', 'responder']);",
 									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// set url variable to collection variable",
+									"pm.request.url.variables.each(item => {",
+									"    pm.collectionVariables.set(item.key, item.value);",
+									"});",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -1032,11 +1603,24 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Update Role Request, approve: status code is 200 OK returning JSON\", function () {",
-									"    pm.response.to.be.withBody;",
-									"    pm.response.to.be.json;",
+									"pm.test(\"response is ok\", function () {",
 									"    pm.response.to.have.status(200);",
-									"});"
+									"});",
+									"",
+									"pm.test(\"response json data should not have errors\", function () {",
+									"    pm.response.to.have.jsonBody();",
+									"    pm.response.to.not.have.jsonBody('error');",
+									"});",
+									"",
+									"pm.test(\"response to be json should be an object\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('object');",
+									"});",
+									"",
+									"pm.test(\"response json should return object details\", function () {",
+									"    pm.expect(pm.response.json()).to.include",
+									"        .keys(['id', 'sub', 'office_symbol', 'status', 'request_date', 'response_date', 'responder']);",
+									"});",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -1076,11 +1660,26 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Update Role Request, deny: status code is 200 OK returning JSON\", function () {",
-									"    pm.response.to.be.withBody;",
-									"    pm.response.to.be.json;",
+									"pm.test(\"response is ok\", function () {",
 									"    pm.response.to.have.status(200);",
-									"});"
+									"});",
+									"",
+									"pm.test(\"response json data should not have errors\", function () {",
+									"    pm.response.to.have.jsonBody();",
+									"    pm.response.to.not.have.jsonBody('error');",
+									"});",
+									"",
+									"pm.test(\"response to be json should be an object\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('object');",
+									"});",
+									"",
+									"pm.test(\"response json should return object details\", function () {",
+									"    pm.expect(pm.response.json()).to.include",
+									"        .keys(['id', 'sub', 'office_symbol', 'status', 'request_date', 'response_date', 'responder']);",
+									"});",
+									"",
+									"pm.collectionVariables.unset('office_symbol');",
+									"pm.collectionVariables.unset('request_id');"
 								],
 								"type": "text/javascript"
 							}
@@ -1113,6 +1712,26 @@
 					},
 					"response": []
 				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
 			]
 		}
 	],
@@ -1132,7 +1751,9 @@
 			"script": {
 				"type": "text/javascript",
 				"exec": [
-					""
+					"if(pm.environment.get(\"base_url\") == null){",
+					"    pm.environment.set(\"base_url\", \"localhost\");",
+					"}"
 				]
 			}
 		},
@@ -1148,24 +1769,19 @@
 	],
 	"variable": [
 		{
-			"key": "position_id",
-			"value": ""
+			"key": "jwt_application_admin",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImJZYVZSTS0xVmp1LWR2N2NEZ0k5ZnJkNVRtZFl1RU5QbWRoV0NaZU1TWmMifQ.eyJleHAiOjE4Mzk1MDU1MzUsImlhdCI6MTYzOTUwNTIzNSwianRpIjoiOTBmN2YzYmYtZTkzNC00NWM2LTg1OGUtNzVjMGM2NDdkZTNkIiwiaXNzIjoiaHR0cHM6Ly9tb2NrLXNlcnZlciIsImF1ZCI6WyJjdW11bHVzIiwid29ya2ZvcmNlIiwiYWNjb3VudCJdLCJzdWIiOiI5MmUxMGQ5My1iNDU0LTQ0Y2ItOWM3Zi01ZGVhZjBkMTZmMTUiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJ3b3JrZm9yY2UiLCJzZXNzaW9uX3N0YXRlIjoiYzI4YTMzZmUtNzM4MC00OTI4LWFkNDYtN2JmZTFiY2M2OTVkIiwiYWNyIjoiMSIsInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJkZWZhdWx0LXJvbGVzLXdhdGVyIiwib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7Indvcmtmb3JjZSI6eyJyb2xlcyI6WyJhcHBsaWNhdGlvbi5hZG1pbiJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSIsInByZWZlcnJlZF91c2VybmFtZSI6Indvcmtmb3JjZS5hZG1pbiIsImdpdmVuX25hbWUiOiIiLCJmYW1pbHlfbmFtZSI6IiJ9.Aip3doJZ13paloCD-tNY88zuMpkWbKYTASrTXITcvTg",
+			"type": "string"
 		},
 		{
-			"key": "office_symbol",
-			"value": ""
+			"key": "jwt_lrn_admin",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImJZYVZSTS0xVmp1LWR2N2NEZ0k5ZnJkNVRtZFl1RU5QbWRoV0NaZU1TWmMifQ.eyJleHAiOjE4Mzk1MDU1MzUsImlhdCI6MTYzOTUwNTIzNSwianRpIjoiZTUzMzYyZDgtYmFkOC00M2JhLThmODItYWExNzNmMjk5M2Y0IiwiaXNzIjoiaHR0cHM6Ly9tb2NrLXNlcnZlciIsImF1ZCI6WyJjdW11bHVzIiwid29ya2ZvcmNlIiwiYWNjb3VudCJdLCJzdWIiOiJmZjJkZDZhMS03MmE0LTQ3OTktOTE2OC1lNjY0MWIwMDI2NjQiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJ3b3JrZm9yY2UiLCJzZXNzaW9uX3N0YXRlIjoiNDgxMGUxYzQtNDhhMS00Njg4LTk2MjYtNGFhZDVlOGIwYzNlIiwiYWNyIjoiMSIsInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJkZWZhdWx0LXJvbGVzLXdhdGVyIiwib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7Indvcmtmb3JjZSI6eyJyb2xlcyI6WyJscm4uYWRtaW4iXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoib3BlbmlkIHByb2ZpbGUiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJscm4uYWRtaW4iLCJnaXZlbl9uYW1lIjoiIiwiZmFtaWx5X25hbWUiOiIifQ.RHdgX1w-p7LAAMQHxF0XJu94-zEfYKPCBTfMtpea2gU",
+			"type": "string"
 		},
 		{
-			"key": "group_slug",
-			"value": ""
-		},
-		{
-			"key": "occupancy_id",
-			"value": ""
-		},
-		{
-			"key": "request_id",
-			"value": ""
+			"key": "jwt_mvp_admin",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImJZYVZSTS0xVmp1LWR2N2NEZ0k5ZnJkNVRtZFl1RU5QbWRoV0NaZU1TWmMifQ.eyJleHAiOjE4Mzk1MDU1MzUsImlhdCI6MTYzOTUwNTIzNSwianRpIjoiMDQ5YzIyMDctNzdhMC00ODk1LWJiYjctNTE3NWY1ZjVjZTIwIiwiaXNzIjoiaHR0cHM6Ly9tb2NrLXNlcnZlciIsImF1ZCI6WyJjdW11bHVzIiwid29ya2ZvcmNlIiwiYWNjb3VudCJdLCJzdWIiOiI2YjRkMTkwMS1kZjIwLTRjNzMtYTI4MS05YjllOGU0OWJiNmIiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJ3b3JrZm9yY2UiLCJzZXNzaW9uX3N0YXRlIjoiODg1NzY3ZTEtNGU2Ni00ZmQ0LWEyNmItN2E5OWY0NjVlMTFhIiwiYWNyIjoiMSIsInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJkZWZhdWx0LXJvbGVzLXdhdGVyIiwib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7Indvcmtmb3JjZSI6eyJyb2xlcyI6WyJtdnAuYWRtaW4iXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoib3BlbmlkIHByb2ZpbGUiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJtdnAuYWRtaW4iLCJnaXZlbl9uYW1lIjoiIiwiZmFtaWx5X25hbWUiOiIifQ.5561G-u8VOvVrDk7nAlQ5Coiiqz51XwUOPHpXukpHGo",
+			"type": "string"
 		}
 	]
 }
