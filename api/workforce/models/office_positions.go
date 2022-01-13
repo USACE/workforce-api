@@ -14,7 +14,7 @@ type Position struct {
 	GroupSlug        string     `json:"group_slug" param:"group_slug"`
 	Title            string     `json:"title"`
 	PayPlan          string     `json:"pay_plan"`
-	Grade            int        `json:"grade"`
+	TargetGrade      int        `json:"target_grade"`
 	IsActive         bool       `json:"is_active"`
 	IsSupervisor     bool       `json:"is_supervisor"`
 	IsAllocated      bool       `json:"is_allocated"`
@@ -59,7 +59,7 @@ const basePositionSql = `WITH current_occupancy_by_position as (
 			g.slug               as group_slug,
 			p.title,
 			a.code               as pay_plan,
-			p.grade,
+			p.target_grade,
 			p.is_active,
 			p.is_supervisor,
 			p.is_allocated,
@@ -113,7 +113,7 @@ func ListPositionsByGroup(db *pgxpool.Pool, officeSymbol string, groupSlug strin
 func CreateOfficePosition(db *pgxpool.Pool, p Position) (Position, error) {
 	var id uuid.UUID
 	if err := db.QueryRow(context.Background(),
-		`INSERT INTO position (occupation_code_id, title, office_group_id, pay_plan_id, grade, is_supervisor, is_active, is_allocated)
+		`INSERT INTO position (occupation_code_id, title, office_group_id, pay_plan_id, target_grade, is_supervisor, is_active, is_allocated)
 		VALUES (
 			(SELECT id FROM occupation_code WHERE code = $1),
 			$2,
@@ -125,7 +125,7 @@ func CreateOfficePosition(db *pgxpool.Pool, p Position) (Position, error) {
 		p.OfficeSymbol,
 		p.GroupSlug,
 		p.PayPlan,
-		p.Grade,
+		p.TargetGrade,
 		p.IsSupervisor,
 		p.IsActive,
 		p.IsAllocated,
@@ -145,7 +145,7 @@ func UpdateOfficePosition(db *pgxpool.Pool, p Position) (Position, error) {
         title = $2,
         office_group_id = (SELECT id FROM office_group WHERE office_id = (SELECT id FROM office WHERE symbol ILIKE $3) AND slug = $4),
         pay_plan_id = (SELECT id FROM pay_plan WHERE code = $5),
-        grade = $6,
+        target_grade = $6,
         is_supervisor = $7,
         is_active = $8,
         is_allocated = $9
@@ -156,7 +156,7 @@ func UpdateOfficePosition(db *pgxpool.Pool, p Position) (Position, error) {
 		p.OfficeSymbol,
 		p.GroupSlug,
 		p.PayPlan,
-		p.Grade,
+		p.TargetGrade,
 		p.IsSupervisor,
 		p.IsActive,
 		p.IsAllocated,

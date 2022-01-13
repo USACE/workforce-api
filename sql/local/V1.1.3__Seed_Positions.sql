@@ -1,4 +1,4 @@
-INSERT INTO position (id, occupation_code_id, title, office_group_id, pay_plan_id, grade, is_supervisor, is_active, is_allocated) VALUES
+INSERT INTO position (id, occupation_code_id, title, office_group_id, pay_plan_id, target_grade, is_supervisor, is_active, is_allocated) VALUES
     ('964d3ba8-14a1-42d2-a6b7-25be6a853101', '9d06df4e-ff49-424c-968c-260cefd316c3', 'Branch Chief', '39a00b5e-369a-4fe6-af81-f86ab01d9737', '3a4823a1-44f1-48bc-9b1c-e52c25dee0b0', 4, TRUE, TRUE, TRUE),
     ('8c595a1f-6d6e-4a57-972e-e022ae485139', 'f22dcb77-eef3-4dbb-8a21-baaae76a0a66', 'Sr. Research Engineer/Scientist', '39a00b5e-369a-4fe6-af81-f86ab01d9737', '3a4823a1-44f1-48bc-9b1c-e52c25dee0b0', 5, FALSE, TRUE, FALSE),
     ('63db2ebb-5030-4efc-bba9-2c0ce79dec34', 'f22dcb77-eef3-4dbb-8a21-baaae76a0a66', 'Research Engineer/Scientist', '39a00b5e-369a-4fe6-af81-f86ab01d9737', '3a4823a1-44f1-48bc-9b1c-e52c25dee0b0', 4, FALSE, TRUE, TRUE),

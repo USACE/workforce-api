@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "9073742a-63c3-4df1-bceb-f3dff669a2dd",
+		"_postman_id": "d7738e6b-bebb-436b-a860-37d585b6f8cd",
 		"name": "workforce",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -22,7 +22,8 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"id": "01a3fc3b-109c-46a3-8f97-5eac2ec67ec9"
 							}
 						}
 					],
@@ -41,7 +42,8 @@
 					},
 					"response": []
 				}
-			]
+			],
+			"protocolProfileBehavior": {}
 		},
 		{
 			"name": "Groups",
@@ -59,7 +61,8 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"id": "9e158b1e-a73d-4afe-83c2-fd01cb2c5907"
 							}
 						}
 					],
@@ -93,7 +96,8 @@
 									"});",
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"id": "81617630-7a68-4643-9c82-ec232b520174"
 							}
 						}
 					],
@@ -129,7 +133,8 @@
 								"exec": [
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"id": "6dcbacdb-4bea-44cf-9b16-086f9b839389"
 							}
 						},
 						{
@@ -146,7 +151,8 @@
 									"    pm.collectionVariables.set(\"group_slug\", jsonData.slug);",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"id": "ca6e089f-e04c-4955-9a9b-9cc890af0b43"
 							}
 						}
 					],
@@ -191,7 +197,8 @@
 								"exec": [
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"id": "b34dbf39-35b7-4ca5-92e6-e0fb4c4c47fa"
 							}
 						},
 						{
@@ -204,7 +211,8 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"id": "382224ca-1985-4a38-8c69-d548e5b16daf"
 							}
 						}
 					],
@@ -244,7 +252,8 @@
 								"exec": [
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"id": "04e12036-8911-4714-88b6-05163053d813"
 							}
 						},
 						{
@@ -255,7 +264,8 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"id": "dc033d08-fa9e-44e6-8e44-3fd81c3fd2a2"
 							}
 						}
 					],
@@ -286,7 +296,8 @@
 					},
 					"response": []
 				}
-			]
+			],
+			"protocolProfileBehavior": {}
 		},
 		{
 			"name": "Positions",
@@ -304,7 +315,8 @@
 									"//     pm.response.to.have.status(200);",
 									"// });"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"id": "ba81b8e7-c542-4e33-870a-e6716c458a29"
 							}
 						}
 					],
@@ -344,7 +356,8 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"id": "93107f71-f37b-43f0-a797-7739e8c3590d"
 							}
 						}
 					],
@@ -385,7 +398,8 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"id": "f67e1f66-affa-48e8-87ee-346f46d2e982"
 							}
 						}
 					],
@@ -432,6 +446,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "c5a6f3cf-208f-49ba-86c9-b21695d2da32",
 								"exec": [
 									"pm.test(\"Create Office Position: successful POST request\", function () {",
 									"    pm.response.to.be.withBody;",
@@ -452,7 +467,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"group_slug\": \"nashville-district\",\n    \"title\": \"Super Trooper Engineer\",\n    \"pay_plan\": \"GS\",\n    \"grade\": 15,\n    \"is_supervisor\": false,\n    \"is_active\": false,\n    \"occupation_code\": \"0810\"\n}\n",
+							"raw": "{\n    \"group_slug\": \"nashville-district\",\n    \"title\": \"Super Trooper Engineer\",\n    \"pay_plan\": \"GS\",\n    \"target_grade\": 15,\n    \"is_supervisor\": false,\n    \"is_active\": false,\n    \"occupation_code\": \"0810\"\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -499,7 +514,8 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"id": "fba74e8e-6df9-4f49-8118-9b883793ee93"
 							}
 						}
 					],
@@ -548,7 +564,8 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"id": "d440d0fb-2663-45a4-ae60-7cbd43689071"
 							}
 						}
 					],
@@ -586,7 +603,8 @@
 					},
 					"response": []
 				}
-			]
+			],
+			"protocolProfileBehavior": {}
 		},
 		{
 			"name": "Occupancy",
@@ -605,7 +623,8 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"id": "8b9715aa-668d-4c67-8f57-141291a42b2a"
 							}
 						}
 					],
@@ -645,7 +664,8 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"id": "717cbb3a-003b-44d3-8521-53285e588e7d"
 							}
 						}
 					],
@@ -694,7 +714,8 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"id": "8d805f2b-6628-4bf6-abf5-b75cbe95fe84"
 							}
 						}
 					],
@@ -750,7 +771,8 @@
 									"    pm.collectionVariables.set(\"occupancy_id\", jsonData.id);",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"id": "f1bdc4a8-2f3e-46f1-817d-ef35c3a1e3c7"
 							}
 						}
 					],
@@ -806,7 +828,8 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"id": "ce5557db-1232-4820-b8bf-ec0bd54364d5"
 							}
 						}
 					],
@@ -844,7 +867,8 @@
 					},
 					"response": []
 				}
-			]
+			],
+			"protocolProfileBehavior": {}
 		},
 		{
 			"name": "Credentials",
@@ -863,7 +887,8 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"id": "a6e9a1e9-402b-467b-a284-c022a67ab214"
 							}
 						}
 					],
@@ -882,7 +907,8 @@
 					},
 					"response": []
 				}
-			]
+			],
+			"protocolProfileBehavior": {}
 		},
 		{
 			"name": "Role Requests",
@@ -901,7 +927,8 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"id": "28a967c7-0b76-4334-af99-a1f29eaee2b1"
 							}
 						}
 					],
@@ -944,7 +971,8 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"id": "bd74f105-065e-45f6-a0f6-86b88a1ed31e"
 							}
 						}
 					],
@@ -989,7 +1017,8 @@
 									"    pm.collectionVariables.set(\"request_id\", jsonData.id);",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"id": "cbff5017-4073-4c31-8c16-33d80f1534f1"
 							}
 						}
 					],
@@ -1038,7 +1067,8 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"id": "787f77f9-69b5-4a87-86ed-1b08af8f4718"
 							}
 						}
 					],
@@ -1082,7 +1112,8 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"id": "fd4df1c9-7139-4de4-8a41-9ccdb76dad0f"
 							}
 						}
 					],
@@ -1113,7 +1144,8 @@
 					},
 					"response": []
 				}
-			]
+			],
+			"protocolProfileBehavior": {}
 		}
 	],
 	"auth": {
@@ -1133,7 +1165,8 @@
 				"type": "text/javascript",
 				"exec": [
 					""
-				]
+				],
+				"id": "fd473d4f-ee97-44d5-af33-2941cb428a77"
 			}
 		},
 		{
@@ -1142,30 +1175,37 @@
 				"type": "text/javascript",
 				"exec": [
 					""
-				]
+				],
+				"id": "ab4f79b0-d939-4d30-84cf-069732fe23e6"
 			}
 		}
 	],
 	"variable": [
 		{
+			"id": "cd862bea-aca3-4cec-b250-42f1ad8bed9d",
 			"key": "position_id",
 			"value": ""
 		},
 		{
+			"id": "c2172de0-0d56-4697-90c9-fe030ae9d860",
 			"key": "office_symbol",
 			"value": ""
 		},
 		{
+			"id": "f2d7a7be-a5e6-42ba-86cc-0b29cc63ec52",
 			"key": "group_slug",
 			"value": ""
 		},
 		{
+			"id": "3b1024cc-b55b-4500-9374-b19ca7a504a8",
 			"key": "occupancy_id",
 			"value": ""
 		},
 		{
+			"id": "ec932de7-e72e-452e-897c-769743dd57a2",
 			"key": "request_id",
 			"value": ""
 		}
-	]
+	],
+	"protocolProfileBehavior": {}
 }
