@@ -22,7 +22,7 @@ type Group struct {
 }
 
 // GetGroupByID
-func GetGroupByID(db *pgxpool.Pool, id uuid.UUID) (Group, error) {
+func GetGroupByID(db *pgxpool.Pool, id uuid.UUID) (*Group, error) {
 	var g Group
 	if err := pgxscan.Get(context.Background(), db, &g,
 		`SELECT
@@ -39,10 +39,10 @@ func GetGroupByID(db *pgxpool.Pool, id uuid.UUID) (Group, error) {
 			og.office_id = o.id
 		WHERE og.id = $1::uuid`,
 		id); err != nil {
-		return Group{}, err
+		return nil, err
 	}
 
-	return g, nil
+	return &g, nil
 }
 
 // ListGroups
@@ -114,7 +114,7 @@ func ListOfficeGroups(db *pgxpool.Pool, officeSymbol string) ([]Group, error) {
 }
 
 // CreateOfficeGroup
-func CreateOfficeGroup(db *pgxpool.Pool, officeGroup Group) (Group, error) {
+func CreateOfficeGroup(db *pgxpool.Pool, officeGroup Group) (*Group, error) {
 	var id uuid.UUID
 	officeGroup.Slug = slugify.Slugify(officeGroup.Name)
 	if err := db.QueryRow(context.Background(),
@@ -122,14 +122,14 @@ func CreateOfficeGroup(db *pgxpool.Pool, officeGroup Group) (Group, error) {
 		((SELECT id FROM office AS o WHERE o.symbol ILIKE $1), $2, $3) RETURNING id`,
 		officeGroup.OfficeSymbol, officeGroup.Name, officeGroup.Slug,
 	).Scan(&id); err != nil {
-		return Group{}, err
+		return nil, err
 	}
 	return GetGroupByID(db, id)
 
 }
 
 // UpdateOfficeGroup
-func UpdateOfficeGroup(db *pgxpool.Pool, officeGroup Group) (Group, error) {
+func UpdateOfficeGroup(db *pgxpool.Pool, officeGroup Group) (*Group, error) {
 	var id uuid.UUID
 	if err := db.QueryRow(context.Background(),
 		`UPDATE office_group SET name = $1
@@ -138,7 +138,7 @@ func UpdateOfficeGroup(db *pgxpool.Pool, officeGroup Group) (Group, error) {
 		RETURNING id`,
 		officeGroup.Name, officeGroup.Slug, officeGroup.OfficeSymbol,
 	).Scan(&id); err != nil {
-		return Group{}, nil
+		return nil, err
 	}
 	return GetGroupByID(db, id)
 }
@@ -157,4 +157,18 @@ func DeleteOfficeGroup(db *pgxpool.Pool, office string, group string) (int64, er
 	}
 	cnt = res.RowsAffected()
 	return cnt, nil
+}
+
+func VerifyOfficeGroup(db *pgxpool.Pool, office string, group string, sub uuid.UUID) (*Group, error) {
+	var id uuid.UUID
+	if err := pgxscan.Get(
+		context.Background(), db, &id,
+		`UPDATE office_group SET last_verified = CURRENT_TIMESTAMP, last_verified_by = $3
+		 WHERE office_id = (SELECT id FROM office WHERE UPPER(symbol) = UPPER($1))
+		 AND UPPER(slug) = UPPER($2)
+		 RETURNING id`, office, group, sub,
+	); err != nil {
+		return nil, err
+	}
+	return GetGroupByID(db, id)
 }
