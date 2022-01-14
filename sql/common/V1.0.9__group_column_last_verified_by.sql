@@ -1,0 +1,1 @@
+ALTER TABLE office_group ADD COLUMN last_verified_by UUID;

@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "d7738e6b-bebb-436b-a860-37d585b6f8cd",
+		"_postman_id": "e4428e6c-728b-47aa-b217-53de96a50086",
 		"name": "workforce",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -23,7 +23,7 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "01a3fc3b-109c-46a3-8f97-5eac2ec67ec9"
+								"id": "65e7837a-d109-4225-ae9d-4ea9fda94db6"
 							}
 						}
 					],
@@ -62,7 +62,7 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "9e158b1e-a73d-4afe-83c2-fd01cb2c5907"
+								"id": "4a3d42c2-33fd-426c-9635-96b0a7e0f9b5"
 							}
 						}
 					],
@@ -97,7 +97,7 @@
 									""
 								],
 								"type": "text/javascript",
-								"id": "81617630-7a68-4643-9c82-ec232b520174"
+								"id": "79fe4710-cf76-4008-ba79-33388c0bf9dd"
 							}
 						}
 					],
@@ -134,7 +134,7 @@
 									""
 								],
 								"type": "text/javascript",
-								"id": "6dcbacdb-4bea-44cf-9b16-086f9b839389"
+								"id": "3c3f1dc3-76f7-4308-b78a-c11002998505"
 							}
 						},
 						{
@@ -152,7 +152,7 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "ca6e089f-e04c-4955-9a9b-9cc890af0b43"
+								"id": "7724a4f2-1b83-4072-b172-c4829738e632"
 							}
 						}
 					],
@@ -198,7 +198,7 @@
 									""
 								],
 								"type": "text/javascript",
-								"id": "b34dbf39-35b7-4ca5-92e6-e0fb4c4c47fa"
+								"id": "9a1dbc0b-501c-4fa0-9408-2fb615262c5c"
 							}
 						},
 						{
@@ -212,7 +212,7 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "382224ca-1985-4a38-8c69-d548e5b16daf"
+								"id": "a34c107b-f988-4442-a978-be5d9074af3b"
 							}
 						}
 					],
@@ -244,6 +244,72 @@
 					"response": []
 				},
 				{
+					"name": "Verify Office Group",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "153fa2b2-f13c-4839-ae26-a3a21b146114",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "ad49b431-05c8-49bc-a3fa-64ff90b0162a",
+								"exec": [
+									"pm.test(\"Update Office Groups: status code is 200 OK returning JSON\", function () {",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_lrn_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/offices/{{office_symbol}}/groups/{{group_slug}}/verify",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"offices",
+								"{{office_symbol}}",
+								"groups",
+								"{{group_slug}}",
+								"verify"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Delete Office Group",
 					"event": [
 						{
@@ -253,7 +319,7 @@
 									""
 								],
 								"type": "text/javascript",
-								"id": "04e12036-8911-4714-88b6-05163053d813"
+								"id": "d50648f2-6100-4b9e-b71d-1d8154a7cb1d"
 							}
 						},
 						{
@@ -265,7 +331,7 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "dc033d08-fa9e-44e6-8e44-3fd81c3fd2a2"
+								"id": "9d987398-444c-48b9-a131-47fd067d7030"
 							}
 						}
 					],
@@ -316,7 +382,7 @@
 									"// });"
 								],
 								"type": "text/javascript",
-								"id": "ba81b8e7-c542-4e33-870a-e6716c458a29"
+								"id": "dcb2bce3-48fa-4215-8c3a-3466afc24be9"
 							}
 						}
 					],
@@ -357,7 +423,7 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "93107f71-f37b-43f0-a797-7739e8c3590d"
+								"id": "4a938d3c-3034-47aa-8fec-e417673ba084"
 							}
 						}
 					],
@@ -399,7 +465,7 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "f67e1f66-affa-48e8-87ee-346f46d2e982"
+								"id": "fbaac517-fcf1-4742-8171-16fd01dfba5e"
 							}
 						}
 					],
@@ -446,7 +512,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c5a6f3cf-208f-49ba-86c9-b21695d2da32",
+								"id": "b756b32d-28fb-4d22-8517-572ff5b6808a",
 								"exec": [
 									"pm.test(\"Create Office Position: successful POST request\", function () {",
 									"    pm.response.to.be.withBody;",
@@ -515,7 +581,7 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "fba74e8e-6df9-4f49-8118-9b883793ee93"
+								"id": "352d775c-deb1-4c6b-8a99-43b7d37dad0f"
 							}
 						}
 					],
@@ -565,7 +631,7 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "d440d0fb-2663-45a4-ae60-7cbd43689071"
+								"id": "b0425062-84cc-4317-80fe-038bfd53ce94"
 							}
 						}
 					],
@@ -624,7 +690,7 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "8b9715aa-668d-4c67-8f57-141291a42b2a"
+								"id": "27065ce9-043b-476e-94d9-bd8dc5126ce4"
 							}
 						}
 					],
@@ -665,7 +731,7 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "717cbb3a-003b-44d3-8521-53285e588e7d"
+								"id": "01e378cf-6776-4ce0-bcc8-f7d4b13f4a30"
 							}
 						}
 					],
@@ -715,7 +781,7 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "8d805f2b-6628-4bf6-abf5-b75cbe95fe84"
+								"id": "b544e05d-66cb-4c58-b77f-4faee97c1729"
 							}
 						}
 					],
@@ -772,7 +838,7 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "f1bdc4a8-2f3e-46f1-817d-ef35c3a1e3c7"
+								"id": "b4b5a70d-03cb-42dc-881f-bc5ce81f5224"
 							}
 						}
 					],
@@ -829,7 +895,7 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "ce5557db-1232-4820-b8bf-ec0bd54364d5"
+								"id": "1169ccd5-de16-43e3-a91a-152c6030164f"
 							}
 						}
 					],
@@ -888,7 +954,7 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "a6e9a1e9-402b-467b-a284-c022a67ab214"
+								"id": "05fbb3cb-1ff1-48da-b677-6afbe76c13fc"
 							}
 						}
 					],
@@ -928,7 +994,7 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "28a967c7-0b76-4334-af99-a1f29eaee2b1"
+								"id": "c24a6ad1-78ed-477a-91ab-bc2f22cc42c9"
 							}
 						}
 					],
@@ -972,7 +1038,7 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "bd74f105-065e-45f6-a0f6-86b88a1ed31e"
+								"id": "54bc8fb2-2815-44cf-9bd1-00b13f645ffd"
 							}
 						}
 					],
@@ -1018,7 +1084,7 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "cbff5017-4073-4c31-8c16-33d80f1534f1"
+								"id": "c338b72e-4006-4841-b5fe-d3c2a21f137e"
 							}
 						}
 					],
@@ -1068,7 +1134,7 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "787f77f9-69b5-4a87-86ed-1b08af8f4718"
+								"id": "2216a700-d945-4c7e-b230-0b065bbc2174"
 							}
 						}
 					],
@@ -1113,7 +1179,7 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "fd4df1c9-7139-4de4-8a41-9ccdb76dad0f"
+								"id": "794b664f-5098-4f81-9481-9fa3b430e40c"
 							}
 						}
 					],
@@ -1166,7 +1232,7 @@
 				"exec": [
 					""
 				],
-				"id": "fd473d4f-ee97-44d5-af33-2941cb428a77"
+				"id": "b19395cb-f0e9-4351-abe2-d48b1d9f3c23"
 			}
 		},
 		{
@@ -1176,33 +1242,33 @@
 				"exec": [
 					""
 				],
-				"id": "ab4f79b0-d939-4d30-84cf-069732fe23e6"
+				"id": "2ae2465f-2c5a-43a5-a023-25ae8a6cbfe6"
 			}
 		}
 	],
 	"variable": [
 		{
-			"id": "cd862bea-aca3-4cec-b250-42f1ad8bed9d",
+			"id": "50c1f51e-c5c6-413a-820e-c068cfee92f4",
 			"key": "position_id",
 			"value": ""
 		},
 		{
-			"id": "c2172de0-0d56-4697-90c9-fe030ae9d860",
+			"id": "04df57e9-8ceb-4132-ac50-5e8f7b78feb1",
 			"key": "office_symbol",
 			"value": ""
 		},
 		{
-			"id": "f2d7a7be-a5e6-42ba-86cc-0b29cc63ec52",
+			"id": "4d20726f-7699-4993-952e-2572e7736f9e",
 			"key": "group_slug",
 			"value": ""
 		},
 		{
-			"id": "3b1024cc-b55b-4500-9374-b19ca7a504a8",
+			"id": "f266dd4b-c7bd-4b53-8339-2f620ba2e2a6",
 			"key": "occupancy_id",
 			"value": ""
 		},
 		{
-			"id": "ec932de7-e72e-452e-897c-769743dd57a2",
+			"id": "633b832a-9fc3-4d54-8283-881f27339544",
 			"key": "request_id",
 			"value": ""
 		}
