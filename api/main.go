@@ -78,6 +78,7 @@ func main() {
 
 	// Offices
 	public.GET("/offices", mp.ListOffices)
+	public.GET("/offices/:office_symbol", mp.GetOffice)
 
 	// Positions
 	public.GET("/position/:position_id", mp.GetPositionByID)

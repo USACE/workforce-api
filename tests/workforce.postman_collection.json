@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "e4428e6c-728b-47aa-b217-53de96a50086",
+		"_postman_id": "14cec5bb-e908-4b2e-81f6-c10d91cf698e",
 		"name": "workforce",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -22,8 +22,7 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript",
-								"id": "65e7837a-d109-4225-ae9d-4ea9fda94db6"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -41,9 +40,42 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Get Single Office",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"List Offices: status code is 200 OK returning JSON\", function () {",
+									"    pm.response.to.be.ok;",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/offices/lrh",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"offices",
+								"lrh"
+							]
+						}
+					},
+					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Groups",
@@ -61,8 +93,7 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript",
-								"id": "4a3d42c2-33fd-426c-9635-96b0a7e0f9b5"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -96,8 +127,7 @@
 									"});",
 									""
 								],
-								"type": "text/javascript",
-								"id": "79fe4710-cf76-4008-ba79-33388c0bf9dd"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -133,8 +163,7 @@
 								"exec": [
 									""
 								],
-								"type": "text/javascript",
-								"id": "3c3f1dc3-76f7-4308-b78a-c11002998505"
+								"type": "text/javascript"
 							}
 						},
 						{
@@ -151,8 +180,7 @@
 									"    pm.collectionVariables.set(\"group_slug\", jsonData.slug);",
 									"});"
 								],
-								"type": "text/javascript",
-								"id": "7724a4f2-1b83-4072-b172-c4829738e632"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -197,8 +225,7 @@
 								"exec": [
 									""
 								],
-								"type": "text/javascript",
-								"id": "9a1dbc0b-501c-4fa0-9408-2fb615262c5c"
+								"type": "text/javascript"
 							}
 						},
 						{
@@ -211,8 +238,7 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript",
-								"id": "a34c107b-f988-4442-a978-be5d9074af3b"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -249,7 +275,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "153fa2b2-f13c-4839-ae26-a3a21b146114",
 								"exec": [
 									""
 								],
@@ -259,12 +284,11 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ad49b431-05c8-49bc-a3fa-64ff90b0162a",
 								"exec": [
-									"pm.test(\"Update Office Groups: status code is 200 OK returning JSON\", function () {",
+									"pm.test(\"Verify Office Groups: status code is 201 OK returning JSON\", function () {",
 									"    pm.response.to.be.withBody;",
 									"    pm.response.to.be.json;",
-									"    pm.response.to.have.status(200);",
+									"    pm.response.to.have.status(201);",
 									"});"
 								],
 								"type": "text/javascript"
@@ -318,8 +342,7 @@
 								"exec": [
 									""
 								],
-								"type": "text/javascript",
-								"id": "d50648f2-6100-4b9e-b71d-1d8154a7cb1d"
+								"type": "text/javascript"
 							}
 						},
 						{
@@ -330,8 +353,7 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript",
-								"id": "9d987398-444c-48b9-a131-47fd067d7030"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -362,8 +384,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Positions",
@@ -381,8 +402,7 @@
 									"//     pm.response.to.have.status(200);",
 									"// });"
 								],
-								"type": "text/javascript",
-								"id": "dcb2bce3-48fa-4215-8c3a-3466afc24be9"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -422,8 +442,7 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript",
-								"id": "4a938d3c-3034-47aa-8fec-e417673ba084"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -464,8 +483,7 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript",
-								"id": "fbaac517-fcf1-4742-8171-16fd01dfba5e"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -512,7 +530,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b756b32d-28fb-4d22-8517-572ff5b6808a",
 								"exec": [
 									"pm.test(\"Create Office Position: successful POST request\", function () {",
 									"    pm.response.to.be.withBody;",
@@ -580,8 +597,7 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript",
-								"id": "352d775c-deb1-4c6b-8a99-43b7d37dad0f"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -630,8 +646,7 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript",
-								"id": "b0425062-84cc-4317-80fe-038bfd53ce94"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -669,8 +684,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Occupancy",
@@ -689,8 +703,7 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript",
-								"id": "27065ce9-043b-476e-94d9-bd8dc5126ce4"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -730,8 +743,7 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript",
-								"id": "01e378cf-6776-4ce0-bcc8-f7d4b13f4a30"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -780,8 +792,7 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript",
-								"id": "b544e05d-66cb-4c58-b77f-4faee97c1729"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -837,8 +848,7 @@
 									"    pm.collectionVariables.set(\"occupancy_id\", jsonData.id);",
 									"});"
 								],
-								"type": "text/javascript",
-								"id": "b4b5a70d-03cb-42dc-881f-bc5ce81f5224"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -894,8 +904,7 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript",
-								"id": "1169ccd5-de16-43e3-a91a-152c6030164f"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -933,8 +942,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Credentials",
@@ -953,8 +961,7 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript",
-								"id": "05fbb3cb-1ff1-48da-b677-6afbe76c13fc"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -973,8 +980,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Role Requests",
@@ -993,8 +999,7 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript",
-								"id": "c24a6ad1-78ed-477a-91ab-bc2f22cc42c9"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -1037,8 +1042,7 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript",
-								"id": "54bc8fb2-2815-44cf-9bd1-00b13f645ffd"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -1083,8 +1087,7 @@
 									"    pm.collectionVariables.set(\"request_id\", jsonData.id);",
 									"});"
 								],
-								"type": "text/javascript",
-								"id": "c338b72e-4006-4841-b5fe-d3c2a21f137e"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -1133,8 +1136,7 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript",
-								"id": "2216a700-d945-4c7e-b230-0b065bbc2174"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -1178,8 +1180,7 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript",
-								"id": "794b664f-5098-4f81-9481-9fa3b430e40c"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -1210,8 +1211,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		}
 	],
 	"auth": {
@@ -1231,8 +1231,7 @@
 				"type": "text/javascript",
 				"exec": [
 					""
-				],
-				"id": "b19395cb-f0e9-4351-abe2-d48b1d9f3c23"
+				]
 			}
 		},
 		{
@@ -1241,37 +1240,30 @@
 				"type": "text/javascript",
 				"exec": [
 					""
-				],
-				"id": "2ae2465f-2c5a-43a5-a023-25ae8a6cbfe6"
+				]
 			}
 		}
 	],
 	"variable": [
 		{
-			"id": "50c1f51e-c5c6-413a-820e-c068cfee92f4",
 			"key": "position_id",
 			"value": ""
 		},
 		{
-			"id": "04df57e9-8ceb-4132-ac50-5e8f7b78feb1",
 			"key": "office_symbol",
 			"value": ""
 		},
 		{
-			"id": "4d20726f-7699-4993-952e-2572e7736f9e",
 			"key": "group_slug",
 			"value": ""
 		},
 		{
-			"id": "f266dd4b-c7bd-4b53-8339-2f620ba2e2a6",
 			"key": "occupancy_id",
 			"value": ""
 		},
 		{
-			"id": "633b832a-9fc3-4d54-8283-881f27339544",
 			"key": "request_id",
 			"value": ""
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }
