@@ -2,6 +2,7 @@ package models
 
 import (
 	"context"
+	"time"
 
 	"github.com/georgysavva/scany/pgxscan"
 	"github.com/google/uuid"
@@ -15,10 +16,11 @@ type AllocationMetrics struct {
 }
 
 type Office struct {
-	ID       uuid.UUID  `json:"id"`
-	Name     string     `json:"name"`
-	Symbol   string     `json:"symbol"`
-	ParentID *uuid.UUID `json:"parent_id"`
+	ID           uuid.UUID  `json:"id"`
+	Name         string     `json:"name"`
+	Symbol       string     `json:"symbol"`
+	LastVerified *time.Time `json:"last_verified" db:"last_verified"`
+	ParentID     *uuid.UUID `json:"parent_id"`
 	AllocationMetrics
 }
 
@@ -48,6 +50,12 @@ func ListOffices(db *pgxpool.Pool) ([]Office, error) {
 			JOIN office       f  on f.id = g.office_id
 			WHERE p.is_active
 			GROUP BY f.id
+		), last_verified AS (
+			SELECT g.office_id, min(coalesce(last_verified, '1900-01-01')) AS last_verified
+			--SELECT g.office_id, last_verified AS last_verified
+			FROM office_group g
+			JOIN office f on f.id = g.office_id
+			GROUP BY g.office_id
 		)
 		SELECT o1.id,
 			   o1.name,
@@ -55,11 +63,15 @@ func ListOffices(db *pgxpool.Pool) ([]Office, error) {
 			   o2.id                AS parent_id,
 			   coalesce(a.count, 0) AS employees,
 			   coalesce(b.count, 0) AS allocated,
-			   coalesce(c.count, 0) AS target
+			   coalesce(c.count, 0) AS target,
+			   CASE v.last_verified WHEN '1900-01-01' THEN NULL
+			   ELSE v.last_verified
+			   END last_verified
 		FROM office o1
 		LEFT JOIN employees_by_office  a  ON a.id = o1.id
 		LEFT JOIN allocation_by_office b  ON b.id = o1.id
 		LEFT JOIN target_by_office     c  ON c.id = o1.id
+		LEFT JOIN last_verified        v  ON v.office_id = o1.id
 		LEFT JOIN office               o2 ON o2.id = o1.parent_id
 		ORDER BY o2.symbol, o1.symbol`,
 	); err != nil {
