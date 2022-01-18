@@ -66,3 +66,17 @@ func (s Store) DeleteOfficeGroup(c echo.Context) error {
 
 	return c.NoContent(http.StatusOK)
 }
+
+func (s Store) VerifyOfficeGroup(c echo.Context) error {
+	officeSymbol := c.Param("office_symbol")
+	groupSlug := c.Param("group_slug")
+	userInfo, ok := c.Get("userInfo").(models.UserInfo)
+	if !ok {
+		return c.JSON(http.StatusForbidden, map[string]string{})
+	}
+	g, err := models.VerifyOfficeGroup(s.Connection, officeSymbol, groupSlug, userInfo.Sub)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, messages.DefaultMessageInternalServerError)
+	}
+	return c.JSON(http.StatusCreated, g)
+}

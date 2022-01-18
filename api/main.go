@@ -71,6 +71,7 @@ func main() {
 
 	// Metrics
 	public.GET("/metrics/series", mp.SeriesMetrics)
+	public.GET("/metrics/demographics", mp.DemographicsMetrics)
 
 	// Codes --> Used in Python script
 	public.GET("/occupation_codes", mp.ListOccupationCodes)
@@ -78,6 +79,7 @@ func main() {
 
 	// Offices
 	public.GET("/offices", mp.ListOffices)
+	public.GET("/offices/:office_symbol", mp.GetOffice)
 
 	// Positions
 	public.GET("/position/:position_id", mp.GetPositionByID)
@@ -89,6 +91,7 @@ func main() {
 	private.POST("/offices/:office_symbol/groups", mp.CreateOfficeGroup, middleware.IsOfficeAdmin)
 	private.PUT("/offices/:office_symbol/groups/:group_slug", mp.UpdateOfficeGroup, middleware.IsOfficeAdmin)
 	private.DELETE("/offices/:office_symbol/groups/:group_slug", mp.DeleteOfficeGroup, middleware.IsOfficeAdmin)
+	private.POST("/offices/:office_symbol/groups/:group_slug/verify", mp.VerifyOfficeGroup, middleware.IsOfficeAdmin)
 
 	// Office Positions/Employees
 	public.GET("/offices/:office_symbol/positions", mp.ListPositions)
