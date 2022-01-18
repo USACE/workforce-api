@@ -30,7 +30,7 @@ const sql = `WITH employees_by_office as (
 	JOIN office_group g ON g.id          = p.office_group_id
 	JOIN office       f ON f.id          = g.office_id
 	JOIN occupancy    c ON c.position_id = p.id and c.end_date is null
-	WHERE p.is_active
+	WHERE p.is_active and p.is_allocated
 	GROUP BY f.id
 ), allocation_by_office as (
 	SELECT f.id, COUNT(f.id)
@@ -44,7 +44,7 @@ const sql = `WITH employees_by_office as (
 	FROM position p
 	JOIN office_group g  on g.id = p.office_group_id
 	JOIN office       f  on f.id = g.office_id
-	WHERE p.is_active
+	WHERE p.is_active and p.is_allocated
 	GROUP BY f.id
 ), last_verified AS (
 	SELECT g.office_id, min(coalesce(last_verified, '1900-01-01')) AS last_verified
