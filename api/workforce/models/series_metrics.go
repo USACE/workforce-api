@@ -18,30 +18,30 @@ type SeriesMetric struct {
 
 func employeesByOccupationPreticate(officeSymbol, groupSlug *string) string {
 	if officeSymbol != nil && groupSlug != nil {
-		return "WHERE f.symbol ILIKE $1 AND g.slug ILIKE $2"
+		return "WHERE UPPER(f.symbol) = UPPER($1) AND UPPER(g.slug) = UPPER($2)"
 	}
 	if officeSymbol != nil {
-		return "WHERE f.symbol ILIKE $1"
+		return "WHERE UPPER(f.symbol) = UPPER($1)"
 	}
 	return ""
 }
 
 func allocationByOccupationPreticate(officeSymbol, groupSlug *string) string {
 	if officeSymbol != nil && groupSlug != nil {
-		return "WHERE p.is_allocated is true AND f.symbol ILIKE $1 AND g.slug ILIKE $2"
+		return "WHERE p.is_allocated is TRUE and p.is_active is TRUE AND UPPER(f.symbol) = UPPER($1) AND UPPER(g.slug) = UPPER($2)"
 	}
 	if officeSymbol != nil {
-		return "WHERE p.is_allocated is true AND f.symbol ILIKE $1"
+		return "WHERE p.is_allocated is TRUE AND p.is_active is TRUE AND UPPER(f.symbol) = UPPER($1)"
 	}
-	return "WHERE p.is_allocated is true"
+	return "WHERE p.is_allocated is TRUE AND p.is_active is TRUE"
 }
 
 func targetByOccupationPreticate(officeSymbol, groupSlug *string) string {
 	if officeSymbol != nil && groupSlug != nil {
-		return "WHERE f.symbol ILIKE $1 AND g.slug ILIKE $2"
+		return "WHERE UPPER(f.symbol) = UPPER($1) AND UPPER(g.slug) = UPPER($2)"
 	}
 	if officeSymbol != nil {
-		return "WHERE f.symbol ILIKE $1"
+		return "WHERE UPPER(f.symbol) = UPPER($1)"
 	}
 	return ""
 }

@@ -30,19 +30,19 @@ func GetGroupByID(db *pgxpool.Pool, id uuid.UUID) (*Group, error) {
 			FROM position p
 			JOIN office_group g ON g.id = p.office_group_id
 			JOIN occupancy    c ON c.position_id = p.id and c.end_date is null
-			WHERE p.is_active AND g.id = $1
+			WHERE p.is_active AND p.is_allocated AND g.id = $1
 			GROUP BY g.id
 		), allocation_by_group as (
 			SELECT g.id, COUNT(g.id)
 			FROM position p
 			JOIN office_group g ON g.id = p.office_group_id
-			WHERE p.is_active AND g.id = $1
+			WHERE p.is_active AND p.is_allocated AND g.id = $1
 			GROUP BY g.id
 		), target_by_group as (
 			SELECT g.id, COUNT(g.id)
 			FROM position p
 			JOIN office_group g  on g.id = p.office_group_id
-			WHERE p.is_active AND g.id = $1
+			WHERE p.is_active AND p.is_allocated AND g.id = $1
 			GROUP BY g.id
 		)
 		SELECT concat(lower(f.symbol), '-', g.slug) AS uid,
@@ -92,19 +92,19 @@ func ListOfficeGroups(db *pgxpool.Pool, officeSymbol string) ([]Group, error) {
 			FROM position p
 			JOIN office_group g ON g.id = p.office_group_id
 			JOIN occupancy    c ON c.position_id = p.id and c.end_date is null
-			WHERE p.is_active AND g.office_id IN (SELECT id FROM office WHERE UPPER(symbol) = UPPER($1))
+			WHERE p.is_active AND p.is_allocated AND g.office_id IN (SELECT id FROM office WHERE UPPER(symbol) = UPPER($1))
 			GROUP BY g.id
 		), allocation_by_group as (
 			SELECT g.id, COUNT(g.id)
 			FROM position p
 			JOIN office_group g ON g.id = p.office_group_id
-			WHERE p.is_active AND g.office_id IN (SELECT id FROM office WHERE UPPER(symbol) = UPPER($1))
+			WHERE p.is_active AND p.is_allocated AND g.office_id IN (SELECT id FROM office WHERE UPPER(symbol) = UPPER($1))
 			GROUP BY g.id
 		), target_by_group as (
 			SELECT g.id, COUNT(g.id)
 			FROM position p
 			JOIN office_group g  on g.id = p.office_group_id
-			WHERE p.is_active AND g.office_id IN (SELEcT id FROM office WHERE UPPER(symbol) = UPPER($1))
+			WHERE p.is_active AND p.is_allocated AND g.office_id IN (SELEcT id FROM office WHERE UPPER(symbol) = UPPER($1))
 			GROUP BY g.id
 		)
 		SELECT concat(lower(f.symbol), '-', g.slug) AS uid,
