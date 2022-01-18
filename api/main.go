@@ -71,6 +71,7 @@ func main() {
 
 	// Metrics
 	public.GET("/metrics/series", mp.SeriesMetrics)
+	public.GET("/metrics/demographics", mp.DemographicsMetrics)
 
 	// Codes --> Used in Python script
 	public.GET("/occupation_codes", mp.ListOccupationCodes)
