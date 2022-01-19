@@ -26,7 +26,7 @@ func AgeMetrics(db *pgxpool.Pool, officeSymbol, groupSlug *string) ([]AgeMetric,
 		return make([]interface{}, 0)
 	}
 
-	preticate := func(officeSymbol, groupSlug *string) string {
+	predicate := func(officeSymbol, groupSlug *string) string {
 		if officeSymbol != nil && groupSlug != nil {
 			return "AND UPPER(f.symbol) = UPPER($1) AND UPPER(g.slug) = UPPER($2)"
 		}
@@ -52,15 +52,17 @@ func AgeMetrics(db *pgxpool.Pool, officeSymbol, groupSlug *string) ([]AgeMetric,
 					AND (o.service_end_date IS NULL OR service_end_date > NOW())
 					%s
 				GROUP BY age
-			), bins as (
-				SELECT s.a as age
-				FROM generate_series(16,90) s(a)
 			)
-			SELECT b.age,
-				   coalesce(ac.count,0) as count
-			FROM bins b
+			SELECT b.age, coalesce(ac.count,0) as count
+			FROM (
+				SELECT s.a as age
+				FROM generate_series(
+					(select MIN(age)::integer from age_counts),
+					(select MAX(age)::integer from age_counts)
+				) s(a)
+			) b
 			LEFT JOIN age_counts ac on ac.age = b.age`,
-			preticate(officeSymbol, groupSlug),
+			predicate(officeSymbol, groupSlug),
 		), args(officeSymbol, groupSlug)...,
 	); err != nil {
 		return make([]AgeMetric, 0), err
