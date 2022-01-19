@@ -38,32 +38,32 @@ func DemographicsMetrics(db *pgxpool.Pool, officeSymbol, groupSlug *string) ([]D
 
 	sql := fmt.Sprintf(
 		`WITH current_occupants as (
-			SELECT 
-				o.id, 
-				o.end_date, 
+			SELECT
+				o.id,
+				o.end_date,
 				o.service_end_date,
 				DATE_PART('year', now()) - DATE_PART('year', o.dob) AS age,
 				f.symbol AS symbol,
 				g.slug AS slug
-			FROM occupancy o 
+			FROM occupancy o
 			JOIN "position" p ON p.id = o.position_id
-			JOIN office_group g ON g.id = p.office_group_id 
-			JOIN office f ON f.id = g.office_id 	
+			JOIN office_group g ON g.id = p.office_group_id
+			JOIN office f ON f.id = g.office_id
 			WHERE is_active IS TRUE
 			AND is_allocated IS true
 			%s
 			)
-			SELECT 
+			SELECT
 			    count(id) AS value,
-			    CASE WHEN age < 25 THEN 
-			    'Under 25' 
+			    CASE WHEN age < 25 THEN
+			    'Under 25'
 			    WHEN age >= 25 AND age <= 35 THEN
 			    '25-35'
 			    WHEN age >= 35 AND age <= 45 THEN
 			    '35-45'
 			    WHEN age >= 45 AND age <= 55 THEN
 			    '45-55'
-			    ELSE 'Over 55' 
+			    ELSE 'Over 55'
 			    END AS label
 			FROM current_occupants o
 			WHERE (end_date IS NULL OR end_date > NOW())
