@@ -20,6 +20,7 @@ type Occupancy struct {
 	ServiceEndDate   *time.Time   `json:"service_end_date"`
 	Dob              *time.Time   `json:"dob"`
 	Credentials      []Credential `json:"credentials"`
+	Expertise        []Expertise  `json:"expertise"`
 }
 
 // baseOccupancySql
@@ -33,6 +34,7 @@ const baseOccupancySql = `WITH occupancy_credentials AS (
 			   o.service_end_date,
 			   o.dob,
 			   json_agg(r) AS credentials,
+			   json_agg(x) AS expertise,
 			   og.slug,
 			   f.symbol
 		FROM "position" p
@@ -54,11 +56,23 @@ const baseOccupancySql = `WITH occupancy_credentials AS (
 			JOIN credential_type AS ct ON ct.id = c.credential_type_id
 			GROUP BY oc.occupancy_id
 		) AS r ON r.occupancy_id = o.id
+		LEFT JOIN (
+			SELECT oe.occupancy_id AS occupancy_id,
+				json_agg(
+					json_build_object(
+						'id',   e.id,
+						'name', e.name
+					)
+				) AS expertise
+			FROM occupant_expertise AS oe
+			JOIN expertise e ON e.id = oe.expertise_id
+			GROUP BY oe.occupancy_id
+		) AS x ON x.occupancy_id = o.id
 		GROUP BY o.id, p.id, og.slug, f.symbol
 	)
 	SELECT oc.occupancy_id, oc.position_id, oc.occupancy_title,
 		oc.start_date, oc.end_date, oc.service_start_date, oc.service_end_date,
-		oc.dob, oc.credentials
+		oc.dob, oc.credentials, oc.expertise
 	FROM occupancy_credentials AS oc`
 
 // GetOccupancyByID with Occupancy as the receiver
@@ -84,7 +98,8 @@ func GetOccupancyByID(db *pgxpool.Pool, id uuid.UUID) (*Occupancy, error) {
 				o.service_start_date,
 				o.service_end_date,
 				o.dob,
-				r.credentials
+				r.credentials,
+				x.expertise
 				--og.slug,
 				--f.symbol
 		 FROM occupancy o
@@ -107,6 +122,19 @@ func GetOccupancyByID(db *pgxpool.Pool, id uuid.UUID) (*Occupancy, error) {
 			 WHERE oc.occupancy_id = $1
 			 GROUP BY oc.occupancy_id
 		 ) AS r ON r.occupancy_id = o.id
+		 LEFT JOIN (
+			SELECT oe.occupancy_id AS occupancy_id,
+				json_agg(
+					json_build_object(
+						'id',   e.id,
+						'name', e.name
+					)
+				) AS expertise
+			FROM occupant_expertise oe
+			JOIN expertise e ON e.id = oe.expertise_id
+			WHERE oe.occupancy_id = $1
+			GROUP BY oe.occupancy_id
+		) AS x ON x.occupancy_id = o.id
 		 WHERE o.id = $1`, id,
 	); err != nil {
 		return nil, err
@@ -137,12 +165,21 @@ func CreateOccupancy(db *pgxpool.Pool, o Occupancy) (*Occupancy, error) {
 	).Scan(&id); err != nil {
 		return nil, err
 	}
-	// Create a new row in occupancy_credentials for each credential in the payload.
+	// Create a new row in occupant_credentials for each credential in the payload.
 	for _, c := range o.Credentials {
 		if _, err = tx.Exec(ctx,
 			`INSERT INTO occupant_credentials (occupancy_id, credential_id)
 				VALUES ($1, (SELECT id FROM credential AS c WHERE c."abbrev" ILIKE $2))`,
 			id, c.Abbreviation,
+		); err != nil {
+			return nil, err
+		}
+	}
+	// Create a new row in occupant_expertise for each expertise in the payload.
+	for _, x := range o.Expertise {
+		if _, err = tx.Exec(ctx,
+			`INSERT INTO occupant_expertise (occupancy_id, expertise_id) VALUES ($1, $2)`,
+			id, x.ID,
 		); err != nil {
 			return nil, err
 		}
@@ -171,6 +208,12 @@ func UpdateOccupancy(db *pgxpool.Pool, o Occupancy) (*Occupancy, error) {
 		credAbbrevs[idx] = strings.ToUpper(c.Abbreviation)
 	}
 
+	// Expertise IDs from Payload
+	expertiseIDs := make([]uuid.UUID, len(o.Expertise))
+	for idx, x := range o.Expertise {
+		expertiseIDs[idx] = x.ID
+	}
+
 	// Defer a rollback in case anything fails.
 	defer tx.Rollback(ctx)
 
@@ -186,7 +229,7 @@ func UpdateOccupancy(db *pgxpool.Pool, o Occupancy) (*Occupancy, error) {
 		return nil, err
 	}
 
-	// What needs to be deleted
+	// Credentials to be deleted
 	if _, err = tx.Exec(ctx,
 		`DELETE FROM occupant_credentials
 	     WHERE occupancy_id = $1 AND credential_id NOT IN (
@@ -196,7 +239,7 @@ func UpdateOccupancy(db *pgxpool.Pool, o Occupancy) (*Occupancy, error) {
 		return nil, err
 	}
 
-	// What needs to be inserted
+	// Credentials to be inserted
 	if _, err = tx.Exec(ctx,
 		`WITH creds AS (
 			SELECT o.id AS occupancy_id,
@@ -218,6 +261,42 @@ func UpdateOccupancy(db *pgxpool.Pool, o Occupancy) (*Occupancy, error) {
 		INSERT INTO occupant_credentials
 		SELECT * FROM creds`,
 		o.ID, credAbbrevs,
+	); err != nil {
+		return nil, err
+	}
+
+	// Expertise to be deleted
+	if _, err = tx.Exec(ctx,
+		`DELETE FROM occupant_expertise
+		 WHERE occupancy_id = $1 AND expertise_id NOT IN (
+			 SELECT id FROM expertise WHERE id = ANY($2)
+		 )`, o.ID, expertiseIDs,
+	); err != nil {
+		return nil, err
+	}
+
+	// Expertise to be inserted
+	if _, err = tx.Exec(ctx,
+		`WITH xx AS (
+				SELECT o.id AS occupancy_id,
+					   e.id AS expertise_id
+				FROM expertise e
+				LEFT JOIN (
+					SELECT expertise_id,
+						   occupancy_id
+					FROM occupant_expertise
+					WHERE occupancy_id = $1
+				) oe ON oe.expertise_id = e.id
+				CROSS JOIN (
+					SELECT id
+					FROM occupancy
+					WHERE id = $1
+				) o
+				WHERE oe.expertise_id IS NULL AND e.id = ANY($2)
+			)
+			INSERT INTO occupant_expertise
+			SELECT * FROM xx`,
+		o.ID, expertiseIDs,
 	); err != nil {
 		return nil, err
 	}
