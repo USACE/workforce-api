@@ -112,6 +112,9 @@ func main() {
 	// Credentials
 	public.GET("/credentials", mp.GetCredentials)
 
+	// Expertise
+	public.GET("/expertise", mp.ListExpertise)
+
 	// Server
 	s := &http2.Server{
 		MaxConcurrentStreams: 250,     // http2 default 250

@@ -35,7 +35,8 @@ const basePositionSql = `WITH current_occupancy_by_position as (
 					o.service_start_date::timestamptz,
 					o.service_end_date::timestamptz,
 					o.dob::timestamptz,
-					c.credentials AS credentials
+					c.credentials AS credentials,
+					x.expertise   AS expertise
 				FROM occupancy o
 				LEFT JOIN (
 					SELECT oc.occupancy_id AS occupancy_id,
@@ -51,6 +52,18 @@ const basePositionSql = `WITH current_occupancy_by_position as (
 					JOIN credential_type ct ON ct.id = c.credential_type_id
 					GROUP BY oc.occupancy_id
 				) AS c ON c.occupancy_id = o.id
+				LEFT JOIN (
+					SELECT oe.occupancy_id AS occupancy_id,
+						json_agg(
+							json_build_object(
+								'id',   e.id,
+								'name', e.name
+							)
+						) AS expertise
+					FROM occupant_expertise oe
+					JOIN expertise e ON e.id = oe.expertise_id
+					GROUP BY oe.occupancy_id
+				) AS x ON x.occupancy_id = o.id
 				WHERE o.end_date is null
 			) t
 		), office_id AS (SELECT id FROM office WHERE symbol ILIKE $1)
