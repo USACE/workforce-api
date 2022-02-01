@@ -233,7 +233,7 @@ func UpdateOccupancy(db *pgxpool.Pool, o Occupancy) (*Occupancy, error) {
 	if _, err = tx.Exec(ctx,
 		`DELETE FROM occupant_credentials
 	     WHERE occupancy_id = $1 AND credential_id NOT IN (
-		 	SELECT id FROM credential WHERE abbrev = ANY($2)
+		 	SELECT id FROM credential WHERE UPPER(abbrev) = ANY($2)
 		 )`, o.ID, credAbbrevs,
 	); err != nil {
 		return nil, err
@@ -256,7 +256,7 @@ func UpdateOccupancy(db *pgxpool.Pool, o Occupancy) (*Occupancy, error) {
 				FROM occupancy
 				WHERE id = $1
 			) o
-			WHERE oc.credential_id IS NULL AND c.abbrev = ANY($2)
+			WHERE oc.credential_id IS NULL AND UPPER(c.abbrev) = ANY($2)
 		)
 		INSERT INTO occupant_credentials
 		SELECT * FROM creds`,
