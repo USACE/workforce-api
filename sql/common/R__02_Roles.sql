@@ -73,7 +73,8 @@ GRANT SELECT ON
     role_request,
     role_request_status,
     data_call,
-    data_call_completed
+    data_call_completed,
+    v_position_report
 TO workforce_reader;
 
 -- Role workforce_writer

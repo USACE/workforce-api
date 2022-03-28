@@ -115,6 +115,9 @@ func main() {
 	// Expertise
 	public.GET("/expertise", mp.ListExpertise)
 
+	//Normalized Export Report
+	public.GET("/report/raw", mp.ListNormalizedPositions)
+
 	// Server
 	s := &http2.Server{
 		MaxConcurrentStreams: 250,     // http2 default 250
