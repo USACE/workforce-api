@@ -61,7 +61,7 @@ func (s Store) ListNormalizedPositions(c echo.Context) error {
 	fmt.Println("Directory of the currently running file...")
 	fmt.Println(dirPathExecutable)
 
-	tmpFile, err := ioutil.TempFile(dirPathExecutable, "prefix-")
+	tmpFile, err := ioutil.TempFile(dirPathExecutable, "download-")
 	if err != nil {
 		log.Fatal("Cannot create temporary file", err)
 	}
@@ -88,6 +88,9 @@ func (s Store) ListNormalizedPositions(c echo.Context) error {
 	if err := writer.Write(headerNames); err != nil {
 		return err
 	}
+
+	// @todo Future cleanup
+	// Use GetFields() to return row values with dynamic types
 
 	//csvRow = append(csvRow, strings.Join(headerNames, ","))
 
@@ -125,16 +128,16 @@ func (s Store) ListNormalizedPositions(c echo.Context) error {
 	// Loop over database results
 	for _, row := range pp {
 
-		//fmt.Println(row.ParentOfficeSymbol)
-
-		//var csvRow []string
-
 		csvRow := append(csvRow,
 			row.ParentOfficeSymbol, row.ParentOfficeName, row.OfficeSymbol, row.OfficeName,
 			row.GroupName, row.OccupationCode, row.OccupationName, row.Title, row.PayPlanCode,
-			strconv.Itoa(row.TargetGrade), row.PayPlanGrade, strconv.FormatBool(row.IsVacant),
-			strconv.FormatBool(row.IsSupervisor), strconv.FormatBool(row.IsAllocated),
-			row.LastUpdated.Format("2006-01-02"), row.AgeRange, row.ServiceRange)
+			strconv.Itoa(row.TargetGrade), row.PayPlanGrade, strconv.Itoa(row.IsVacant),
+			strconv.Itoa(row.IsSupervisor), strconv.Itoa(row.IsAllocated),
+			row.LastUpdated.Format("2006-01-02"), row.AgeRange, row.ServiceRange,
+			strconv.Itoa(row.ProfRegCnt), strconv.Itoa(row.AdvDegCnt), strconv.Itoa(row.CertCnt),
+			strconv.Itoa(row.ExpHydrology), strconv.Itoa(row.ExpHydraulics),
+			strconv.Itoa(row.ExpCoastal), strconv.Itoa(row.ExpWM),
+			strconv.Itoa(row.ExpWQ))
 
 		// Write db records to CSV
 		if err := writer.Write(csvRow); err != nil {
