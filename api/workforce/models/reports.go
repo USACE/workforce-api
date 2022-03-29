@@ -21,12 +21,20 @@ type NormalizedPosition struct {
 	PayPlanCode    string    `json:"pay_plan_code"  db:"pay_plan_code"`
 	TargetGrade    int       `json:"target_grade"  db:"target_grade"`
 	PayPlanGrade   string    `json:"pay_plan_grade" db:"pay_plan_grade"`
-	IsVacant       bool      `json:"is_vacant"  db:"is_vacant"`
-	IsSupervisor   bool      `json:"is_supervisor"  db:"is_supervisor"`
-	IsAllocated    bool      `json:"is_allocated"  db:"is_allocated"`
+	IsVacant       int       `json:"is_vacant"  db:"is_vacant"`
+	IsSupervisor   int       `json:"is_supervisor"  db:"is_supervisor"`
+	IsAllocated    int       `json:"is_allocated"  db:"is_allocated"`
 	LastUpdated    time.Time `json:"last_updated"  db:"last_updated"`
 	AgeRange       string    `json:"age_range"  db:"age_range"`
 	ServiceRange   string    `json:"service_range"  db:"service_range"`
+	ProfRegCnt     int       `json:"prof_registration_count" db:"prof_registration_count"`
+	AdvDegCnt      int       `json:"adv_degree_count" db:"adv_degree_count"`
+	CertCnt        int       `json:"certification_count" db:"certification_count"`
+	ExpHydrology   int       `json:"expertise_hydrology" db:"expertise_hydrology"`
+	ExpHydraulics  int       `json:"expertise_hydraulics" db:"expertise_hydraulics"`
+	ExpCoastal     int       `json:"expertise_coastal" db:"expertise_coastal"`
+	ExpWM          int       `json:"expertise_wm" db:"expertise_wm"`
+	ExpWQ          int       `json:"expertise_wq" db:"expertise_wq"`
 }
 
 // ListNormalizedPositions lists all positions in a normalized view for reporting
@@ -51,7 +59,15 @@ func ListNormalizedPositions(db *pgxpool.Pool) ([]NormalizedPosition, error) {
 			is_allocated,
 			last_updated,
 			age_range,
-			service_range
+			service_range,
+			prof_registration_count,
+			adv_degree_count,
+			certification_count,
+			expertise_hydrology,
+			expertise_hydraulics,
+			expertise_coastal,
+			expertise_wm,
+			expertise_wq
 			FROM v_position_report`,
 	); err != nil {
 		return make([]NormalizedPosition, 0), err
