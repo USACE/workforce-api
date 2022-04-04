@@ -116,7 +116,8 @@ func main() {
 	public.GET("/expertise", mp.ListExpertise)
 
 	//Normalized Export Report
-	public.GET("/report/csv", mp.ListNormalizedPositions)
+	public.GET("/report/csv", mp.ExportNormalizedPositions)
+	public.GET("/report/json", mp.ListNormalizedPositions)
 
 	// Server
 	s := &http2.Server{
