@@ -43,7 +43,7 @@ func GetFieldsNames(row models.NormalizedPosition) (res []string) {
 }
 
 // ListNormalizedPositions lists raw normalized positions for report consumption
-func (s Store) ListNormalizedPositions(c echo.Context) error {
+func (s Store) ExportNormalizedPositions(c echo.Context) error {
 	pp, err := models.ListNormalizedPositions(s.Connection)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, messages.NewMessage(err.Error()))
@@ -155,12 +155,18 @@ func (s Store) ListNormalizedPositions(c echo.Context) error {
 	//return c.File(tmpFile.Name())
 	return c.Attachment(tmpFile.Name(), "workforce-export.csv")
 
-	//return c.JSON(http.StatusOK, pp)
-
 	// var CsvData []string
 	// for _, v := range pp {
 	// 	CsvData = append(CsvData, GetFields(v)...)
 	// }
 	// fmt.Printf("%q\n", CsvData)
 	// return c.String(http.StatusOK, strings.Join(CsvData, ","))
+}
+
+func (s Store) ListNormalizedPositions(c echo.Context) error {
+	pp, err := models.ListNormalizedPositions(s.Connection)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, messages.NewMessage(err.Error()))
+	}
+	return c.JSON(http.StatusOK, pp)
 }
