@@ -38,12 +38,12 @@ func allocationByOccupationPreticate(officeSymbol, groupSlug *string) string {
 
 func targetByOccupationPreticate(officeSymbol, groupSlug *string) string {
 	if officeSymbol != nil && groupSlug != nil {
-		return "WHERE UPPER(f.symbol) = UPPER($1) AND UPPER(g.slug) = UPPER($2)"
+		return "WHERE UPPER(f.symbol) = UPPER($1) AND UPPER(g.slug) = UPPER($2) AND p.is_active is TRUE"
 	}
 	if officeSymbol != nil {
-		return "WHERE UPPER(f.symbol) = UPPER($1)"
+		return "WHERE UPPER(f.symbol) = UPPER($1) AND p.is_active is TRUE"
 	}
-	return ""
+	return "WHERE p.is_active is TRUE"
 }
 
 func SeriesMetrics(db *pgxpool.Pool, officeSymbol, groupSlug *string) ([]SeriesMetric, error) {
@@ -96,7 +96,7 @@ func SeriesMetrics(db *pgxpool.Pool, officeSymbol, groupSlug *string) ([]SeriesM
 	left join employees_by_occupation  a on a.id = oc.id
 	left join allocation_by_occupation b on b.id = oc.id
 	left join target_by_occupation     c on c.id = oc.id
-	where b.count > 0
+	where b.count > 0 OR c.count > 0
 	order by allocated DESC`,
 		employeesByOccupationPreticate(officeSymbol, groupSlug),
 		allocationByOccupationPreticate(officeSymbol, groupSlug),
