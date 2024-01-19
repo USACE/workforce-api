@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "14cec5bb-e908-4b2e-81f6-c10d91cf698e",
+		"_postman_id": "e3d8d2ba-c666-4e18-a43a-40e4ab46e8c3",
 		"name": "workforce",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13201855"
 	},
 	"item": [
 		{
@@ -387,7 +388,7 @@
 			]
 		},
 		{
-			"name": "Positions",
+			"name": "Positions and Occupancy",
 			"item": [
 				{
 					"name": "Get Position By ID",
@@ -525,171 +526,6 @@
 					"response": []
 				},
 				{
-					"name": "Create Office Position",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Create Office Position: successful POST request\", function () {",
-									"    pm.response.to.be.withBody;",
-									"    pm.response.to.be.json;",
-									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
-									"",
-									"    var jsonData = pm.response.json();",
-									"    pm.collectionVariables.set(\"office_symbol\", jsonData.office_symbol);",
-									"    pm.collectionVariables.set(\"position_id\", jsonData.id);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"group_slug\": \"nashville-district\",\n    \"title\": \"Super Trooper Engineer\",\n    \"pay_plan\": \"GS\",\n    \"target_grade\": 15,\n    \"is_supervisor\": false,\n    \"is_active\": false,\n    \"occupation_code\": \"0810\"\n}\n",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{base_url}}/offices/:office_symbol/positions",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"offices",
-								":office_symbol",
-								"positions"
-							],
-							"query": [
-								{
-									"key": "",
-									"value": "",
-									"disabled": true
-								}
-							],
-							"variable": [
-								{
-									"key": "office_symbol",
-									"value": "LRN"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update Office Position",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Update Office Position: status code is 200 OK returning JSON\", function () {",
-									"    pm.response.to.be.withBody;",
-									"    pm.response.to.be.json;",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"title\": \"Super Trooper\",\n    \"group_slug\": \"nashville-district\",\n    \"pay_plan\": \"GS\",\n    \"grade\": 5,\n    \"is_active\": false,\n    \"is_supervisor\": false,\n    \"is_allocated\": false,\n    \"occupation_code\": \"0810\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{base_url}}/offices/{{office_symbol}}/positions/{{position_id}}",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"offices",
-								"{{office_symbol}}",
-								"positions",
-								"{{position_id}}"
-							],
-							"query": [
-								{
-									"key": "",
-									"value": "",
-									"disabled": true
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Office Position",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Delete Office Position: status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{base_url}}/offices/{{office_symbol}}/positions/{{position_id}}",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"offices",
-								"{{office_symbol}}",
-								"positions",
-								"{{position_id}}"
-							],
-							"query": [
-								{
-									"key": "",
-									"value": "",
-									"disabled": true
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Occupancy",
-			"item": [
-				{
 					"name": "Get Occupancy By ID",
 					"event": [
 						{
@@ -722,7 +558,7 @@
 							"variable": [
 								{
 									"key": "occupancy_id",
-									"value": "a119ad8a-2b94-4d8f-a3c9-b985904e6f69"
+									"value": "d387a51f-f5e5-4abd-8551-cd4e9943d11a"
 								}
 							]
 						}
@@ -825,7 +661,67 @@
 								},
 								{
 									"key": "group_slug",
-									"value": "nashville-district"
+									"value": "water-management"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Office Position",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Create Office Position: successful POST request\", function () {",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
+									"",
+									"    var jsonData = pm.response.json();",
+									"    pm.collectionVariables.set(\"office_symbol\", jsonData.office_symbol);",
+									"    pm.collectionVariables.set(\"position_id\", jsonData.id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"group_slug\": \"water-management\",\n    \"title\": \"Super Trooper Engineer\",\n    \"pay_plan\": \"GS\",\n    \"target_grade\": 15,\n    \"is_supervisor\": false,\n    \"is_active\": false,\n    \"occupation_code\": \"0810\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/offices/:office_symbol/positions",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"offices",
+								":office_symbol",
+								"positions"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "office_symbol",
+									"value": "LRN"
 								}
 							]
 						}
@@ -850,6 +746,15 @@
 								],
 								"type": "text/javascript"
 							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
 						}
 					],
 					"request": {
@@ -857,7 +762,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"position_id\": \"964d3ba8-14a1-42d2-a6b7-25be6a853101\",\n    \"title\": \"New Position Title\",\n    \"start_date\": \"2005-10-20T00:00:00Z\",\n    \"end_date\": null,\n    \"service_start_date\": \"2001-10-20T00:00:00Z\",\n    \"service_end_date\": null,\n    \"dob\": \"1990-03-01T00:00:00Z\",\n    \"credentials\": [\n        {\n            \"abbrev\": \"PE\"\n        },\n        {\n            \"abbrev\": \"PH\"\n        },\n        {\n            \"abbrev\": \"MS\"\n        }\n    ]\n}",
+							"raw": "{\n    \"position_id\": \"{{position_id}}\",\n    \"title\": \"New Position Title\",\n    \"start_date\": \"2005-10-20T00:00:00Z\",\n    \"end_date\": null,\n    \"service_start_date\": \"2001-10-20T00:00:00Z\",\n    \"service_end_date\": null,\n    \"dob\": \"1990-03-01T00:00:00Z\",\n    \"credentials\": [\n        {\n            \"abbrev\": \"PE\"\n        },\n        {\n            \"abbrev\": \"PH\"\n        },\n        {\n            \"abbrev\": \"MS\"\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -892,6 +797,57 @@
 					"response": []
 				},
 				{
+					"name": "Update Office Position",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Update Office Position: status code is 200 OK returning JSON\", function () {",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Super Trooper\",\n    \"group_slug\": \"water-management\",\n    \"pay_plan\": \"GS\",\n    \"grade\": 5,\n    \"is_active\": false,\n    \"is_supervisor\": false,\n    \"is_allocated\": false,\n    \"occupation_code\": \"0810\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/offices/{{office_symbol}}/positions/{{position_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"offices",
+								"{{office_symbol}}",
+								"positions",
+								"{{position_id}}"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Update Occupancy",
 					"event": [
 						{
@@ -913,7 +869,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"position_id\": \"964d3ba8-14a1-42d2-a6b7-25be6a853101\",\n    \"title\": \"MY NEW TITLE\",\n    \"start_date\": \"2005-10-20T00:00:00Z\",\n    \"end_date\": null,\n    \"service_start_date\": \"2001-10-20T00:00:00Z\",\n    \"service_end_date\": null,\n    \"dob\": \"1990-03-01T00:00:00Z\",\n    \"credentials\": [\n        {\n            \"abbrev\": \"PE\"\n        },\n        {\n            \"abbrev\": \"MS\"\n        }\n    ]\n}",
+							"raw": "{\n    \"position_id\": \"{{position_id}}\",\n    \"title\": \"MY NEW TITLE\",\n    \"start_date\": \"2005-10-20T00:00:00Z\",\n    \"end_date\": null,\n    \"service_start_date\": \"2001-10-20T00:00:00Z\",\n    \"service_end_date\": null,\n    \"dob\": \"1990-03-01T00:00:00Z\",\n    \"credentials\": [\n        {\n            \"abbrev\": \"PE\"\n        },\n        {\n            \"abbrev\": \"MS\"\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -930,6 +886,55 @@
 								"{{office_symbol}}",
 								"occupancy",
 								"{{occupancy_id}}"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Office Position",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Delete Office Position: status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/offices/{{office_symbol}}/positions/{{position_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"offices",
+								"{{office_symbol}}",
+								"positions",
+								"{{position_id}}"
 							],
 							"query": [
 								{
