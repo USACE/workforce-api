@@ -1,0 +1,13 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "remove debug_bin",
+            "command": "rm",
+            "args": [
+                "${workspaceFolder}/api/__debug_bin*",
+            ]
+        }
+    ]
+}
